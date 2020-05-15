@@ -60,6 +60,16 @@ class list {
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
 
+	/*Capacity */
+		bool empty() const;
+		size_type size() const;
+		size_type max_size() const;
+
+	/*Element access */
+		reference front();
+		const_reference front() const;
+		reference back();
+		const_reference back() const;
 };
 
 template <typename T, typename A>
@@ -104,42 +114,79 @@ list<T, A> &list<T, A>::operator=(const list &x) //Besoin de préciser le type d
 }
 
 template <typename T, typename A>
-iterator list<T, A>::begin() {
+typename list<T, A>::iterator list<T, A>::begin() {
 
 }
 
 template <typename T, typename A>
-const_iterator list<T, A>::begin() const {
+typename list<T, A>::const_iterator list<T, A>::begin() const {
 
 }
 
 template <typename T, typename A>
-iterator list<T, A>::end() {
+typename list<T, A>::iterator list<T, A>::end() {
 
 }
 template <typename T, typename A>
-const_iterator list<T, A>::end() const {
-
-}
-
-template <typename T, typename A>
-reverse_iterator list<T, A>::rbegin() {
+typename list<T, A>::const_iterator list<T, A>::end() const {
 
 }
 
 template <typename T, typename A>
-const_reverse_iterator list<T, A>::rbegin() const {
+typename list<T, A>::reverse_iterator list<T, A>::rbegin() {
 
 }
 
 template <typename T, typename A>
-reverse_iterator list<T, A>::rend() {
+typename list<T, A>::const_reverse_iterator list<T, A>::rbegin() const {
 
 }
 
 template <typename T, typename A>
-const_reverse_iterator list<T, A>::rend() const {
+typename list<T, A>::reverse_iterator list<T, A>::rend() {
+
+}
+
+template <typename T, typename A>
+typename list<T, A>::const_reverse_iterator list<T, A>::rend() const {
 	
+}
+
+template <typename T, typename A>
+bool list<T, A>::empty() const {
+	if (_size)
+		return false;
+	return true;
+}
+
+template <typename T, typename A>
+typename list<T, A>::size_type list<T, A>::size() const {
+	return _size;
+}
+
+template <typename T, typename A>
+typename list<T, A>::size_type list<T, A>::max_size() const {
+	//TO IMPLEMENT
+}
+
+template <typename T, typename A>
+typename list<T, A>::reference list<T, A>::front() {
+
+}
+
+template <typename T, typename A>
+typename list<T, A>::const_reference list<T, A>::front() const {
+
+}
+
+template <typename T, typename A>
+typename list<T, A>::reference list<T, A>::back() {
+	//implement
+}
+
+template <typename T, typename A>
+typename list<T, A>::const_reference list<T, A>::back() const {
+	//implement
 }
 
 
