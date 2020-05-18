@@ -33,8 +33,7 @@ namespace ft { //utilisation ft::list
 		private:
 		/*Attributes*/
 			allocator_type _allocator; //default to allocator value_type
-			ListNode<T> *_li;
-			ListNode<T> *_tail;
+			ListNode<T> *_li; //son prv c'est le dernier node, son nxt c'est le premier. Boucle. Permet de retourner l'iterateur end, qui est past-the-end element.
 			size_type _size;
 
 		public:
@@ -70,7 +69,7 @@ namespace ft { //utilisation ft::list
 
 					const_iterator() : ListIter<T>(NULL){};
 					const_iterator(const const_iterator &it) : ListIter<T>(it._p){};
-					const_iterator(ListNode<T> *p) : ListBaseIter<T>(p){};
+					const_iterator(ListNode<T> *p) : ListIter<T>(p){};
 					virtual ~const_iterator(){};
 
 					const_iterator &operator=(const const_iterator &rhs) { this->_p = rhs._p; return (*this); };		
@@ -122,6 +121,26 @@ namespace ft { //utilisation ft::list
 			const_reference front() const;
 			reference back();
 			const_reference back() const;
+		
+		/*Assign modifiers*/
+		/*Les surcharges de la méthode assign se comportent un peu comme les deux derniers constructeurs, 
+		à ceci près qu'elles ne prennent pas d'allocateur en paramètre. La première méthode permet donc 
+		de réinitialiser la liste et de la remplir avec un certain nombre de copies d'un objet donné, 
+		et la deuxième permet de réinitialiser la liste et de la remplir avec une séquence d'objets 
+		définie par deux itérateurs.*/
+		template <class InputIterator>
+  		void assign (InputIterator first, InputIterator last);	
+		void assign (size_type n, const value_type& val);
+
+		/*Other modifiers */
+		void push_front(const value_type& val);
+		void pop_front();
+		void push_back(const value_type& val);
+		void pop_back();
+		iterator insert (iterator position, const value_type& val);
+    	void insert (iterator position, size_type n, const value_type& val);	
+		template <class InputIterator>
+    	void insert (iterator position, InputIterator first, InputIterator last);
 	};
 
 	template <typename T, typename A>
@@ -133,7 +152,7 @@ namespace ft { //utilisation ft::list
 	list<T, A>::list(size_type n, const value_type &val, const allocator_type &alloc) : _allocator(alloc), _size(0) {
 		_li = new ListNode<T>(NULL, NULL, value_type());
 		_tail = _li;
-		insert(begin(), n, val); //implement BOTH - assigner tail dans la ft?
+		insert(begin(), n, val);
 	}
 
 	template <typename T, typename A>
@@ -141,20 +160,20 @@ namespace ft { //utilisation ft::list
 	list<T, A>::list(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) 
 	{
 		_li = new ListNode<T>(NULL, NULL, value_type());
-		insert(begin(), first, last); //a different insert overload - ici il faudra assigner tail
+		insert(begin(), first, last);
 	}
 
 	template <typename T, typename A>
 	list<T, A>::list(const list &x) : _allocator(other._allocator), _size(0)
 	{
 		_li = new ListNode<T>(NULL, NULL, value_type());
-		insert(begin(), x.begin(), x.end()); //OTHER OVERLOAD OF INSERT - ici il faudra assigner tail
+		insert(begin(), x.begin(), x.end());
 	}
 
 	template <typename T, typename A>
 	list<T, A>::~list()
 	{
-		clear(); //To be implemented
+		clear();
 		delete[] _li;
 	}
 
@@ -168,21 +187,22 @@ namespace ft { //utilisation ft::list
 
 	template <typename T, typename A>
 	typename list<T, A>::iterator list<T, A>::begin() {
-		return iterator(_li);
+		return iterator(_li->nxt);
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::const_iterator list<T, A>::begin() const {
-		return const_iterator(_li);
+		return const_iterator(_li->nxt);
 	}
 
+	/*Returns an iterator referring to the past-the-end element in the list container.*/
 	template <typename T, typename A>
 	typename list<T, A>::iterator list<T, A>::end() {
-		return iterator(_tail);
+		return iterator(_li);
 	}
 	template <typename T, typename A>
 	typename list<T, A>::const_iterator list<T, A>::end() const {
-		return const_iterator(_tail);
+		return const_iterator(_li);
 	}
 
 	template <typename T, typename A>
@@ -224,23 +244,163 @@ namespace ft { //utilisation ft::list
 
 	template <typename T, typename A>
 	typename list<T, A>::reference list<T, A>::front() {
-		return _li->element;
+		return _tip->nxt->el;
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::const_reference list<T, A>::front() const {
-		return _li->element;
+		return _tip->nxt->el;
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::reference list<T, A>::back() {
-		return _tail->element;
+		return _tip->prv->el; //le dernier node pointe sur type. Boucle.
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::const_reference list<T, A>::back() const {
-		return _tail->element;
+		return _tip->nxt->el;
 	}
+
+	template <class InputIterator>
+	template <typename T, typename A>
+	void list<T, A>::assign (InputIterator first, InputIterator last) {
+		clear();
+		insert(begin(), first, last);
+	}	
+
+	template <typename T, typename A>
+	void list<T, A>::assign (size_type n, const value_type& val) {
+		clear();
+		insert(begin(), n, val);
+	}
+
+	template <typename T, typename A>
+	void list<T, A>::push_front (const value_type& val) {
+		insert(begin(), val);
+	}
+
+	template <typename T, typename A>
+	void list<T, A>::pop_front() {
+		erase(begin());
+	}
+
+	template <typename T, typename A>
+	void list<T, A>::push_back (const value_type& val) {
+		insert(end(), val);
+	}
+
+	template <typename T, typename A>
+	void list<T, A>::pop_back() {
+		iterator it(end());
+		erase(--it);
+	}
+
+	template <typename T, typename A>
+	typename list<T, A>::iterator list<T, A>::insert(typename list<T, A>::iterator position, const value_type& val) {
+		insert(position, 1, val);
+		return --position;
+	}
+
+	template <typename T, typename A>
+    void list<T, A>::insert(typename list<T, A>::iterator position, size_type n, const value_type& val) {
+		ListNode<T> *start;
+		ListNode<T> *cur;
+		ListNode<T> *nxt;
+
+		if (n > max_size() || n < 0)
+			return ; 
+		/*Make sublist*/
+		for (size_type i = 0; i < n; i++)
+		{
+			if (i == 0)
+			{					
+				start = new ListNode<T>(NULL, NULL, val);
+				cur = start;
+				nxt = cur;
+			}
+			else
+			{	
+				nxt = new ListNode<T>(cur, NULL, val);
+				cur->nxt = nxt;
+				cur = cur->nxt;
+			}
+		}
+		if (_size == 0) 
+		{
+			_li->nxt = start;
+			start->prv = _li;
+			nxt->nxt = _li; // A ce stade nxt c'est le dernier node.
+			_li->prv = nxt;
+		} 
+		else 
+		{
+			//stock existing state of list
+			ListNode<T> *pos_node = position.getP();
+			ListNode<T> *_prev = position.getP()->prv;
+			// Plug prev to start of sublist
+			prev->nxt = start;
+			start->prv = prev;
+			// Plug tail to node initially in position
+			nxt->nxt = pos_node;
+			pos_node->prv = nxt;
+		}
+	_size += n;
+	}
+
+	//need to reset tail if necessary + update size
+	template <typename T, typename A>
+	template <class InputIterator>
+    void list<T, A>::insert(typename list<T, A>::iterator position, InputIterator first, InputIterator last) {
+		ListNode<T> *start;
+		ListNode<T> *cur;
+		ListNode<T> *nxt;
+		size_type nb = 0;
+
+		// create sublist
+		int i = 0;
+		for (InputIterator it = first; it != last; ++it, ++i)
+		{
+			if (i == 0)
+			{
+				start = new ListNode<T>(NULL, NULL, *it);
+				cur = start;
+				nxt = cur;
+			}
+			else
+			{
+				nxt = new ListNode<T>(cur, NULL, *it);
+				cur->nxt = nxt;
+				cur = cur->nxt;
+			}
+			nb++;
+		}
+		if (!nb)
+			return ;
+
+		if (_size == 0)
+		{
+			_li->nxt = start;
+			start->prv = _li;
+			nxt->nxt = _li; // last point to _tip
+			_li->prv = nxt;
+		}
+		else
+		{
+			//stock existing state of list
+			ListNode<T> *pos_node = position.getP();
+			ListNode<T> *_prev = position.getP()->prv;
+			// Plug prev to start of sublist
+			prev->nxt = start;
+			start->prv = prev;
+			// Plug tail to node initially in position
+			nxt->nxt = pos_node;
+			pos_node->prv = nxt;
+		}
+		_size += nb;
+	}
+
+
 
 }; //fin de namespace ft
 
