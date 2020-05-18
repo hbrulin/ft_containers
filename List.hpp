@@ -141,6 +141,13 @@ namespace ft { //utilisation ft::list
     	void insert (iterator position, size_type n, const value_type& val);	
 		template <class InputIterator>
     	void insert (iterator position, InputIterator first, InputIterator last);
+		iterator erase (iterator position);
+		iterator erase (iterator first, iterator last);
+		void swap (list& x);
+		void resize (size_type n, value_type val = value_type());
+		void clear();
+
+		/*Operations */
 	};
 
 	template <typename T, typename A>
@@ -348,7 +355,6 @@ namespace ft { //utilisation ft::list
 	_size += n;
 	}
 
-	//need to reset tail if necessary + update size
 	template <typename T, typename A>
 	template <class InputIterator>
     void list<T, A>::insert(typename list<T, A>::iterator position, InputIterator first, InputIterator last) {
@@ -400,6 +406,56 @@ namespace ft { //utilisation ft::list
 		_size += nb;
 	}
 
+	template <typename T, typename A>
+	typename list<T, A>::iterator list<T, A>::erase (typename list<T, A>::iterator position) {
+		iterator it(position);
+		return erase(position, ++it);
+	}
+
+	template <typename T, typename A>
+	typename list<T, A>::iterator list<T, A>::erase (typename list<T, A>::iterator first, typename list<T, A>::iterator last) {
+		ListNode<T> *fst = first.getP();
+		ListNode<T> *lst = last.getP();
+		ListNode<T> *prev = fst->prv;
+		size_type nb = 0;
+		
+		while (fst != lst)
+		{
+			ListNode<T> *tmp = fst->nxt;
+			if (fst != _li) {
+				delete fst;
+				nb++;
+			}
+			fst = tmp;
+		}
+		_size -= nb;
+		prev->nxt = lst; /*Last is not to be erased*/
+		lst->prv = prev;
+		return iterator(lst);
+	}
+
+	template <typename T, typename A>
+	void swap (list& x) {
+		//TO IMPLEMENT
+	}
+
+	template <typename T, typename A>
+	void resize (size_type n, value_type val = value_type()) {
+		if (n < size())
+		{
+			iterator it = begin();
+			for (size_t i = 0; i < n; i++)
+				++it;
+			erase(it, end());
+		}
+		else if (n > size())
+			insert(end(), n - size(), val);
+	}
+
+	template <typename T, typename A>
+	void clear() {
+		erase(begin(), end());
+	}
 
 
 }; //fin de namespace ft
