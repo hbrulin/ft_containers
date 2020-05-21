@@ -6,16 +6,6 @@
 
 namespace ft { //utilisation ft::list
 
-	template <typename T>
-	struct ListNode {
-		/*Constructor for structure */
-		ListNode(ListNode<T> *prv, ListNode<T> *nxt, const T &element) : prv(prv), nxt(nxt),
-			element(element) {}
-		ListNode<T> *prv;
-		ListNode<T> *nxt;
-		T element;
-	};
-
 	template <typename T, class A = std::allocator<T> >
 	class list {
 
@@ -37,7 +27,7 @@ namespace ft { //utilisation ft::list
 			size_type _size;
 
 		public:
-		/* iterators */
+		/* bidirectional iterators */
 			class iterator : public ListIter<T> // list::iterator
 			{
 
@@ -56,8 +46,8 @@ namespace ft { //utilisation ft::list
 					iterator &operator--() { this->_p = this->_p->prv; return *this; }; // --it
 					iterator operator--(int) { iterator it(this->_p); this->_p = this->_p->prv; return it; }; // it--
 
-					reference operator*() const { return this->_p->el; };
-					pointer operator->() const { return &(this->_p->el); };
+					reference operator*() const { return this->_p->element; };
+					pointer operator->() const { return &(this->_p->element); };
 			}; 
 
 			class const_iterator : public ListIter<T> // list::const_iterator
@@ -78,13 +68,13 @@ namespace ft { //utilisation ft::list
 					const_iterator &operator--() { this->_p = this->_p->prv; return *this; }; // --it
 					const_iterator operator--(int) { const_iterator it(this->_p); this->_p = this->_p->prv; return it; }; // it--
 
-					reference operator*() const { return this->_p->el; };
-					pointer operator->() const { return &(this->_p->el); };
+					reference operator*() const { return this->_p->element; };
+					pointer operator->() const { return &(this->_p->element); };
 			};
 
 		/* reverse iterators */
-			typedef ReverseIterator<iterator> reverse_iterator; //SYNTAXE??
-			typedef ConstReverseIterator<iterator> const_reverse_iterator; //SYNTAXE??
+			typedef ReverseIterator<iterator> reverse_iterator; 
+			typedef ConstReverseIterator<iterator> const_reverse_iterator; 
 
 		/* Constructors, destructor, assign */
 			/*default*/
@@ -168,8 +158,8 @@ namespace ft { //utilisation ft::list
 	};
 
 	/* Non-member functions */
-	template <class T, class Alloc>
-	bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	template <class T, class A>
+	bool operator== (const list<T,A>& lhs, const list<T,A>& rhs) {
 		if (lhs.size() != rhs.size())
 		return false;
 		typename list<T, A>::const_iterator lit = lhs.begin();
@@ -182,13 +172,13 @@ namespace ft { //utilisation ft::list
 		return true;
 	}
 
-	template <class T, class Alloc>
-	bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	template <class T, class A>
+	bool operator!= (const list<T,A>& lhs, const list<T,A>& rhs) {
 		return !(lhs == rhs);
 	}
 
-	template <class T, class Alloc>
-	bool operator<(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	template <class T, class A>
+	bool operator<(const list<T,A>& lhs, const list<T,A>& rhs) {
 		typename list<T, A>::const_iterator itl = lhs.begin();
 		typename list<T, A>::const_iterator itr = rhs.begin();
 
@@ -202,13 +192,13 @@ namespace ft { //utilisation ft::list
 		return lhs.size() < rhs.size();
 	}
 
-	template <class T, class Alloc>
-	bool operator<=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	template <class T, class A>
+	bool operator<=(const list<T,A>& lhs, const list<T,A>& rhs) {
 		return !(lhs > rhs);
 	}
 
-	template <class T, class Alloc>
-	bool operator>(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	template <class T, class A>
+	bool operator>(const list<T,A>& lhs, const list<T,A>& rhs) {
 		typename list<T, A>::const_iterator itl = lhs.begin();
 		typename list<T, A>::const_iterator itr = rhs.begin();
 
@@ -222,40 +212,47 @@ namespace ft { //utilisation ft::list
 		return lhs.size() > rhs.size();
 	}
 
-	template <class T, class Alloc>
-	bool operator>=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+	template <class T, class A>
+	bool operator>=(const list<T,A>& lhs, const list<T,A>& rhs) {
 		return !(lhs < rhs);
 	}
 
-	template <class T, class Alloc>
-  	void swap (list<T,Alloc>& x, list<T,Alloc>& y) {
+	template <class T, class A>
+  	void swap (list<T,A>& x, list<T,A>& y) {
 		  x.swap(y);
 	}
 
 	template <typename T, typename A>
 	list<T, A>::list(const allocator_type &alloc) : _allocator(alloc), _size(0) {
 		_li = new ListNode<T>(NULL, NULL, value_type());
+		_li->prv = _li;
+		_li->nxt = _li;
 	}
 
 	template <typename T, typename A>
 	list<T, A>::list(size_type n, const value_type &val, const allocator_type &alloc) : _allocator(alloc), _size(0) {
 		_li = new ListNode<T>(NULL, NULL, value_type());
-		_tail = _li;
+		_li->prv = _li;
+		_li->nxt = _li;
 		insert(begin(), n, val);
 	}
 
 	template <typename T, typename A>
 	template <class InputIterator>
-	list<T, A>::list(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) 
+	list<T, A>::list(InputIterator first, InputIterator last, const allocator_type& alloc) 
 	{
 		_li = new ListNode<T>(NULL, NULL, value_type());
+		_li->prv = _li;
+		_li->nxt = _li;
 		insert(begin(), first, last);
 	}
 
 	template <typename T, typename A>
-	list<T, A>::list(const list &x) : _allocator(other._allocator), _size(0)
+	list<T, A>::list(const list &x) : _allocator(x._allocator), _size(0)
 	{
 		_li = new ListNode<T>(NULL, NULL, value_type());
+		_li->prv = _li;
+		_li->nxt = _li;
 		insert(begin(), x.begin(), x.end());
 	}
 
@@ -331,31 +328,32 @@ namespace ft { //utilisation ft::list
 		/*Max size = maximun valeur de size_type divise par taille de list node
 		Size_type est toujour positive, donc il y a under flow
 		-1 devient max*/
-		return static_cast<size_type>(-1 / sizeof(ListNode<T>))
+		return static_cast<size_type>(-1 / sizeof(ListNode<T>));
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::reference list<T, A>::front() {
-		return _tip->nxt->el;
+		return _li->nxt->element;
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::const_reference list<T, A>::front() const {
-		return _tip->nxt->el;
+		return _li->nxt->element;
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::reference list<T, A>::back() {
-		return _tip->prv->el; //le dernier node pointe sur type. Boucle.
+		return _li->prv->element; //le dernier node pointe sur type. Boucle.
 	}
 
 	template <typename T, typename A>
 	typename list<T, A>::const_reference list<T, A>::back() const {
-		return _tip->nxt->el;
+		return _li->nxt->element;
 	}
 
-	template <class InputIterator>
+	
 	template <typename T, typename A>
+	template <class InputIterator>
 	void list<T, A>::assign (InputIterator first, InputIterator last) {
 		clear();
 		insert(begin(), first, last);
@@ -429,7 +427,7 @@ namespace ft { //utilisation ft::list
 		{
 			//stock existing state of list
 			ListNode<T> *pos_node = position.getP();
-			ListNode<T> *_prev = position.getP()->prv;
+			ListNode<T> *prev = position.getP()->prv;
 			// Plug prev to start of sublist
 			prev->nxt = start;
 			start->prv = prev;
@@ -480,7 +478,7 @@ namespace ft { //utilisation ft::list
 		{
 			//stock existing state of list
 			ListNode<T> *pos_node = position.getP();
-			ListNode<T> *_prev = position.getP()->prv;
+			ListNode<T> *prev = position.getP()->prv;
 			// Plug prev to start of sublist
 			prev->nxt = start;
 			start->prv = prev;
@@ -526,7 +524,7 @@ namespace ft { //utilisation ft::list
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::resize (size_type n, value_type val = value_type()) {
+	void list<T, A>::resize (size_type n, value_type val) {
 		if (n < size())
 		{
 			iterator it = begin();
@@ -553,11 +551,11 @@ namespace ft { //utilisation ft::list
 	template <typename T, typename A>
 	void list<T, A>::splice (typename list<T, A>::iterator position, list& x, typename list<T, A>::iterator i) {
 		this->insert(position, *i);
-		x.erase(i)
+		x.erase(i);
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::splice (typename list<T, A>::iterator position, list& x, typename list<T, A>::iterator first, typename list<T, A>::iterator last); {
+	void list<T, A>::splice (typename list<T, A>::iterator position, list& x, typename list<T, A>::iterator first, typename list<T, A>::iterator last) {
 		this->insert(position, first, last);
 		x.erase(first, last);
 	}	
@@ -596,7 +594,7 @@ namespace ft { //utilisation ft::list
 	template <typename T, typename A>
 	void list<T, A>::unique() {
 		iterator start = begin();
-		++beg;
+		++start;
 		for (iterator it = start; it != end();)
 		{
 			iterator tmp = it;
@@ -615,7 +613,7 @@ namespace ft { //utilisation ft::list
 	template <class BinaryPredicate>
   	void list<T, A>::unique (BinaryPredicate binary_pred) {
 		iterator start = begin();
-		++beg;
+		++start;
 		for (iterator it = start; it != end();)
 		{
 			iterator tmp = it;

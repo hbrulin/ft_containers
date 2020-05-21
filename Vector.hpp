@@ -19,7 +19,74 @@ namespace ft
 			typedef typename A::difference_type difference_type;
 			typedef typename A::size_type size_type;
 
-		/*def iterators*/
+		/*Random access iterators */
+		class iterator : public Iter<T>
+		{
+		public:
+			typedef typename A::difference_type difference_type;
+			typedef typename A::value_type value_type;
+			typedef typename A::reference reference;
+			typedef typename A::pointer pointer;
+			typedef std::random_access_iterator_tag iterator_category;
+
+			iterator() : Iter<T>(NULL){};
+			iterator(const iterator &it) : Iter<T>(it._p){};
+			iterator(pointer p) : Iter<T>(p){}; // it = &(arr[0]);
+			virtual ~iterator() {};
+
+			iterator &operator=(const iterator &rhs) { this->_p = rhs._p; return (*this); };
+			iterator &operator++() { this->_p++; return *this; }; // ++it
+			iterator operator++(int) { iterator it = *this; this->_p++; return it; }; // it++
+			iterator &operator--() { this->_p--; return *this; }; // --it
+			iterator operator--(int) { iterator it = *this; this->_p--; return it; }; // it--
+			iterator &operator+=(difference_type n) { this->_p += n; return (*this); };
+			iterator operator+(difference_type n) const { return iterator(this->_p + n); };
+			friend iterator operator+(difference_type n, const iterator &it) { return iterator(it._p + n); };
+			iterator &operator-=(difference_type n) { this->_p -= n; return (*this); };
+			iterator operator-(difference_type n) const { return iterator(this->_p - n); };
+			difference_type operator-(const BaseIter<T> &other) { return this->_p - other.getP(); };
+
+			reference operator*() const { return *this->_p; };
+			pointer operator->() const { return this->_p; };
+			reference operator[](difference_type n) const { return *(this->_p + n); };
+		};
+
+	/* const iterator */
+		class const_iterator : public Iter<T>
+		{
+		public:
+			typedef typename A::difference_type difference_type;
+			typedef typename A::value_type value_type;
+			typedef const T& reference;
+			typedef const T* pointer;
+			typedef std::random_access_iterator_tag iterator_category;
+
+			const_iterator() : Iter<T>(NULL){};
+			const_iterator(const const_iterator &it) : Iter<T>(it._p){};
+			const_iterator(T* p) : Iter<T>(p){}; // it = &(arr[0]);
+			virtual ~const_iterator() {};
+
+			const_iterator &operator=(const const_iterator &rhs) { this->_p = rhs._p; return (*this); };		
+			const_iterator &operator++() { this->_p++; return *this; }; // ++it
+			const_iterator operator++(int) { const_iterator it = *this; this->_p++; return it; }; // it++
+			const_iterator &operator--() { this->_p--; return *this; }; // --it
+			const_iterator operator--(int) { const_iterator it = *this; this->_p--; return it; }; // it--
+			const_iterator &operator+=(difference_type n) { this->_p += n; return (*this); };
+			const_iterator operator+(difference_type n) const { return const_iterator(this->_p + n); };
+			friend const_iterator operator+(difference_type n, const const_iterator &it) { return const_iterator(it._p + n); };
+			const_iterator &operator-=(difference_type n) { this->_p -= n; return (*this); };
+			const_iterator operator-(difference_type n) const { return const_iterator(this->_p - n); };
+			difference_type operator-(const BaseIter<T> &other) const { return this->_p - other.getP(); };
+
+			reference operator*() const { return *this->_p; };
+			pointer operator->() const { return this->_p; };
+			reference operator[](difference_type n) const { return *(this->_p + n); };
+
+		};
+
+		typedef ReverseIterator<iterator> reverse_iterator;
+		typedef ConstReverseIterator<iterator> const_reverse_iterator;
+
 
 		private: //other attributes needed?
 			allocator_type _allocator;
