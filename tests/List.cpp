@@ -27,4 +27,8 @@ int main(void)
 ///
 	std::cout << std::endl;
 
+	std::cout << "Non-member functions" << std::endl;
+///
+	std::cout << std::endl;
+
 }

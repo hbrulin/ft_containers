@@ -129,8 +129,8 @@ namespace ft { //utilisation ft::list
 		et la deuxième permet de réinitialiser la liste et de la remplir avec une séquence d'objets 
 		définie par deux itérateurs.*/
 		template <class InputIterator>
-  		void assign (InputIterator first, InputIterator last);	
-		void assign (size_type n, const value_type& val);
+  		void assign(InputIterator first, InputIterator last);	
+		void assign(size_type n, const value_type& val);
 
 		/*Other modifiers */
 		void push_front(const value_type& val);
@@ -148,7 +148,89 @@ namespace ft { //utilisation ft::list
 		void clear();
 
 		/*Operations */
+		void splice (iterator position, list& x);
+		void splice (iterator position, list& x, iterator i);	
+		void splice (iterator position, list& x, iterator first, iterator last);	
+		void remove (const value_type& val);
+		template <class Predicate>
+  		void remove_if (Predicate pred);
+		void unique();
+		template <class BinaryPredicate>
+  		void unique (BinaryPredicate binary_pred);
+		void merge (list& x);
+		template <class Compare>
+  		void merge (list& x, Compare comp);
+		void sort();
+		template <class Compare>
+  		void sort (Compare comp);
+		void reverse();
+
 	};
+
+	/* Non-member functions */
+	template <class T, class Alloc>
+	bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		if (lhs.size() != rhs.size())
+		return false;
+		typename list<T, A>::const_iterator lit = lhs.begin();
+		typename list<T, A>::const_iterator rit = rhs.begin();
+		for (; lit != lhs.end() && rit != rhs.end(); ++lit, ++rit)
+		{
+			if (*lit != *rit)
+				return false;
+		}
+		return true;
+	}
+
+	template <class T, class Alloc>
+	bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		return !(lhs == rhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator<(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		typename list<T, A>::const_iterator itl = lhs.begin();
+		typename list<T, A>::const_iterator itr = rhs.begin();
+
+		for (; itl != lhs.end() && itr != rhs.end(); ++itl, ++itr)
+		{
+			if (*itl != *itr)
+				return *itl < *itr;
+		}
+		if (lhs.size() == rhs.size())
+			return false;
+		return lhs.size() < rhs.size();
+	}
+
+	template <class T, class Alloc>
+	bool operator<=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		return !(lhs > rhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator>(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		typename list<T, A>::const_iterator itl = lhs.begin();
+		typename list<T, A>::const_iterator itr = rhs.begin();
+
+		for (; itl != lhs.end() && itr != rhs.end(); ++itl, ++itr)
+		{
+			if (*itl != *itr)
+				return *itl > *itr;
+		}
+		if (lhs.size() == rhs.size())
+			return false;
+		return lhs.size() > rhs.size();
+	}
+
+	template <class T, class Alloc>
+	bool operator>=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+		return !(lhs < rhs);
+	}
+
+	template <class T, class Alloc>
+  	void swap (list<T,Alloc>& x, list<T,Alloc>& y) {
+		  x.swap(y);
+	}
 
 	template <typename T, typename A>
 	list<T, A>::list(const allocator_type &alloc) : _allocator(alloc), _size(0) {
@@ -246,7 +328,10 @@ namespace ft { //utilisation ft::list
 
 	template <typename T, typename A>
 	typename list<T, A>::size_type list<T, A>::max_size() const {
-		//TO IMPLEMENT
+		/*Max size = maximun valeur de size_type divise par taille de list node
+		Size_type est toujour positive, donc il y a under flow
+		-1 devient max*/
+		return static_cast<size_type>(-1 / sizeof(ListNode<T>))
 	}
 
 	template <typename T, typename A>
@@ -435,12 +520,13 @@ namespace ft { //utilisation ft::list
 	}
 
 	template <typename T, typename A>
-	void swap (list& x) {
-		//TO IMPLEMENT
+	void list<T, A>::swap (list& x) {
+		std::swap(_size, x._size); //swap ft template de std
+		std::swap(_li, x._li);
 	}
 
 	template <typename T, typename A>
-	void resize (size_type n, value_type val = value_type()) {
+	void list<T, A>::resize (size_type n, value_type val = value_type()) {
 		if (n < size())
 		{
 			iterator it = begin();
@@ -453,10 +539,251 @@ namespace ft { //utilisation ft::list
 	}
 
 	template <typename T, typename A>
-	void clear() {
+	void list<T, A>::clear() {
 		erase(begin(), end());
 	}
 
+	template <typename T, typename A>
+	void list<T, A>::splice (typename list<T, A>::iterator position, list& x) {
+		this->insert(position, x.begin(), x.end());
+		x.clear();
+	}
+
+	/*Single element transferred*/
+	template <typename T, typename A>
+	void list<T, A>::splice (typename list<T, A>::iterator position, list& x, typename list<T, A>::iterator i) {
+		this->insert(position, *i);
+		x.erase(i)
+	}
+
+	template <typename T, typename A>
+	void list<T, A>::splice (typename list<T, A>::iterator position, list& x, typename list<T, A>::iterator first, typename list<T, A>::iterator last); {
+		this->insert(position, first, last);
+		x.erase(first, last);
+	}	
+
+	//remove by value
+	template <typename T, typename A>
+	void list<T, A>::remove (const value_type& val) {
+		for (iterator it = begin(); it != end();)
+		{
+			if (*it == val)
+				it = erase(it);
+			else
+				++it;
+		}
+	}
+
+	/*Removes from the container all the elements for which Predicate pred returns true.
+	This calls the destructor of these objects and reduces the container size by the number of elements removed.
+	The function calls pred(*i) for each element (where i is an iterator to that element). 
+	Any of the elements in the list for which this returns true, are removed from the container.*/
+	template <typename T, typename A>
+	template <class Predicate>
+  	void list<T, A>::remove_if (Predicate pred) {
+		  for (iterator it = begin(); it != end();)
+		{
+			if (pred(*it))
+				it = erase(it);
+			else
+				++it;
+		}
+	}
+
+	/*removes all but the first element from every consecutive group of equal elements in the container.*/
+	/*an element is only removed from the list container if it compares equal to the element immediately 
+	preceding it. Thus, this function is especially useful for sorted lists.*/
+	template <typename T, typename A>
+	void list<T, A>::unique() {
+		iterator start = begin();
+		++beg;
+		for (iterator it = start; it != end();)
+		{
+			iterator tmp = it;
+			--tmp;
+			if (*tmp == *it) //tester avec *(it - 1)
+				it = erase(it);
+			else
+				++it;
+		}
+	}
+
+	/*Binary predicate that, taking two values of the same type than those contained in the list,
+	returns true to remove the element passed as first argument from the container, and false otherwise.
+	This shall be a function pointer or a function object.	*/
+	template <typename T, typename A>
+	template <class BinaryPredicate>
+  	void list<T, A>::unique (BinaryPredicate binary_pred) {
+		iterator start = begin();
+		++beg;
+		for (iterator it = start; it != end();)
+		{
+			iterator tmp = it;
+			--tmp;
+			if (binary_pred(*it, *tmp)) //tester avec *(it - 1)
+				it = erase(it);
+			else
+				++it;
+		}
+	}
+
+/*This effectively removes all the elements in x (which becomes empty), 
+and inserts them into their ordered position within container 
+(which expands in size by the number of elements transferred). 
+The operation is performed without constructing nor destroying any element: they are transferred,*/
+	template <typename T, typename A>
+	void list<T, A>::merge (list& x) {
+		ListNode<T> *og = begin().getP(); // original
+		ListNode<T> *xp = x.begin().getP(); // other
+		ListNode<T> *xnxt;
+		ListNode<T> *bef;
+		while (xp != x._li)
+		{
+			if (og == end().getP() || xp->element < og->element) //soit on plug à la fin, soit on plug one by one a l'endroit aproprié
+			{
+				xnxt = xp->nxt;
+				bef = og->prv;
+				// link bef - x
+				bef->nxt = xp;
+				xp->prv = bef;
+				// link x - og
+				xp->nxt = og;
+				og->prv = xp;
+				// move x
+				xp = xnxt;
+			} 
+			else
+				og = og->nxt;
+		}
+		_size += x._size;
+		//Elements removal from x, without destroying them
+		x._size = 0;
+		ListNode<T> *xli = x._li;
+		xli->nxt = xli;
+		xli->prv = xli;
+	}
+
+	template <typename T, typename A>
+	template <class Compare>
+  	void list<T, A>::merge (list& x, Compare comp) {
+		ListNode<T> *og = begin().getP();	// original
+		ListNode<T> *xp = x.begin().getP(); // other
+		ListNode<T> *xnxt;
+		ListNode<T> *bef;
+		while (xp != x._li)
+		{
+			if (og == end().getP() || comp(xp->element, og->element))
+			{
+				xnxt = xp->nxt;
+				bef = og->prv;
+				// link bef - x
+				bef->nxt = xp;
+				xp->prv = bef;
+				// link x - og
+				xp->nxt = og;
+				og->prv = xp;
+				// move x
+				xp = xnxt;
+			}
+			else
+				og = og->nxt;
+		}
+		_size += x._size;
+		//Elements removal from x, without destroying them
+		x._size = 0;
+		ListNode<T> *xli = x._li;
+		xli->nxt = xli;
+		xli->prv = xli;
+	}
+
+	template <typename T, typename A>
+	void list<T, A>::sort() {
+		ListNode<T> *a = _li->nxt;
+		ListNode<T> *b = a->nxt;
+		ListNode<T> *bef;
+		ListNode<T> *aft;
+		while (b != _li)
+		{ 	// bef -> a -> b -> aft
+			if (b->element < a->element) 
+			{
+				bef = a->prv;
+				aft = b->nxt;
+				// link bef -> b
+				bef->nxt = b;
+				b->prv = bef;
+				// link b -> a
+				b->nxt = a;
+				a->prv = b;
+				// link a-> aft
+				a->nxt = aft;
+				aft->prv = a;
+				// retun to begin
+				a = _li->nxt;
+				b = a->nxt;
+			} 
+			else 
+			{
+				a = a->nxt;
+				b = b->nxt;
+			}
+		}
+	}
+
+	template <typename T, typename A>
+	template <class Compare>
+  	void list<T, A>::sort (Compare comp) {
+		ListNode<T> *a = _li->nxt;
+		ListNode<T> *b = a->nxt;
+		ListNode<T> *bef;
+		ListNode<T> *aft;
+		while (b != _li)
+		{ 	// bef -> a -> b -> aft
+			if (comp(b->el, a->el))
+			{
+				bef = a->prv;
+				aft = b->nxt;
+				// link bef -> b
+				bef->nxt = b;
+				b->prv = bef;
+				// link b -> a
+				b->nxt = a;
+				a->prv = b;
+				// link a-> aft
+				a->nxt = aft;
+				aft->prv = a;
+				// retun to begin
+				a = _li->nxt;
+				b = a->nxt;
+			} 
+			else 
+			{
+				a = a->nxt;
+				b = b->nxt;
+			}
+		}
+	}
+
+	template <typename T, typename A>
+	void list<T, A>::reverse() {
+		ListNode<T> *cur = _li->nxt;
+		ListNode<T> *next;
+		ListNode<T> *tmp;
+
+		while (cur != _li)
+		{
+			next = cur->nxt;
+			/*swap a->nxt and a->prv */
+			tmp = cur->nxt;
+			cur->nxt = cur->prv;
+			cur->prv = tmp;
+			/*go to next node*/
+			cur = next;
+		}
+		// swap dernier node
+		tmp = cur->nxt;
+		cur->nxt = cur->prv;
+		cur->prv = tmp;
+	}
 
 }; //fin de namespace ft
 
