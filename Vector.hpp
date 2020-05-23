@@ -92,6 +92,7 @@ namespace ft
 			allocator_type _allocator;
 			pointer _arr; 
 			size_type _size;
+			size_type _cap;
 
 		public:
 			/*Constructors, destructor, assign content*/
@@ -105,7 +106,7 @@ namespace ft
 			vector& operator= (const vector& x);
 
 			/*Iterator functions*/
-			terator begin();
+			iterator begin();
 			const_iterator begin() const;
 			iterator end();
 			const_iterator end() const;
@@ -203,91 +204,123 @@ namespace ft
 	}
 
 
-/*AJOUTER TYPENAM OU NECESSAIRE*/
-
 	template <class T, class Alloc>
   	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) {
 		  x.swap(y);
 	}
 
 	template <typename T, typename A>
-	vector<T, A>::vector (const allocator_type& alloc = allocator_type()) {
+	vector<T, A>::vector (const allocator_type& alloc): _allocator(alloc), _arr(NULL), _size(0), _cap(0) {
 
 	}		
 	
 	template <typename T, typename A>
-	vector<T, A>::vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) {
-
+	vector<T, A>::vector (size_type n, const value_type& val, const allocator_type& alloc): _allocator(alloc), _size(n), _cap(n) {
+		_arr = _allocator.allocate(n);
+		for (size_type i = 0; i < n; i++) 
+		{	/*Constructs an object of type T in allocated uninitialized storage pointed to by p, using placement-new*/
+			_allocator.construct(_arr + i, value);
+		}
 	}
 
 	template <typename T, typename A>
 	template <class InputIterator>
-	vector<T, A>::vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {
-
+	vector<T, A>::vector (InputIterator first, InputIterator last, const allocator_type& alloc): _allocator(alloc) {
+		_size = last - first;
+		_cap = _size;
+		_arr = _allocator.allocate(_size);
+		int i = 0;
+		for (InputIterator it = first; it != last; ++it, ++i)
+		{
+			_allocator.construct(_arr + i, *it);
+		}
 	}
 	
 	template <typename T, typename A>
-	vector<T, A>::vector (const vector& x) {
-
+	vector<T, A>::vector (const vector& x): _allocator(x._allocator), _size(x._size), _cap(x._cap) {
+		if (x._arr) 
+		{
+			_arr = _allocator.allocate(_cap);
+			for (size_type i = 0; i < _size; i++)
+				_allocator.construct(_arr + i, x._arr[i]);
+		}
 	}
 		
 	template <typename T, typename A>
 	vector<T, A>::~vector() {
-
+		if (_cap) 
+		{
+			for (size_type i = 0; i < _size; i++)
+				_allocator.destroy(_arr + i);
+			_allocator.deallocate(_arr, _cap);
+		}
 	}
 			
 	template <typename T, typename A>
-	vector<T, A>::vector& vector<T, A>::operator= (const vector<T, A>::vector& x) {
-
+	vector<T, A> &vector<T, A>::operator= (const vector& x) {
+		if (_arr) 
+		{
+			for (size_type i = 0; i < _size; i++)
+				_allocator.destroy(_arr + i);
+			_allocator.deallocate(_arr, _cap);
+		}
+		// deep copy
+		if (x._arr) {
+			_arr = _allocator.allocate(x._cap);
+			for (size_type i = 0; i < x._size; i++)
+				_allocator.construct(_arr + i, x._arr[i]);
+		}
+		_size = x._size;
+		_cap = x._cap;
 	}
 
 	template <typename T, typename A>
-	iterator vector<T, A>::begin() {
-
+	typename vector<T, A>::iterator vector<T, A>::begin() {
+		return (iterator(_arr));
 	}
 	
 	template <typename T, typename A>
-	const_iterator vector<T, A>::begin() const {
+	typename vector<T, A>::const_iterator vector<T, A>::begin() const {
+		return (const_iterator(_arr));
+	}
+
+	template <typename T, typename A>
+	typename vector<T, A>::iterator vector<T, A>::end() {
 
 	}
 
 	template <typename T, typename A>
-	iterator vector<T, A>::end() {
+	typename vector<T, A>::const_iterator vector<T, A>::end() const {
 
 	}
 
 	template <typename T, typename A>
-	const_iterator vector<T, A>::end() const {
+	typename vector<T, A>::reverse_iterator vector<T, A>::rbegin() {
 
 	}
 
 	template <typename T, typename A>
-	reverse_iterator vector<T, A>::rbegin() {
+	typename vector<T, A>::const_reverse_iterator vector<T, A>::rbegin() const {
 
 	}
 
 	template <typename T, typename A>
-	const_reverse_iterator vector<T, A>::rbegin() const {
+	typename vector<T, A>::reverse_iterator vector<T, A>::rend() {
 
 	}
 
 	template <typename T, typename A>
-	reverse_iterator vector<T, A>::rend() {
+	typename vector<T, A>::const_reverse_iterator vector<T, A>::rend() const {
 
 	}
 
 	template <typename T, typename A>
-	const_reverse_iterator vector<T, A>::rend() const {
+	typename vector<T, A>::size_type vector<T, A>::size() const {
 
 	}
 
 	template <typename T, typename A>
-	size_type vector<T, A>::size() const {
-
-	}
-
-	template <typename T, typename A>
-	size_type vector<T, A>::max_size() const {
+	typename vector<T, A>::size_type vector<T, A>::max_size() const {
 
 	}
 
@@ -297,7 +330,7 @@ namespace ft
 	}
 
 	template <typename T, typename A>
-	size_type vector<T, A>::capacity() const {
+	typename vector<T, A>::size_type vector<T, A>::capacity() const {
 
 	}
 
@@ -312,42 +345,42 @@ namespace ft
 	}
 
 	template <typename T, typename A>
-	reference vector<T, A>::operator[] (size_type n) {
+	typename vector<T, A>::reference vector<T, A>::operator[] (size_type n) {
 
 	}
 
 	template <typename T, typename A>
-	const_reference vector<T, A>::operator[] (size_type n) const {
+	typename vector<T, A>::const_reference vector<T, A>::operator[] (size_type n) const {
 
 	}
 
 	template <typename T, typename A>
-	reference vector<T, A>::at (size_type n) {
+	typename vector<T, A>::reference vector<T, A>::at (size_type n) {
 
 	}
 
 	template <typename T, typename A>
-	const_reference vector<T, A>::at (size_type n) const {
+	typename vector<T, A>::const_reference vector<T, A>::at (size_type n) const {
 
 	}
 
 	template <typename T, typename A>
-	reference vector<T, A>::front() {
+	typename vector<T, A>::reference vector<T, A>::front() {
 
 	}
 
 	template <typename T, typename A>
-	const_reference vector<T, A>::front() const {
+	typename vector<T, A>::const_reference vector<T, A>::front() const {
 
 	}
 
 	template <typename T, typename A>
-	reference vector<T, A>::back() {
+	typename vector<T, A>::reference vector<T, A>::back() {
 
 	}
 
 	template <typename T, typename A>
-	const_reference vector<T, A>::back() const {
+	typename vector<T, A>::const_reference vector<T, A>::back() const {
 
 	}
 
@@ -373,7 +406,7 @@ namespace ft
 	}
 
 	template <typename T, typename A>
-	iterator vector<T, A>::insert (iterator position, const value_type& val) {
+	typename vector<T, A>::iterator vector<T, A>::insert (iterator position, const value_type& val) {
 
 	}
 
@@ -389,12 +422,12 @@ namespace ft
 	}
 
 	template <typename T, typename A>
-	iterator vector<T, A>::erase (iterator position) {
+	typename vector<T, A>::iterator vector<T, A>::erase (iterator position) {
 
 	}
 
 	template <typename T, typename A>
-	iterator vector<T, A>::erase (iterator first, iterator last) {
+	typename vector<T, A>::iterator vector<T, A>::erase (iterator first, iterator last) {
 
 	}
 	
