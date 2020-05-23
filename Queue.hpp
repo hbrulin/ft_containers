@@ -75,13 +75,13 @@ namespace ft
 	}
 
 	template <typename T, typename C>
-	queue &queue<T, C>::operator=(queue const &other) {
+	queue<T, C> &queue<T, C>::operator=(queue const &other) {
 		_c = other._c;
 		return *this;
 	}
 
 	template <typename T, typename C>
-	~queue<T, C>::queue() {
+	queue<T, C>::~queue() {
 	}
 
 	template <typename T, typename C>

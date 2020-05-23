@@ -79,14 +79,14 @@ namespace ft
 
 	//deep copy necessaire?
 	template <typename T, typename C>
-	stack &stack<T, C>::operator=(stack const &other) {
+	stack<T, C> &stack<T, C>::operator=(stack const &other) {
 		_c = other._c;
 		return *this;	
 	}
 
 	//appel destructeur list auto
 	template <typename T, typename C>
-	~stack<T, C>::stack() {
+	stack<T, C>::~stack() {
 	}
 
 	template <typename T, typename C>
