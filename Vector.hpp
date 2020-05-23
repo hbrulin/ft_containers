@@ -47,7 +47,7 @@ namespace ft
 			friend iterator operator+(difference_type n, const iterator &it) { return iterator(it._p + n); };
 			iterator &operator-=(difference_type n) { this->_p -= n; return (*this); };
 			iterator operator-(difference_type n) const { return iterator(this->_p - n); };
-			difference_type operator-(const BaseIter<T> &other) { return this->_p - other.getP(); };
+			difference_type operator-(const Iter<T> &other) { return this->_p - other.getP(); };
 
 			reference operator*() const { return *this->_p; };
 			pointer operator->() const { return this->_p; };
@@ -79,7 +79,7 @@ namespace ft
 			friend const_iterator operator+(difference_type n, const const_iterator &it) { return const_iterator(it._p + n); };
 			const_iterator &operator-=(difference_type n) { this->_p -= n; return (*this); };
 			const_iterator operator-(difference_type n) const { return const_iterator(this->_p - n); };
-			difference_type operator-(const BaseIter<T> &other) const { return this->_p - other.getP(); };
+			difference_type operator-(const Iter<T> &other) const { return this->_p - other.getP(); };
 
 			reference operator*() const { return *this->_p; };
 			pointer operator->() const { return this->_p; };
@@ -121,7 +121,7 @@ namespace ft
 			/*Capacity*/
 			size_type size() const;
 			size_type max_size() const;
-			void resize (size_type n, value_type val = value_type());
+			void resize (size_type n, value_type val);
 			size_type capacity() const;
 			bool empty() const;
 			void reserve (size_type n);
@@ -159,7 +159,7 @@ namespace ft
 	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
 		if (lhs.size() != rhs.size())
 			return false;
-		for (typename vector<T, A>::size_type i = 0; i < lhs.size(); i++)
+		for (typename vector<T, Alloc>::size_type i = 0; i < lhs.size(); i++)
 		{
 			if (lhs[i] != rhs[i])
 				return false;
@@ -174,7 +174,7 @@ namespace ft
 
 	template <class T, class Alloc>
 	bool operator< (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-		for (typename vector<T, A>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
+		for (typename vector<T, Alloc>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
 		{
 			if (lhs[i] != rhs[i])
 				return lhs[i] < rhs[i];
@@ -191,7 +191,7 @@ namespace ft
 
 	template <class T, class Alloc>
 	bool operator> (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-		for (typename vector<T, A>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
+		for (typename vector<T, Alloc>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
 		{
 			if (lhs[i] != rhs[i])
 				return lhs[i] > rhs[i];
@@ -222,7 +222,7 @@ namespace ft
 		_arr = _allocator.allocate(n);
 		for (size_type i = 0; i < n; i++) 
 		{	/*Constructs an object of type T in allocated uninitialized storage pointed to by p, using placement-new*/
-			_allocator.construct(_arr + i, value);
+			_allocator.construct(_arr + i, val);
 		}
 	}
 
@@ -332,7 +332,7 @@ namespace ft
 	/*If n is also greater than the current container capacity, 
 	an automatic reallocation of the allocated storage space takes place -> insert() uses reserve()*/
 	template <typename T, typename A>
-	void vector<T, A>::resize (size_type n, value_type val = value_type()) {
+	void vector<T, A>::resize (size_type n, value_type val) {
 		if (n < size())
 		{
 			erase(begin() + n, end());
@@ -535,7 +535,7 @@ namespace ft
 	void vector<T, A>::swap (vector& x) {
 		std::swap(_allocator, x._allocator);
 		std::swap(_size, x._size);
-		std::swap(_capacity, x._capacity);
+		std::swap(_cap, x._cap);
 		std::swap(_arr, x._arr);
 	}
 
