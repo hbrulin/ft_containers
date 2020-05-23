@@ -37,32 +37,32 @@ namespace ft
 
 	template <class T, class Container>
   	bool operator== (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-
+		  return lhs._c == rhs._c;
 	}
 
 	template <class T, class Container>
   	bool operator!= (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-
+		return lhs._c != rhs._c;
 	}
 
 	template <class T, class Container>
   	bool operator<  (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-
+		return lhs._c < rhs._c;
 	}
 
 	template <class T, class Container>
   	bool operator<= (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-
+		return lhs._c <= rhs._c;
 	}
 
 	template <class T, class Container>
   	bool operator>  (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-
+		return lhs._c > rhs._c;
 	}
 
 	template <class T, class Container>
   	bool operator>= (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-
+		return lhs._c >= rhs._c;
 	}
 
 /*Member functions*/
