@@ -62,11 +62,6 @@ namespace ft
 
 	  }
 
-	template <class T, class Container>
-  	void swap (stack<T,Container>& x, stack<T,Container>& y) noexcept(noexcept(x.swap(y))) {
-
-	}
-
 	/*Member functions */
 
 	template <typename T, typename C>
