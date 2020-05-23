@@ -154,6 +154,31 @@ namespace ft
 		return rev_it + n;
 	};
 
+	/* iterator distance for bidirectionnal it */
+	template <class Iter>
+	static typename std::iterator_traits<Iter>::difference_type do_distance(Iter first, Iter last, std::input_iterator_tag)
+	{
+		typename std::iterator_traits<Iter>::difference_type result = 0;
+		while (first != last)
+		{
+			++first;
+			++result;
+		}
+		return result;
+	}
+
+	/*for random access it*/
+	template <class Iter>
+	static typename std::iterator_traits<Iter>::difference_type do_distance(Iter first, Iter last, std::random_access_iterator_tag)
+	{
+		return last - first;
+	}
+
+	template <class Iter>
+	typename std::iterator_traits<Iter>::difference_type distance(Iter first, Iter last)
+	{
+		return do_distance(first, last, typename std::iterator_traits<Iter>::iterator_category());
+	}
 
 }; //end namespace
 

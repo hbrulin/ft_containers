@@ -2,6 +2,9 @@
 # define VECTOR_HPP
 
 # include <memory>
+# include <stdexcept> 
+/*This header defines a set of standard exceptions that both 
+the library and programs can use to report common errors. I don't need to make classes to use length error, it is already defined*/
 # include "Iterators.hpp"
 
 namespace ft
@@ -284,161 +287,261 @@ namespace ft
 		return (const_iterator(_arr));
 	}
 
+	/*Returns an iterator referring to the past-the-end element in the vector container.*/
 	template <typename T, typename A>
 	typename vector<T, A>::iterator vector<T, A>::end() {
-
+		return (iterator(_arr + _size));
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::const_iterator vector<T, A>::end() const {
-
+		return (const_iterator(_arr + _size));
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::reverse_iterator vector<T, A>::rbegin() {
-
+		return reverse_iterator(end());
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::const_reverse_iterator vector<T, A>::rbegin() const {
-
+		return const_reverse_iterator(end());
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::reverse_iterator vector<T, A>::rend() {
-
+		return reverse_iterator(begin());
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::const_reverse_iterator vector<T, A>::rend() const {
-
+		return const_reverse_iterator(begin());
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::size_type vector<T, A>::size() const {
-
+		return (_size);
 	}
 
+	/*même calcul que pour listes*/
 	template <typename T, typename A>
 	typename vector<T, A>::size_type vector<T, A>::max_size() const {
-
+		return static_cast<size_type>(-1 / sizeof(T));
 	}
 
+	/*If n is also greater than the current container capacity, 
+	an automatic reallocation of the allocated storage space takes place -> insert() uses reserve()*/
 	template <typename T, typename A>
 	void vector<T, A>::resize (size_type n, value_type val = value_type()) {
-
+		if (n < size())
+		{
+			erase(begin() + n, end());
+		}
+		else if (n > size())
+		{
+			insert(end(), n - size(), val);
+	}
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::size_type vector<T, A>::capacity() const {
-
+		return (_cap);
 	}
 
 	template <typename T, typename A>
 	bool vector<T, A>::empty() const {
-
+		return (_size == 0);
 	}
 
+	/*This function has no effect on the vector size and cannot alter its elements.*/
 	template <typename T, typename A>
 	void vector<T, A>::reserve (size_type n) {
-
+		if (n > max_size()) 
+			throw std::length_error("lenght error");
+		else if (n > _cap) 
+		{
+			T *newArr = _allocator.allocate(n);
+			for (size_t i = 0; i < _size; i++)
+			{
+				_allocator.construct(&newArr[i], _arr[i]);
+				_allocator.destroy(&_arr[i]);
+			}
+			_allocator.deallocate(_arr, _cap);
+			_arr = newArr;
+			_cap = n;
+		}
 	}
-
+	
+	/*No out of bound check*/
 	template <typename T, typename A>
 	typename vector<T, A>::reference vector<T, A>::operator[] (size_type n) {
-
+		return _arr[n];
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::const_reference vector<T, A>::operator[] (size_type n) const {
-
+		return _arr[n];
 	}
 
+	/*Returns a reference to the element at position n in the vector.
+	The function automatically checks whether n is within the bounds of valid elements in the vector*/
 	template <typename T, typename A>
 	typename vector<T, A>::reference vector<T, A>::at (size_type n) {
-
+		if (n >= size())
+			throw std::out_of_range("out of range");
+		return _arr[n];
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::const_reference vector<T, A>::at (size_type n) const {
-
+		if (n >= size())
+			throw std::out_of_range("out of range");
+		return _arr[n];
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::reference vector<T, A>::front() {
-
+		return (*begin()); //if empty, undefined behavior so no exception
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::const_reference vector<T, A>::front() const {
-
+		return (*begin());
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::reference vector<T, A>::back() {
-
+		return (*--end());
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::const_reference vector<T, A>::back() const {
-
+		return (*--end());
 	}
 
 	template <typename T, typename A>
 	template <class InputIterator>
   	void vector<T, A>::assign (InputIterator first, InputIterator last) {
-
+		clear();
+		insert(begin(), first, last);
 	}
 
 	template <typename T, typename A>
 	void vector<T, A>::assign (size_type n, const value_type& val) {
-
+		clear();
+		insert(begin(), n, val);
 	}
 
 	template <typename T, typename A>
 	void vector<T, A>::push_back (const value_type& val) {
-
+		insert(end(), val);
 	}
 
 	template <typename T, typename A>
 	void vector<T, A>::pop_back() {
-
+		erase(--end());
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::iterator vector<T, A>::insert (iterator position, const value_type& val) {
-
+		insert(position, 1, val);
+		return position;
 	}
 
 	template <typename T, typename A>
-    void vector<T, A>::insert (iterator position, size_type n, const value_type& val) {
-
+    void vector<T, A>::insert (iterator position, size_type n, const value_type& val) {	
+		size_type pos = ft::distance(begin(), position);
+		size_type newSize = _size + n;
+		if (newSize > _cap)
+			reserve(newSize);
+		if (_size)
+		{
+			// copy from end down to pos
+			size_type times = _size - pos;
+			for (size_type last = (_size - 1), i = 0; i < times; --last, i++)
+			{
+				_allocator.construct(_arr + last + n, *(_arr + last));
+				_allocator.destroy(_arr + last);
+			}
+			//insert n vals
+			for (size_type i = 0; i < n; ++i, ++pos)
+				_allocator.construct(_arr + pos, val);
+		} 
+		else 
+		{
+			for (size_type i = 0; i < n; ++i)
+				_allocator.construct(_arr + i, val);
+		}	
+		_size += n;	
 	}
 
 	template <typename T, typename A>
 	template <class InputIterator>
     void vector<T, A>::insert (iterator position, InputIterator first, InputIterator last) {
-
+		size_type pos = ft::distance(begin(), position);
+		size_type n = ft::distance(first, last);
+		size_type newSize = _size + n;
+		if (newSize > _cap)
+			reserve(newSize);
+		if (_size)
+		{
+			// copy from end down to pos
+			size_type times = _size - pos;
+			for (size_type last = (_size - 1), i = 0; i < times; --last, i++)
+			{
+				_allocator.construct(_arr + last + n, *(_arr + last));
+				_allocator.destroy(_arr + last);
+			}
+			//insert n vals from *first up, starting at position
+			for (size_type i = 0; first != last; ++i, ++first)
+				_allocator.construct(_arr + pos + i, *first);
+		} 
+		else 
+		{
+			for (size_type i = 0; first != last; ++i, ++first)
+				_allocator.construct(_arr + i, *first);
+		}	
+		_size += n;	
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::iterator vector<T, A>::erase (iterator position) {
-
+		return erase(position, position + 1);
 	}
 
 	template <typename T, typename A>
 	typename vector<T, A>::iterator vector<T, A>::erase (iterator first, iterator last) {
+		iterator it;
+		size_type times = ft::distance(first, last);
 
+		for (it = first; it != last; ++it) 
+		{
+			_allocator.destroy(&*it); //SYNTAXE
+		}
+
+		if (last < end())
+		{
+			for (it = first; last != end(); ++it, ++last)
+			{
+				_allocator.construct(&*it, *last);	//SYNTAXE
+				_allocator.destroy(&*last); //SYNTAXE
+			}
+		}
+		_size -= times;
+		return (first);
 	}
 	
 	template <typename T, typename A>
 	void vector<T, A>::swap (vector& x) {
-
+		std::swap(_allocator, x._allocator);
+		std::swap(_size, x._size);
+		std::swap(_capacity, x._capacity);
+		std::swap(_arr, x._arr);
 	}
 
 	template <typename T, typename A>
 	void vector<T, A>::clear() {
-
+		erase(begin(), end());
 	}
 
 };
