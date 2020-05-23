@@ -151,35 +151,55 @@ namespace ft
 
 	};
 
-
 	template <class T, class Alloc>
 	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-
+		if (lhs.size() != rhs.size())
+			return false;
+		for (typename vector<T, A>::size_type i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] != rhs[i])
+				return false;
+		}
+		return true;
 	}
 
 	template <class T, class Alloc>
 	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-
+		return !(lhs == rhs);
 	}
 
 	template <class T, class Alloc>
-	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-
+	bool operator< (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		for (typename vector<T, A>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
+		{
+			if (lhs[i] != rhs[i])
+				return lhs[i] < rhs[i];
+		}
+		if (lhs.size() == rhs.size())
+			return false;
+		return lhs.size() < rhs.size();
 	}
 
 	template <class T, class Alloc>
 	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-
+		return !(lhs > rhs);
 	}
 
 	template <class T, class Alloc>
-	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-
+	bool operator> (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+		for (typename vector<T, A>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
+		{
+			if (lhs[i] != rhs[i])
+				return lhs[i] > rhs[i];
+		}
+		if (lhs.size() == rhs.size())
+			return false;
+		return lhs.size() > rhs.size();
 	}
 
 	template <class T, class Alloc>
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-		
+		return !(lhs < rhs);
 	}
 
 
@@ -187,204 +207,204 @@ namespace ft
 
 	template <class T, class Alloc>
   	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) {
-
+		  x.swap(y);
 	}
 
 	template <typename T, typename A>
-	list<T, A>::vector (const allocator_type& alloc = allocator_type()) {
+	vector<T, A>::vector (const allocator_type& alloc = allocator_type()) {
 
 	}		
 	
 	template <typename T, typename A>
-	list<T, A>::vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) {
+	vector<T, A>::vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) {
 
 	}
 
 	template <typename T, typename A>
 	template <class InputIterator>
-	list<T, A>::vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {
+	vector<T, A>::vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) {
 
 	}
 	
 	template <typename T, typename A>
-	list<T, A>::vector (const vector& x) {
+	vector<T, A>::vector (const vector& x) {
 
 	}
 		
 	template <typename T, typename A>
-	list<T, A>::~vector() {
+	vector<T, A>::~vector() {
 
 	}
 			
 	template <typename T, typename A>
-	list<T, A>::vector& list<T, A>::operator= (const list<T, A>::vector& x) {
+	vector<T, A>::vector& vector<T, A>::operator= (const vector<T, A>::vector& x) {
 
 	}
 
 	template <typename T, typename A>
-	iterator list<T, A>::begin() {
+	iterator vector<T, A>::begin() {
 
 	}
 	
 	template <typename T, typename A>
-	const_iterator list<T, A>::begin() const {
+	const_iterator vector<T, A>::begin() const {
 
 	}
 
 	template <typename T, typename A>
-	iterator list<T, A>::end() {
+	iterator vector<T, A>::end() {
 
 	}
 
 	template <typename T, typename A>
-	const_iterator list<T, A>::end() const {
+	const_iterator vector<T, A>::end() const {
 
 	}
 
 	template <typename T, typename A>
-	reverse_iterator list<T, A>::rbegin() {
+	reverse_iterator vector<T, A>::rbegin() {
 
 	}
 
 	template <typename T, typename A>
-	const_reverse_iterator list<T, A>::rbegin() const {
+	const_reverse_iterator vector<T, A>::rbegin() const {
 
 	}
 
 	template <typename T, typename A>
-	reverse_iterator list<T, A>::rend() {
+	reverse_iterator vector<T, A>::rend() {
 
 	}
 
 	template <typename T, typename A>
-	const_reverse_iterator list<T, A>::rend() const {
+	const_reverse_iterator vector<T, A>::rend() const {
 
 	}
 
 	template <typename T, typename A>
-	size_type list<T, A>::size() const {
+	size_type vector<T, A>::size() const {
 
 	}
 
 	template <typename T, typename A>
-	size_type list<T, A>::max_size() const {
+	size_type vector<T, A>::max_size() const {
 
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::resize (size_type n, value_type val = value_type()) {
+	void vector<T, A>::resize (size_type n, value_type val = value_type()) {
 
 	}
 
 	template <typename T, typename A>
-	size_type list<T, A>::capacity() const {
+	size_type vector<T, A>::capacity() const {
 
 	}
 
 	template <typename T, typename A>
-	bool list<T, A>::empty() const {
+	bool vector<T, A>::empty() const {
 
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::reserve (size_type n) {
+	void vector<T, A>::reserve (size_type n) {
 
 	}
 
 	template <typename T, typename A>
-	reference list<T, A>::operator[] (size_type n) {
+	reference vector<T, A>::operator[] (size_type n) {
 
 	}
 
 	template <typename T, typename A>
-	const_reference list<T, A>::operator[] (size_type n) const {
+	const_reference vector<T, A>::operator[] (size_type n) const {
 
 	}
 
 	template <typename T, typename A>
-	reference list<T, A>::at (size_type n) {
+	reference vector<T, A>::at (size_type n) {
 
 	}
 
 	template <typename T, typename A>
-	const_reference list<T, A>::at (size_type n) const {
+	const_reference vector<T, A>::at (size_type n) const {
 
 	}
 
 	template <typename T, typename A>
-	reference list<T, A>::front() {
+	reference vector<T, A>::front() {
 
 	}
 
 	template <typename T, typename A>
-	const_reference list<T, A>::front() const {
+	const_reference vector<T, A>::front() const {
 
 	}
 
 	template <typename T, typename A>
-	reference list<T, A>::back() {
+	reference vector<T, A>::back() {
 
 	}
 
 	template <typename T, typename A>
-	const_reference list<T, A>::back() const {
+	const_reference vector<T, A>::back() const {
 
 	}
 
 	template <typename T, typename A>
 	template <class InputIterator>
-  	void list<T, A>::assign (InputIterator first, InputIterator last) {
+  	void vector<T, A>::assign (InputIterator first, InputIterator last) {
 
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::assign (size_type n, const value_type& val) {
+	void vector<T, A>::assign (size_type n, const value_type& val) {
 
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::push_back (const value_type& val) {
+	void vector<T, A>::push_back (const value_type& val) {
 
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::pop_back() {
+	void vector<T, A>::pop_back() {
 
 	}
 
 	template <typename T, typename A>
-	iterator list<T, A>::insert (iterator position, const value_type& val) {
+	iterator vector<T, A>::insert (iterator position, const value_type& val) {
 
 	}
 
 	template <typename T, typename A>
-    void list<T, A>::insert (iterator position, size_type n, const value_type& val) {
+    void vector<T, A>::insert (iterator position, size_type n, const value_type& val) {
 
 	}
 
 	template <typename T, typename A>
 	template <class InputIterator>
-    void list<T, A>::insert (iterator position, InputIterator first, InputIterator last) {
+    void vector<T, A>::insert (iterator position, InputIterator first, InputIterator last) {
 
 	}
 
 	template <typename T, typename A>
-	iterator list<T, A>::erase (iterator position) {
+	iterator vector<T, A>::erase (iterator position) {
 
 	}
 
 	template <typename T, typename A>
-	iterator list<T, A>::erase (iterator first, iterator last) {
+	iterator vector<T, A>::erase (iterator first, iterator last) {
 
 	}
 	
 	template <typename T, typename A>
-	void list<T, A>::swap (vector& x) {
+	void vector<T, A>::swap (vector& x) {
 
 	}
 
 	template <typename T, typename A>
-	void list<T, A>::clear() {
+	void vector<T, A>::clear() {
 
 	}
 
