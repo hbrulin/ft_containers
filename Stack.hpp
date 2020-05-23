@@ -21,6 +21,9 @@ namespace ft
 
 		public:
 			explicit stack (const container_type& ctnr = container_type());
+			stack(stack const &other);
+			stack &operator=(stack const &other);
+			~stack();
 			bool empty() const;
 			size_type size() const;
 			value_type& top();
@@ -60,45 +63,61 @@ namespace ft
 	template <class T, class Container>
   	bool operator>= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
 
-	  }
+	}
 
 	/*Member functions */
 
+	//pas besoin d'un appel explicite au constructeur de la liste?
 	template <typename T, typename C>
-	stack<T, C>::stack (const container_type& ctnr) {
+	stack<T, C>::stack (const container_type& ctnr): _c(ctnr) {
+	}
 
+	//deep copy necessaire? ou appel au constructeur de la list?
+	template <typename T, typename C>
+	stack<T, C>::stack(stack const &other): _c(other._c) {
+	}
+
+	//deep copy necessaire?
+	template <typename T, typename C>
+	stack &stack<T, C>::operator=(stack const &other) {
+		_c = other._c;
+		return *this;	
+	}
+
+	//appel destructeur list auto
+	template <typename T, typename C>
+	~stack<T, C>::stack() {
 	}
 
 	template <typename T, typename C>
 	bool stack<T, C>::empty() const {
-
+		return _c.empty();
 	}
 
 	template <typename T, typename C>
 	typename stack<T, C>::size_type stack<T, C>::size() const {
-
+		return _c.size();
 	}
 
 	template <typename T, typename C>
 	typename stack<T, C>::value_type& stack<T, C>::top() {
-
+		return _c.back();
 	}
 
 	template <typename T, typename C>
 	const typename stack<T, C>::value_type& stack<T, C>::top() const {
-
+		return _c.back();
 	}
 
 	template <typename T, typename C>
 	void stack<T, C>::push (const value_type& val) {
-
+		_c.push_back(val);
 	}
 
 	template <typename T, typename C>
 	void stack<T, C>::pop() {
-
+		_c.pop_back();
 	}
-
 
 }; //fin ft
 
