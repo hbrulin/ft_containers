@@ -3,6 +3,43 @@
 
 namespace ft
 {
+	template <typename T, typename Compare, bool isMulti>
+	class BST;
+
+	template <typename T> 
+	struct BSTNode
+	{
+		T element;
+		BSTNode *parent;
+		BSTNode *left;
+		BSTNode *right;
+		BSTNode() {};
+		BSTNode(T element, BSTNode *parent, BSTNode *left, BSTNode *right)
+			: element(element), parent(parent), left(left), right(right) {};
+		BST(const BSTNode &o)
+			: el(o.element), parent(o.parent), left(o.left), right(o.right) {};
+	};
+
+	template <typename T, typename Compare, bool isMulti>
+	class BSTIter
+	{
+	private:
+		BSTIter();
+
+	protected:
+		BST<E, Compare, isMulti> *_tree;
+		BSTNode<E> *_node;
+
+	public:
+		virtual ~BSTIter(){};
+		BSTIter(BST<T, Compare, isMulti> *tree, BSTNode<T> *node) : _tree(tree), _node(node) {}
+		BSTIter(const BSTIter &other) : _tree(other._tree), _node(other._node) {}
+		bool operator==(const BSTIter &rhs) const { return _node == rhs._node; };
+		bool operator!=(const BSTIter &rhs) const { return _node != rhs._node; };
+		BSTNode<T> *getNode() const { return _node; };
+		BST<T, Compare, isMulti> *getTree() const { return _tree; };
+	};
+
 
 	template <typename T>
 	class Iter
