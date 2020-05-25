@@ -135,61 +135,187 @@ namespace ft
 
 	};
 
-			explicit map (const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type());
+	template <class Key, class T, class Compare, class A>
+	map<Key, T, Compare, A>::map (const key_compare& comp, const allocator_type& alloc) {
+
+	}
+	
+	template <class Key, class T, class Compare, class A>
+	template <class InputIterator>
+	map<Key, T, Compare, A>::map (InputIterator first, InputIterator last, const key_compare& comp,const allocator_type& alloc) {
+
+	}
+	
+	template <class Key, class T, class Compare, class A>
+	map<Key, T, Compare, A>::map (const map& x) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	~map<Key, T, Compare, A>::map() {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	map<Key, T, Compare, A> &map<Key, T, Compare, A>::operator= (const map& x) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::begin() {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::begin() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::end() {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::end() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::reverse_iterator map<Key, T, Compare, A>::rbegin() {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::const_reverse_iterator map<Key, T, Compare, A>::rbegin() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::reverse_iterator map<Key, T, Compare, A>::rend() {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::const_reverse_iterator map<Key, T, Compare, A>::rend() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	bool map<Key, T, Compare, A>::empty() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::size() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::max_size() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::mapped_type& map<Key, T, Compare, A>::operator[] (const key_type& k) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	pair<map<Key, T, Compare, A>::iterator,bool> map<Key, T, Compare, A>::insert (const value_type& val) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::insert (iterator position, const value_type& val) {
+
+	}
 		
-		template <class InputIterator>
-		map (InputIterator first, InputIterator last,
-			const key_compare& comp = key_compare(),
-		const allocator_type& alloc = allocator_type());
-		
-		map (const map& x);
-		~map();
-		map& operator= (const map& x);
+	template <class Key, class T, class Compare, class A>
+	template <class InputIterator>
+	void map<Key, T, Compare, A>::insert (InputIterator first, InputIterator last) {
 
-		/*Iterators*/
-		iterator begin();
-		const_iterator begin() const;
-		iterator end();
-		const_iterator end() const;
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
+	}
 
-		/*Capacity*/
-		bool empty() const;
-		size_type size() const;
-		size_type max_size() const;
+	template <class Key, class T, class Compare, class A>
+	void map<Key, T, Compare, A>::erase (iterator position) {
 
-		/*Element access*/
-		mapped_type& operator[] (const key_type& k);
+	}
 
-		/*Modifiers*/
-		pair<iterator,bool> insert (const value_type& val);
-		iterator insert (iterator position, const value_type& val);
-		template <class InputIterator>
-		void insert (InputIterator first, InputIterator last);
-		void erase (iterator position);
-		size_type erase (const key_type& k);
-    	void erase (iterator first, iterator last);
-		void swap (map& x);
-		void clear();
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::erase (const key_type& k) {
 
-		/*Observers*/
-		key_compare key_comp() const;
-		value_compare value_comp() const;
+	}
 
-		/*Operations*/
-		iterator find (const key_type& k);
-		const_iterator find (const key_type& k) const;
-		size_type count (const key_type& k) const;
-		iterator lower_bound (const key_type& k);
-		const_iterator lower_bound (const key_type& k) const;
-		iterator upper_bound (const key_type& k);
-		const_iterator upper_bound (const key_type& k) const;
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-		pair<iterator,iterator> equal_range (const key_type& k);
+	template <class Key, class T, class Compare, class A>
+    void map<Key, T, Compare, A>::erase (iterator first, iterator last) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	void map<Key, T, Compare, A>::swap (map& x) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	void map<Key, T, Compare, A>::clear() {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::key_compare map<Key, T, Compare, A>::key_comp() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::value_compare map<Key, T, Compare, A>::value_comp() const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::find (const key_type& k) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::find (const key_type& k) const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::count (const key_type& k) const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::lower_bound (const key_type& k) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::lower_bound (const key_type& k) const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::upper_bound (const key_type& k) {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::upper_bound (const key_type& k) const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	pair<typename map<Key, T, Compare, A>::const_iterator, typename map<Key, T, Compare, A>::const_iterator> map<Key, T, Compare, A>::equal_range (const key_type& k) const {
+
+	}
+
+	template <class Key, class T, class Compare, class A>
+	pair<typename map<Key, T, Compare, A>::iterator, typename map<Key, T, Compare, A>::iterator> map<Key, T, Compare, A>::equal_range (const key_type& k) {
+
+	}
 
 }; //end namespace
 
