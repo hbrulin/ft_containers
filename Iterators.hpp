@@ -27,17 +27,23 @@ namespace ft
 		BSTIter();
 
 	protected:
-		BST<E, Compare, isMulti> *_tree;
+		BST<E, Compare, isMulti> &_tree;
 		BSTNode<E> *_node;
 
 	public:
+		typedef std::ptrdiff_t difference_type;
+		typedef T value_type;
+		typedef T* pointer;
+		typedef T& reference;
+		typedef BidirectionalIteratorTag iterator_category;
 		virtual ~BSTIter(){};
 		BSTIter(BST<T, Compare, isMulti> *tree, BSTNode<T> *node) : _tree(tree), _node(node) {}
 		BSTIter(const BSTIter &other) : _tree(other._tree), _node(other._node) {}
 		bool operator==(const BSTIter &rhs) const { return _node == rhs._node; };
 		bool operator!=(const BSTIter &rhs) const { return _node != rhs._node; };
-		BSTNode<T> *getNode() const { return _node; };
+		BSTNode<T> *getP() const { return _node; };
 		BST<T, Compare, isMulti> *getTree() const { return _tree; };
+
 	};
 
 

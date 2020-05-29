@@ -46,7 +46,7 @@ namespace ft
 				typedef pair<const Key, T> first_argument_type;
 				typedef pair<const Key, T> second_argument_type;
 				~value_compare() {}
-				value_compare(const Compare &c) : _cmp(c) {}
+				value_compare(const Compare &c) : _cmp(c) {} //prend key_compare() en paramètre - va utiliser la ft key_compare, soit less def ci-dessus
 				value_compare(const value_compare &o) : _cmp(o._cmp) {}
 				value_compare &operator=(const value_compare &o) 
 				{
@@ -136,105 +136,125 @@ namespace ft
 	};
 
 	template <class Key, class T, class Compare, class A>
-	map<Key, T, Compare, A>::map (const key_compare& comp, const allocator_type& alloc) {
+	map<Key, T, Compare, A>::map (const key_compare& comp, const allocator_type& alloc): _tree(value_compare(comp)), _alloc(alloc) {
 
 	}
 	
 	template <class Key, class T, class Compare, class A>
 	template <class InputIterator>
-	map<Key, T, Compare, A>::map (InputIterator first, InputIterator last, const key_compare& comp,const allocator_type& alloc) {
-
+	map<Key, T, Compare, A>::map (InputIterator first, InputIterator last, const key_compare& comp,const allocator_type& alloc)
+		: _tree(value_compare(comp)), _alloc(alloc) {
+		for (InputIterator it = first; it != last; ++it)
+		{
+			_tree.insert(iterator(&_tree, _tree.getR()), *it);
+		}
 	}
 	
 	template <class Key, class T, class Compare, class A>
 	map<Key, T, Compare, A>::map (const map& x) {
-
+		: _tree(x._tree), _alloc(x._alloc) //deep copy?
 	}
 
 	template <class Key, class T, class Compare, class A>
 	~map<Key, T, Compare, A>::map() {
-
 	}
 
 	template <class Key, class T, class Compare, class A>
 	map<Key, T, Compare, A> &map<Key, T, Compare, A>::operator= (const map& x) {
-
+		_tree = x._tree; //idem deep copy?
+		_alloc = x._alloc;
+		return *this; 
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::begin() {
-
+		Node *n = _tree.getR();
+		if (!n)
+			return iterator(&_tree, _tree.getD());
+		while (n && n->left) //car on parle du premier element selon key, pas selon si parent ou enfant
+			n = n->left;
+		return iterator(&_tree, n);
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::begin() const {
-
+		Node *n = _tree.getR();
+		if (!n)
+			return const_iterator(&_tree, _tree.getInit());
+		while (n && n->left)
+			n = n->left;
+		return const_iterator(&_tree, n);
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::end() {
-
+		return iterator(&_tree, _tree.getInit());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::end() const {
-
+		return const_iterator(&_tree, _tree.getInit());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::reverse_iterator map<Key, T, Compare, A>::rbegin() {
-
+		return reverse_iterator(end());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::const_reverse_iterator map<Key, T, Compare, A>::rbegin() const {
-
+		return const_reverse_iterator(end());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::reverse_iterator map<Key, T, Compare, A>::rend() {
-
+		return reverse_iterator(begin());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::const_reverse_iterator map<Key, T, Compare, A>::rend() const {
-
+		return const_reverse_iterator(begin());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	bool map<Key, T, Compare, A>::empty() const {
-
+		return _tree.getSize() == 0;
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::size() const {
-
+		return _tree.getSize();
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::max_size() const {
-
+		return static_cast<size_type>(-1 / sizeof(Node));
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::mapped_type& map<Key, T, Compare, A>::operator[] (const key_type& k) {
-
+		//TO IMPLEMENT
 	}
 
 	template <class Key, class T, class Compare, class A>
 	pair<map<Key, T, Compare, A>::iterator,bool> map<Key, T, Compare, A>::insert (const value_type& val) {
-
+		return _tree.insert(iterator(&_tree, _tree.getR()), val); //on commence au début du tree
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::insert (iterator position, const value_type& val) {
-
+		key_compare cmp = key_comp();
+		if (cmp(position->first, val.first) //il faut check avant car si position trop avancée, pas mandatory
+			&& upper_bound(position->first) == upper_bound(val.first))
+			return _tree.insert(position, val).first; 
+		return _tree.insert(iterator(&_tree, _tree.getR()), val).first; //on return un iterator et pas un iterator paired avec un bool comme au-dessus. 
 	}
 		
 	template <class Key, class T, class Compare, class A>
 	template <class InputIterator>
 	void map<Key, T, Compare, A>::insert (InputIterator first, InputIterator last) {
-
+		for (InputIterator it = first; it != last; ++it)
+			insert(*it);
 	}
 
 	template <class Key, class T, class Compare, class A>
@@ -254,22 +274,23 @@ namespace ft
 
 	template <class Key, class T, class Compare, class A>
 	void map<Key, T, Compare, A>::swap (map& x) {
-
+		std::swap(_alloc, x._alloc);
+		std::swap(_tree, x._tree);
 	}
 
 	template <class Key, class T, class Compare, class A>
 	void map<Key, T, Compare, A>::clear() {
-
+		erase(begin(), end());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::key_compare map<Key, T, Compare, A>::key_comp() const {
-
+		return key_compare();
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::value_compare map<Key, T, Compare, A>::value_comp() const {
-
+		return value_compare(key_compare());
 	}
 
 	template <class Key, class T, class Compare, class A>
