@@ -17,7 +17,7 @@ namespace ft
 		typedef BST<T, Compare, isMulti> Tree;
 	
 		/*Define iterators - Maps automatically store values in sort-order, so iterating will go through order in key.*/
-		class iterator : public BtreeBaseIter<E, Compare, isMulti>
+		class iterator : public BSTIter<E, Compare, isMulti>
 		{
 		public:
 			typedef E value_type;
@@ -27,10 +27,10 @@ namespace ft
 			typedef std::bidirectional_iterator_tag iterator_category;
 			typedef BtreeNode<E> Node;
 
-			iterator() : BtreeBaseIter<E, Compare, isMulti>(NULL, NULL) {}
-			iterator(Btree *tree) : BtreeBaseIter<E, Compare, isMulti>(tree, NULL) {}
-			iterator(Btree *tree, Node *node) : BtreeBaseIter<E, Compare, isMulti>(tree, node) {}
-			iterator(const iterator &other) : BtreeBaseIter<E, Compare, isMulti>(other) {}
+			iterator() : BSTIter<E, Compare, isMulti>(NULL, NULL) {}
+			iterator(BST *tree) : BSTIter<E, Compare, isMulti>(tree, NULL) {}
+			iterator(BST *tree, Node *node) : BSTIter<E, Compare, isMulti>(tree, node) {}
+			iterator(const iterator &other) : BSTIter<E, Compare, isMulti>(other) {}
 			~iterator() {}
 			iterator &operator=(const iterator &other)
 			{
@@ -50,16 +50,16 @@ namespace ft
 					this->_node = this->_tree->getInit();
 					return *this;
 				}
-				/* edge
+				//end of tree
 				if (!this->_node || this->_node == this->_tree->getInit())
 				{
 					tmp = root;
 					while (tmp->left)
 						tmp = tmp->left;
 					this->_node = tmp;
-					return *this; // begin node
-				}*/
-				// next node to right
+					return *this; // first node
+				}
+				// move right, but if right has less, then it is closer up to cur node.
 				if (this->_node->right)
 				{
 					this->_node = this->_node->right;
@@ -67,17 +67,15 @@ namespace ft
 						this->_node = this->_node->left;
 					return *this;
 				}
-				// next node to parent
+				// Sinon :
 				tmp = this->_node->parent;
-				while (tmp && tmp->right == this->_node) {
+				while (tmp && tmp->right == this->_node) { //on remonte tant que le node à droite n'est pas celui sur lequel on est
 					this->_node = tmp;
 					tmp = this->_node->parent;
 				}
 				this->_node = tmp;
-				if (!tmp) // no next node
-				{
+				if (!tmp) // no upper node exist
 					this->_node = this->_tree->getInit();
-				}
 				return *this;
 			}
 			iterator operator++(int)
@@ -91,13 +89,13 @@ namespace ft
 				Node *root = this->_tree->getR();
 				Node *tmp;
 
-				// empty
+
 				if (!root)
 				{
 					this->_node = this->_tree->getInit();
 					return *this;
 				}
-				// edge
+
 				if (!this->_node || this->_node == this->_tree->getInit())
 				{
 					tmp = root;
@@ -106,7 +104,7 @@ namespace ft
 					this->_node = tmp;
 					return *this; // last node
 				}
-				// next node to left
+
 				if (this->_node->left)
 				{
 					this->_node = this->_node->left;
@@ -114,7 +112,7 @@ namespace ft
 						this->_node = this->_node->right;
 					return *this;
 				}
-				// next node to parent
+
 				tmp = this->_node->parent;
 				while (tmp && tmp->left == this->_node)
 				{
@@ -122,7 +120,7 @@ namespace ft
 					tmp = this->_node->parent;
 				}
 				this->_node = tmp;
-				if (!tmp) // no next node
+				if (!tmp) // no lower
 					this->_node = this->_tree->getInit();
 				return *this;
 			}
@@ -132,12 +130,12 @@ namespace ft
 				operator--();
 				return it;
 			}
-			reference operator*() const { return this->_node->el; }
-			pointer operator->() const { return &this->_node->el; }
+			reference operator*() const { return this->_node->element; }
+			pointer operator->() const { return &this->_node->element; }
 		};
 
 		/* const_iterator */
-		class const_iterator : public BtreeBaseIter<E, Compare, isMulti>
+		class const_iterator : public BSTIter<E, Compare, isMulti>
 		{
 		public:
 			typedef E value_type;
@@ -145,12 +143,12 @@ namespace ft
 			typedef const E &reference;
 			typedef std::ptrdiff_t difference_type;
 			typedef std::bidirectional_iterator_tag iterator_category;
-			typedef BtreeNode<E> Node;
+			typedef BSTNode<E> Node;
 
-			const_iterator() : BtreeBaseIter<E, Compare, isMulti>(NULL, NULL) {}
-			const_iterator(Btree *tree, Node *node) : BtreeBaseIter<E, Compare, isMulti>(tree, node) {}
-			const_iterator(const const_iterator &other) : BtreeBaseIter<E, Compare, isMulti>(other) {}
-			const_iterator(const iterator &other) : BtreeBaseIter<E, Compare, isMulti>(other) {}
+			const_iterator() : BSTIter<E, Compare, isMulti>(NULL, NULL) {}
+			const_iterator(BST *tree, Node *node) : BSTIter<E, Compare, isMulti>(tree, node) {}
+			const_iterator(const const_iterator &other) : BSTIter<E, Compare, isMulti>(other) {}
+			const_iterator(const iterator &other) : BSTIter<E, Compare, isMulti>(other) {}
 			~const_iterator() {}
 			const_iterator &operator=(const const_iterator &other)
 			{
@@ -163,22 +161,22 @@ namespace ft
 				Node *root = this->_tree->getR();
 				Node *tmp;
 
-				// empty
+		
 				if (!root)
 				{
-					this->_node = this->_tree->getD();
+					this->_node = this->_tree->getInit();
 					return *this;
 				}
-				// edge
-				if (!this->_node || this->_node == this->_tree->getD())
+			
+				if (!this->_node || this->_node == this->_tree->getInit())
 				{
 					tmp = root;
 					while (tmp->left)
 						tmp = tmp->left;
 					this->_node = tmp;
-					return *this; // begin node
+					return *this; 
 				}
-				// next node to right
+		
 				if (this->_node->right)
 				{
 					this->_node = this->_node->right;
@@ -186,7 +184,7 @@ namespace ft
 						this->_node = this->_node->left;
 					return *this;
 				}
-				// next node to parent
+			
 				tmp = this->_node->parent;
 				while (tmp && tmp->right == this->_node)
 				{
@@ -194,7 +192,7 @@ namespace ft
 					tmp = this->_node->parent;
 				}
 				this->_node = tmp;
-				if (!tmp) // no next node
+				if (!tmp) 
 					this->_node = this->_tree->getD();
 				return *this;
 			}
@@ -209,22 +207,22 @@ namespace ft
 				Node *root = this->_tree->getR();
 				Node *tmp;
 
-				// empty
+	
 				if (!root)
 				{
-					this->_node = this->_tree->getD();
+					this->_node = this->_tree->getInit();
 					return *this;
 				}
-				// edge
-				if (!this->_node || this->_node == this->_tree->getD())
+		
+				if (!this->_node || this->_node == this->_tree->getInit())
 				{
 					tmp = root;
 					while (tmp->right)
 						tmp = tmp->right;
 					this->_node = tmp;
-					return *this; // last node
+					return *this; 
 				}
-				// next node to left
+			
 				if (this->_node->left)
 				{
 					this->_node = this->_node->left;
@@ -232,7 +230,7 @@ namespace ft
 						this->_node = this->_node->right;
 					return *this;
 				}
-				// next node to parent
+		
 				tmp = this->_node->parent;
 				while (tmp && tmp->left == this->_node)
 				{
@@ -240,8 +238,8 @@ namespace ft
 					tmp = this->_node->parent;
 				}
 				this->_node = tmp;
-				if (!tmp) // no next node
-					this->_node = this->_tree->getD();
+				if (!tmp)
+					this->_node = this->_tree->getInit();
 				return *this;
 			}
 			const_iterator operator--(int)
@@ -250,8 +248,8 @@ namespace ft
 				operator--();
 				return it;
 			}
-			reference operator*() const { return this->_node->el; }
-			pointer operator->() const { return &this->_node->el; }
+			reference operator*() const { return this->_node->element; }
+			pointer operator->() const { return &this->_node->element; }
 		}; 
 
 /* reverse iterator */
@@ -263,7 +261,7 @@ namespace ft
 	private:
 		Compare _cmp;
 		Node *_root;
-		//Node *_init;
+		Node *_init;
 		size_t _size;
 		BST(){};
 		void deep_free(Node *root);
