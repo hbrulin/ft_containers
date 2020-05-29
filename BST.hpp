@@ -25,7 +25,7 @@ namespace ft
 			typedef E &reference;
 			typedef std::ptrdiff_t difference_type;
 			typedef std::bidirectional_iterator_tag iterator_category;
-			typedef BtreeNode<E> Node;
+			typedef BSTNode<E> Node;
 
 			iterator() : BSTIter<E, Compare, isMulti>(NULL, NULL) {}
 			iterator(BST *tree) : BSTIter<E, Compare, isMulti>(tree, NULL) {}
