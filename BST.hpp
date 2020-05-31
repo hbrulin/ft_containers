@@ -6,7 +6,6 @@
 
 namespace ft
 {
-
 	template <typename T, typename Compare, bool isMulti>
 	class BST
 	{
@@ -17,20 +16,20 @@ namespace ft
 		typedef BST<T, Compare, isMulti> Tree;
 	
 		/*Define iterators - Maps automatically store values in sort-order, so iterating will go through order in key.*/
-		class iterator : public BSTIter<E, Compare, isMulti>
+		class iterator : public BSTIter<T, Compare, isMulti>
 		{
 		public:
-			typedef E value_type;
-			typedef E *pointer;
-			typedef E &reference;
+			typedef T value_type;
+			typedef T *pointer;
+			typedef T &reference;
 			typedef std::ptrdiff_t difference_type;
 			typedef std::bidirectional_iterator_tag iterator_category;
-			typedef BSTNode<E> Node;
+			typedef BSTNode<T> Node;
 
-			iterator() : BSTIter<E, Compare, isMulti>(NULL, NULL) {}
-			iterator(BST *tree) : BSTIter<E, Compare, isMulti>(tree, NULL) {}
-			iterator(BST *tree, Node *node) : BSTIter<E, Compare, isMulti>(tree, node) {}
-			iterator(const iterator &other) : BSTIter<E, Compare, isMulti>(other) {}
+			iterator() : BSTIter<T, Compare, isMulti>(NULL, NULL) {}
+			iterator(BST *tree) : BSTIter<T, Compare, isMulti>(tree, NULL) {}
+			iterator(BST *tree, Node *node) : BSTIter<T, Compare, isMulti>(tree, node) {}
+			iterator(const iterator &other) : BSTIter<T, Compare, isMulti>(other) {}
 			~iterator() {}
 			iterator &operator=(const iterator &other)
 			{
@@ -135,20 +134,20 @@ namespace ft
 		};
 
 		/* const_iterator */
-		class const_iterator : public BSTIter<E, Compare, isMulti>
+		class const_iterator : public BSTIter<T, Compare, isMulti>
 		{
 		public:
-			typedef E value_type;
-			typedef const E *pointer;
-			typedef const E &reference;
+			typedef T value_type;
+			typedef const T *pointer;
+			typedef const T &reference;
 			typedef std::ptrdiff_t difference_type;
 			typedef std::bidirectional_iterator_tag iterator_category;
-			typedef BSTNode<E> Node;
+			typedef BSTNode<T> Node;
 
-			const_iterator() : BSTIter<E, Compare, isMulti>(NULL, NULL) {}
-			const_iterator(BST *tree, Node *node) : BSTIter<E, Compare, isMulti>(tree, node) {}
-			const_iterator(const const_iterator &other) : BSTIter<E, Compare, isMulti>(other) {}
-			const_iterator(const iterator &other) : BSTIter<E, Compare, isMulti>(other) {}
+			const_iterator() : BSTIter<T, Compare, isMulti>(NULL, NULL) {}
+			const_iterator(BST *tree, Node *node) : BSTIter<T, Compare, isMulti>(tree, node) {}
+			const_iterator(const const_iterator &other) : BSTIter<T, Compare, isMulti>(other) {}
+			const_iterator(const iterator &other) : BSTIter<T, Compare, isMulti>(other) {}
 			~const_iterator() {}
 			const_iterator &operator=(const const_iterator &other)
 			{
@@ -316,14 +315,13 @@ namespace ft
 	}
 
 	/* public functions */	
-	//AJOUTER TYPENAMES
 
 	/*the insertion operation checks whether each inserted element has a key equivalent to the one of an 
 	element already in the container, and if so, the element is not inserted, returning an iterator to this
 	existing element (if the function returns a value).
 	Keys that are less than parent go to left, keys that are bigger than to the right.*/
 	template <typename T, typename Compare, bool isMulti>
-	pair<iterator, bool> BST<T, Compare, isMulti>::insert(iterator position, const value_type &val) {
+	pair<typename BST<T, Compare, isMulti>::iterator, bool> BST<T, Compare, isMulti>::insert(iterator position, const value_type &val) {
 		Node *pos = position.getP();
 		Node *newNode;
 
@@ -370,8 +368,78 @@ namespace ft
 	}
 
 	template <typename T, typename Compare, bool isMulti>
-	bool BST<T, Compare, isMulti>::map_erase(const value_type &val) {
+	bool BST<T, Compare, isMulti>::map_erase(const value_type &val) { //pass value itself or dereference iterator
+		Node *del = NULL;
+		Node *delp = NULL;
+		Node *cdd = NULL;
+		Node *cddp = NULL;
+		Node *tmp = NULL;
+
+		if (!_root)
+			return false;
+		tmp = _root;
+		while (tmp)
+		{
+			if (val.first == tmp->element.first)
+			{
+				del = tmp;
+				break;
+			}
+			if (_cmp(val, tmp->el))
+				tmp = tmp->left;
+			else
+				tmp = tmp->right;
+		}
+		if (!del)
+			return false; // nothing to delete
 		
+		//Before deleting, reorg the BST
+		delp = del->parent;
+		if (!del->right) // case1. no right node of del
+			cdd = del->left;
+		else if (!del->right->left) // case2. right node of del has no left child
+		{
+			cdd = del->right;
+			cdd->left = del->left;
+			del->left->parent = cdd;
+		}
+		else // case3
+		{
+			cddp = del;
+			cdd = del->right;
+			while (cdd->left)
+			{
+				cddp = cdd;
+				cdd = cdd->left;
+			}
+			cddp->left = cdd->right;
+			if (cdd->right)
+				cdd->right->parent = cddp;
+
+			cdd->left = del->left;
+			if (del->left)
+				del->left->parent = cdd;
+
+			cdd->right = del->right;
+			del->right->parent = cdd;
+		}
+		// make cdd as child of delp
+		if (delp)
+		{
+			Node **delpLR = (delp->left == del) ? &delp->left : &delp->right;
+			*delpLR = cdd;
+		}
+		else
+		{
+			_root = cdd;
+		}
+		if (cdd) // if del is not leaf node
+			cdd->parent = delp;
+
+		//Finally delete
+		delete del;
+		_size--;
+		return true;
 	}
 
 

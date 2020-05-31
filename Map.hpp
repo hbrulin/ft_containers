@@ -5,6 +5,7 @@
 # include "Pair.hpp"
 # include "BST.hpp"
 # include "Iterators.hpp"
+# include "Vector.hpp"
 
 /*COMPARE : A binary predicate that takes two element keys as arguments and returns a bool. 
 The expression comp(a,b), where comp is an object of this type and a and b are key values, 
@@ -156,7 +157,7 @@ namespace ft
 	}
 
 	template <class Key, class T, class Compare, class A>
-	~map<Key, T, Compare, A>::map() {
+	map<Key, T, Compare, A>::~map() {
 	}
 
 	template <class Key, class T, class Compare, class A>
@@ -231,9 +232,14 @@ namespace ft
 		return static_cast<size_type>(-1 / sizeof(Node));
 	}
 
+	/*If k does not match the key of any element in the container, the function inserts a new element with that key and returns a reference to its mapped value. */
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::mapped_type& map<Key, T, Compare, A>::operator[] (const key_type& k) {
-		//TO IMPLEMENT
+		iterator it = find(k);
+		if (it == end()) {
+			it = _tree.insert(iterator(&_tree, _tree.getR()), make_pair(k, mapped_type())); //CHECK IF RIGHT
+		}
+		return it->second;
 	}
 
 	template <class Key, class T, class Compare, class A>
@@ -259,17 +265,23 @@ namespace ft
 
 	template <class Key, class T, class Compare, class A>
 	void map<Key, T, Compare, A>::erase (iterator position) {
-
+		_tree.map_erase(*position);
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::erase (const key_type& k) {
-
+		return _tree.map_erase(make_pair(k, mapped_type())); //because in map_erase I use val.first. No need for two functions.
 	}
 
 	template <class Key, class T, class Compare, class A>
     void map<Key, T, Compare, A>::erase (iterator first, iterator last) {
-
+		ft::vector<value_type> data;
+		for (iterator it = first; it != last; ++it) {
+			data.push_back(*it);
+		}
+		for (typename ft::vector<value_type>::iterator it = data.begin(); it != data.end(); ++it) {
+			_tree.map_erase(*it);
+		}
 	}
 
 	template <class Key, class T, class Compare, class A>
@@ -295,47 +307,174 @@ namespace ft
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::find (const key_type& k) {
-
+		Node *tmp = _tree.getR();
+		key_compare cmp = key_comp();
+		while(tmp)
+		{
+			if (tmp->element.first == k)
+				return (iterator(&_tree, tmp));
+			if (cmp(k, tmp->element.first))
+				tmp = tmp->left;
+			else
+				tmp = tmp->right;
+		}
+		return end();
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::find (const key_type& k) const {
-
+		Node *tmp = _tree.getR();
+		key_compare cmp = key_comp();
+		while (tmp)
+		{
+			if (tmp->element.first == k)
+				return (const_iterator(&_tree, tmp));
+			if (cmp(k, tmp->element.first))
+				tmp = tmp->left;
+			else
+				tmp = tmp->right;
+		}
+		return const_iterator(end());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::count (const key_type& k) const {
-
+		Node *tmp = _tree.getR();
+		key_compare cmp = key_comp();
+		while (tmp)
+		{
+			if (tmp->element.first == k)
+				return (1); //there is one key equivalent
+			if (cmp(k, tmp->element.first))
+				tmp = tmp->left;
+			else
+				tmp = tmp->right;
+		}
+		return (0); //there is none
 	}
 
+	/*Returns an iterator pointing to the first element in the container whose key is not considered to go before k 
+	(i.e., either it is equivalent or goes after).*/
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::lower_bound (const key_type& k) {
-
+		Node *tmp = _tree.getR();
+		Node *ptmp = NULL;
+		key_compare cmp = key_comp();
+		if (tmp)
+		{
+			while (tmp)
+			{
+				ptmp = tmp;
+				if (tmp->element.first == k)
+					return iterator(&_tree, tmp);
+				if (cmp(k, tmp->element.first))
+					tmp = tmp->left;
+				else
+					tmp = tmp->right;
+			}
+			while (ptmp)
+			{
+				if (!cmp(k, ptmp->element.first)) // k > element.first
+					ptmp = ptmp->parent;
+				else
+					return iterator(&_tree, ptmp);
+			}
+		}
+		return (end());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::lower_bound (const key_type& k) const {
-
+		Node *tmp = _tree.getR();
+		Node *ptmp = NULL;
+		key_compare cmp = key_comp();
+		if (tmp)
+		{
+			while (tmp)
+			{
+				ptmp = tmp;
+				if (tmp->element.first == k)
+					return const_iterator(&_tree, tmp);
+				if (cmp(k, tmp->element.first))
+					tmp = tmp->left;
+				else
+					tmp = tmp->right;
+			}
+			while (ptmp)
+			{
+				if (!cmp(k, ptmp->element.first))
+					ptmp = ptmp->parent;
+				else
+					return const_iterator(&_tree, ptmp);
+			}
+		}
+		return const_iterator(end());
 	}
 
+	/*Returns an iterator pointing to the first element in the container whose key is considered to go after k. 
+	The difference is that equivalent is not considered here =/ lower bound. If equivalent, your return point to next.*/
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::upper_bound (const key_type& k) {
-
+		Node *tmp = _tree.getR();
+		Node *ptmp = NULL;
+		key_compare cmp = key_comp();
+		if (tmp)
+		{
+			while (tmp)
+			{
+				ptmp = tmp;
+				if (cmp(k, tmp->el.first))
+					tmp = tmp->left;
+				else
+					tmp = tmp->right;
+			}
+			while (ptmp)
+			{
+				if (!cmp(k, ptmp->el.first)) 
+					ptmp = ptmp->parent;
+				else
+					return iterator(&_tree, ptmp);
+			}
+		}
+		return (end());
 	}
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::const_iterator map<Key, T, Compare, A>::upper_bound (const key_type& k) const {
-
+		Node *tmp = _tree.getR();
+		Node *ptmp = NULL;
+		key_compare cmp = key_comp();
+		if (tmp)
+		{
+			while (tmp)
+			{
+				ptmp = tmp;
+				if (cmp(k, tmp->element.first))
+					tmp = tmp->left;
+				else
+					tmp = tmp->right;
+			}
+			while (ptmp)
+			{
+				if (!cmp(k, ptmp->element.first))
+					ptmp = ptmp->parent;
+				else
+					return const_iterator(&_tree, ptmp);
+			}
+		}
+		return const_iterator(end());
 	}
 
+	/*Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k.
+	Because the elements in a map container have unique keys, the range returned will contain a single element at most.*/
 	template <class Key, class T, class Compare, class A>
 	pair<typename map<Key, T, Compare, A>::const_iterator, typename map<Key, T, Compare, A>::const_iterator> map<Key, T, Compare, A>::equal_range (const key_type& k) const {
-
+		return make_pair(lower_bound(k), upper_bound(k));
 	}
 
 	template <class Key, class T, class Compare, class A>
 	pair<typename map<Key, T, Compare, A>::iterator, typename map<Key, T, Compare, A>::iterator> map<Key, T, Compare, A>::equal_range (const key_type& k) {
-
+		return make_pair(lower_bound(k), upper_bound(k));
 	}
 
 }; //end namespace
