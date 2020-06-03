@@ -117,11 +117,17 @@ int main(void)
 	ENDL()
 
 	PRINT("### Capacity Tests ###")
-///
+	PRINT(mine.empty());
+	PRINT(mine5.empty());
+	PRINT(mine5.size());
+	PRINT(mine5.max_size());
 	ENDL()
 
 	PRINT("### Element access ###")
-///
+	PRINT(real5.front());
+	PRINT(real5.back());
+	PRINT(mine5.front());
+	PRINT(mine5.back());
 	ENDL()
 
 	PRINT("### Modifiers ###")
