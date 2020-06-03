@@ -383,8 +383,33 @@ int main(void)
 	PRINT_L(custom)
 	ENDL()
 
-	PRINT("### Non-member functions ###")
-///
+	PRINT("### relational operators ###")
+	int array2[] = {1, 2, 3, 4, 5, 6};
+	standard.assign(array, array + 5);
+	std2.assign(array2, array2 + 6);
+	custom.assign(array, array + 5);
+	cus2.assign(array2, array2 + 6);
+
+	PRINT(standard == std2)
+	PRINT(custom == cus2)
+	PRINT(standard != std2)
+	PRINT(custom != cus2)
+	PRINT(standard > std2)
+	PRINT(custom > cus2)
+	PRINT(standard >= std2)
+	PRINT(custom >= cus2)
+	PRINT(standard < std2)
+	PRINT(custom < cus2)
+	PRINT(standard <= std2)
+	PRINT(custom <= cus2)
 	ENDL()
 
+	std::swap(standard, std2);
+	ft::swap(custom, cus2);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(std2)
+	PRINT_L(cus2)
+
+	return 0;
 }
