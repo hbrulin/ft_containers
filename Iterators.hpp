@@ -16,8 +16,8 @@ namespace ft
 		BSTNode() {};
 		BSTNode(T element, BSTNode *parent, BSTNode *left, BSTNode *right)
 			: element(element), parent(parent), left(left), right(right) {};
-		BSTNode(const BSTNode &o)
-			: element(o.element), parent(o.parent), left(o.left), right(o.right) {};
+		BST(const BSTNode &o)
+			: el(o.element), parent(o.parent), left(o.left), right(o.right) {};
 	};
 
 	template <typename T, typename Compare, bool isMulti>
@@ -35,7 +35,7 @@ namespace ft
 		typedef T value_type;
 		typedef T* pointer;
 		typedef T& reference;
-		typedef std::bidirectional_iterator_tag iterator_category;
+		typedef BidirectionalIteratorTag iterator_category;
 		virtual ~BSTIter(){};
 		BSTIter(BST<T, Compare, isMulti> *tree, BSTNode<T> *node) : _tree(tree), _node(node) {}
 		BSTIter(const BSTIter &other) : _tree(other._tree), _node(other._node) {}

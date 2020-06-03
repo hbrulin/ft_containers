@@ -32,8 +32,11 @@ namespace ft { //utilisation ft::list
 			class iterator : public ListIter<T> // list::iterator
 			{
 
+				typedef typename A::difference_type difference_type;
+				typedef typename A::value_type value_type;
 				typedef typename A::reference reference;
 				typedef typename A::pointer pointer;
+				typedef std::bidirectional_iterator_tag iterator_category;
 
 				public:
 					iterator() : ListIter<T>(NULL){};
@@ -53,13 +56,17 @@ namespace ft { //utilisation ft::list
 
 			class const_iterator : public ListIter<T> // list::const_iterator
 			{
-				typedef typename A::reference reference;
-				typedef typename A::pointer pointer;
+				typedef typename A::difference_type difference_type;
+				typedef typename A::value_type value_type;
+				typedef const T& reference;
+				typedef const T* pointer;
+				typedef std::random_access_iterator_tag iterator_category;
 
 				public:
 
 					const_iterator() : ListIter<T>(NULL){};
 					const_iterator(const const_iterator &it) : ListIter<T>(it._p){};
+					const_iterator(const iterator &it) : ListIter<T>(it.getP()){}; //pour choper le resultat de begin
 					const_iterator(ListNode<T> *p) : ListIter<T>(p){};
 					virtual ~const_iterator(){};
 

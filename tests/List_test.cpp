@@ -5,12 +5,36 @@
 #define PRINT(value) std::cout << (value) << std::endl;
 #define ENDL() std::cout << std::endl;
 #define PRINT_L(list) print_list(list);
+#define PRINT_L_CONST(list) print_list_const(list);
+#define	PRINT_REV(list) print_rev(list);
 
 template <class list>
 void print_list(list l)
 {
 	typename list::iterator it;
 	for (it = l.begin(); it != l.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	ENDL()
+}
+
+template <class list>
+void print_list_const(list l)
+{
+	typename list::const_iterator it;
+	for (it = l.begin(); it != l.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	ENDL()
+}
+
+template <class list>
+void print_rev(list l)
+{
+	typename list::reverse_iterator it;
+	for (it = l.rbegin(); it != l.rend(); ++it)
 	{
 		std::cout << *it << " ";
 	}
@@ -66,11 +90,19 @@ int main(void)
 
 	ENDL()
 
-	PRINT("### Testing iterator functions ###")
-	///
+	PRINT("### Testing const iterator ###")
+	PRINT_L_CONST(real5)
+	PRINT_L_CONST(mine5)
+
 	ENDL()
 
-	PRINT("### 3 Capacity Tests ###")
+	PRINT("### Testing rev iterator ###")
+	PRINT_REV(real5)
+	PRINT_REV(mine5)
+
+	ENDL()
+
+	PRINT("### Capacity Tests ###")
 ///
 	ENDL()
 

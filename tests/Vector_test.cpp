@@ -6,15 +6,19 @@
 
 int main(void)
 {
-	PRINT("### Testing 4 constructors + assignments ###")
+	PRINT("### Testing constructors + assignments ###")
 ////
 	ENDL()
 
-	PRINT("### Testing iterator functions ###")
-	///
+	PRINT("### Testing const iterator ###")
+	
 	ENDL()
 
-	PRINT("### 3 Capacity Tests ###")
+	PRINT("### Testing rev iterator ###")
+
+	ENDL()
+
+	PRINT("### Capacity Tests ###")
 ///
 	ENDL()
 

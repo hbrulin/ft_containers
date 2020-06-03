@@ -39,7 +39,7 @@ queue: $(OBJS_Q)
 	clang++ $(OBJS_Q) -lm -o $(NAME) -g
 	@echo "$(NAME) queue created"
 
-list: $(OBJS_M)
+map: $(OBJS_M)
 	clang++ $(OBJS_M) -lm -o $(NAME) -g
 	@echo "$(NAME) map created"
 
