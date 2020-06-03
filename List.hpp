@@ -32,7 +32,7 @@ namespace ft { //utilisation ft::list
 			class iterator : public ListIter<T> // list::iterator
 			{
 				public :
-				
+
 				typedef typename A::difference_type difference_type;
 				typedef typename A::value_type value_type;
 				typedef typename A::reference reference;
@@ -129,7 +129,8 @@ namespace ft { //utilisation ft::list
 		et la deuxième permet de réinitialiser la liste et de la remplir avec une séquence d'objets 
 		définie par deux itérateurs.*/
 		template <class InputIterator>
-  		void assign(InputIterator first, InputIterator last);	
+  		void assign(InputIterator first, InputIterator last,
+			typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
 		void assign(size_type n, const value_type& val);
 
 		/*Other modifiers */
@@ -140,7 +141,8 @@ namespace ft { //utilisation ft::list
 		iterator insert (iterator position, const value_type& val);
     	void insert (iterator position, size_type n, const value_type& val);	
 		template <class InputIterator>
-    	void insert (iterator position, InputIterator first, InputIterator last);
+    	void insert(iterator position, InputIterator first, InputIterator last,
+			typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
 		iterator erase (iterator position);
 		iterator erase (iterator first, iterator last);
 		void swap (list& x);
@@ -365,7 +367,8 @@ namespace ft { //utilisation ft::list
 	
 	template <typename T, typename A>
 	template <class InputIterator>
-	void list<T, A>::assign (InputIterator first, InputIterator last) {
+	void list<T, A>::assign(InputIterator first, InputIterator last,
+	typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
 		clear();
 		insert(begin(), first, last);
 	}	
@@ -451,7 +454,8 @@ namespace ft { //utilisation ft::list
 
 	template <typename T, typename A>
 	template <class InputIterator>
-    void list<T, A>::insert(typename list<T, A>::iterator position, InputIterator first, InputIterator last) {
+    void list<T, A>::insert(iterator position, InputIterator first, InputIterator last,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
 		ListNode<T> *start;
 		ListNode<T> *cur;
 		ListNode<T> *nxt;

@@ -130,8 +130,116 @@ int main(void)
 	PRINT(mine5.back());
 	ENDL()
 
-	PRINT("### Modifiers ###")
-///
+	PRINT("### Modifiers - Assign ###")
+	std::list<int> standard(10, 8);
+	ft::list<int> custom(10, 8);
+	standard.assign(array, array +5);
+	custom.assign(array, array + 5);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	standard.assign(10, 10);
+	custom.assign(10, 10);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	PRINT("### Modifiers - Push & pop ###")
+	standard.push_front(3);
+	custom.push_front(3);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	standard.pop_front();
+	custom.pop_front();
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	standard.push_back(3);
+	custom.push_back(3);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	standard.pop_back();
+	custom.pop_back();
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL();
+
+	PRINT("### Modifiers - Inserts ###")
+	std::list<int>::iterator its;
+	its = standard.begin();
+	ft::list<int>::iterator itc;
+	itc = custom.begin();
+	for (size_t i = 0; i < 5; i++)
+	{
+		its++;
+		itc++;
+	}
+	standard.insert(its, 5);
+	custom.insert(itc, 5);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL();
+
+	standard.insert(its, 3, 5);
+	custom.insert(itc, 3, 5);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL();
+
+	standard.insert(its, array, array + 5);
+	custom.insert(itc, array, array + 5);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL();
+
+	PRINT("### Modifiers - Erase ###")
+	standard.erase(its);
+	custom.erase(itc);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL();
+
+	its = standard.begin();
+	itc = custom.begin();
+	for (size_t i = 0; i < 5; i++)
+	{
+		its++;
+		itc++;
+	}
+	standard.erase(standard.begin(), its);
+	custom.erase(custom.begin(), itc);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL();
+
+	PRINT("### Modifiers - Swap ###")
+	standard.swap(real5);
+	custom.swap(mine5);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(real5)
+	PRINT_L(mine5)
+	ENDL();
+
+	PRINT("### Modifiers - Resize ###")
+	standard.resize(2);
+	custom.resize(2);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	standard.resize(10);
+	custom.resize(10);
+	PRINT_L(standard)
+	PRINT_L(custom)
+
+	PRINT("### Modifiers - Clear ###")
+	standard.clear();
+	custom.clear();
+	PRINT_L(standard)
+	PRINT_L(custom)
 	ENDL()
 
 	PRINT("### Operations ###")
