@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Iterators.hpp"
+#include "Utils.hpp"
 
 namespace ft { //utilisation ft::list
 
@@ -83,7 +84,8 @@ namespace ft { //utilisation ft::list
 			explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 			/*Range*/
 			template <class InputIterator>
-			list (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+			list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
+				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
 			/* Copy */
 			list (const list& x);
 			/*Destructor*/
@@ -239,7 +241,8 @@ namespace ft { //utilisation ft::list
 
 	template <typename T, typename A>
 	template <class InputIterator>
-	list<T, A>::list(InputIterator first, InputIterator last, const allocator_type& alloc) 
+	list<T, A>::list(InputIterator first, InputIterator last, const allocator_type& alloc,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) : _allocator(alloc), _size(0) //pour qu'utilisation seulement si Iterator, pas de int
 	{
 		_li = new ListNode<T>(NULL, NULL, value_type());
 		_li->prv = _li;

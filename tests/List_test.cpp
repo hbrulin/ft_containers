@@ -1,34 +1,93 @@
 #include "../List.hpp"
 #include "iostream"
+#include <list>
+
+#define PRINT(value) std::cout << (value) << std::endl;
+#define ENDL() std::cout << std::endl;
+#define PRINT_L(list) print_list(list);
+
+template <class list>
+void print_list(list l)
+{
+	typename list::iterator it;
+	for (it = l.begin(); it != l.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	ENDL()
+}
 
 int main(void)
 {
-	std::cout << "Testing 4 constructors + 1 assignment" << std::endl;
-////
-	std::cout << std::endl;
+	PRINT("### Testing 4 constructors + = Operator ###")
 
-	std::cout << "Testing iterator functions" << std::endl;
-////
-	std::cout << std::endl;
+	PRINT("Constructor list()")
+	std::list<int> real;
+	ft::list<int> mine;
+	PRINT_L(real)
+	PRINT_L(mine)
 
-	std::cout << "3 Capacity Tests" << std::endl;
+	PRINT("Fill constructor : constructs with n element, each a copy of val")
+	std::list<int> real2(3);
+	ft::list<int> mine2(3);
+	PRINT_L(real2)
+	PRINT_L(mine2)
+
+	PRINT("Fill constructor : val is defined")
+	std::list<int> real3(3, 50);
+	ft::list<double> mine3(3, 50.6);
+	PRINT_L(real3)
+	PRINT_L(mine3)
+
+	PRINT("Range constructor :as many elements as the range [first, last)")
+	std::list<int> real4(real3.begin(), real3.end());
+	ft::list<int> mine4(mine3.begin(), mine3.end());
+	PRINT_L(real4)
+	PRINT_L(mine4)
+
+	PRINT("Range constructor array")
+	int array[] = {1, 2, 3, 4, 5};
+	std::list<int> real5(array, array + 5);
+	ft::list<int> mine5(array, array + 5);
+	PRINT_L(real5)
+	PRINT_L(mine5)
+
+	PRINT("Copy constructor")
+	std::list<int> real6(real5);
+	std::list<int> mine6(real5);
+	PRINT_L(real6)
+	PRINT_L(mine6)
+
+	PRINT("= Operator")
+	std::list<int> real7 = real5;
+	ft::list<int> mine7 = mine5;
+	PRINT_L(real7)
+	PRINT_L(mine7)
+
+	ENDL()
+
+	PRINT("### Testing iterator functions ###")
+	///
+	ENDL()
+
+	PRINT("### 3 Capacity Tests ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Element access" << std::endl;
+	PRINT("### Element access ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Modifiers" << std::endl;
+	PRINT("### Modifiers ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Operations" << std::endl;
+	PRINT("### Operations ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Non-member functions" << std::endl;
+	PRINT("### Non-member functions ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
 }

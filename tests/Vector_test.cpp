@@ -1,34 +1,37 @@
 #include "../Vector.hpp"
 #include "iostream"
 
+#define PRINT(string) std::cout << (string) << std::endl;
+#define ENDL() std::cout << std::endl;
+
 int main(void)
 {
-	std::cout << "Testing constructors + assignment" << std::endl;
+	PRINT("### Testing 4 constructors + assignments ###")
 ////
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Testing iterator functions" << std::endl;
-////
-	std::cout << std::endl;
+	PRINT("### Testing iterator functions ###")
+	///
+	ENDL()
 
-	std::cout << "Capacity Tests" << std::endl;
+	PRINT("### 3 Capacity Tests ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Element access" << std::endl;
+	PRINT("### Element access ###" << std::endl;
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Modifiers" << std::endl;
+	PRINT("### Modifiers ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Operations" << std::endl;
+	PRINT("### Operations ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
-	std::cout << "Non-member functions" << std::endl;
+	PRINT("### Non-member functions ###")
 ///
-	std::cout << std::endl;
+	ENDL()
 
 }
