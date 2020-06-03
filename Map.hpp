@@ -152,8 +152,8 @@ namespace ft
 	}
 	
 	template <class Key, class T, class Compare, class A>
-	map<Key, T, Compare, A>::map (const map& x) {
-		: _tree(x._tree), _alloc(x._alloc) //deep copy?
+	map<Key, T, Compare, A>::map (const map& x)
+		: _tree(x._tree), _alloc(x._alloc) { //deep copy?
 	}
 
 	template <class Key, class T, class Compare, class A>
@@ -243,7 +243,7 @@ namespace ft
 	}
 
 	template <class Key, class T, class Compare, class A>
-	pair<map<Key, T, Compare, A>::iterator,bool> map<Key, T, Compare, A>::insert (const value_type& val) {
+	pair<typename map<Key, T, Compare, A>::iterator,bool> map<Key, T, Compare, A>::insert (const value_type& val) {
 		return _tree.insert(iterator(&_tree, _tree.getR()), val); //on commence au début du tree
 	}
 

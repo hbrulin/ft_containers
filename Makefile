@@ -14,14 +14,7 @@ OBJS_S = $(SRCS_STACK:.cpp=.o)
 OBJS_Q = $(SRCS_QUEUE:.cpp=.o)
 OBJS_M = $(SRCS_MAP:.cpp=.o)
 
-all: $(NAME)
-
-$(NAME): 
-	@make list
-	@make vector
-	@make stack 
-	@make queue 
-	@make map
+all: list
 	
 list: $(OBJS_L)
 	clang++ $(OBJS_L) -lm -o $(NAME) -g
@@ -47,7 +40,7 @@ $(OBJS_L)/%.o: %.cpp Makefile
 	clang++ $(CFLAGS) -o $@ -c $<
 
 clean:
-	@/bin/rm -rf *.o
+	@/bin/rm -rf tests/*.o
 	@echo "Object files deleted"
 
 fclean: clean
