@@ -31,7 +31,8 @@ namespace ft { //utilisation ft::list
 		/* bidirectional iterators */
 			class iterator : public ListIter<T> // list::iterator
 			{
-
+				public :
+				
 				typedef typename A::difference_type difference_type;
 				typedef typename A::value_type value_type;
 				typedef typename A::reference reference;

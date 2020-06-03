@@ -7,6 +7,7 @@
 #define PRINT_L(list) print_list(list);
 #define PRINT_L_CONST(list) print_list_const(list);
 #define	PRINT_REV(list) print_rev(list);
+#define	PRINT_REV_CONST(list) print_rev_const(list);
 
 template <class list>
 void print_list(list l)
@@ -34,6 +35,17 @@ template <class list>
 void print_rev(list l)
 {
 	typename list::reverse_iterator it;
+	for (it = l.rbegin(); it != l.rend(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	ENDL()
+}
+
+template <class list>
+void print_rev_const(list l)
+{
+	typename list::const_reverse_iterator it;
 	for (it = l.rbegin(); it != l.rend(); ++it)
 	{
 		std::cout << *it << " ";
@@ -99,6 +111,8 @@ int main(void)
 	PRINT("### Testing rev iterator ###")
 	PRINT_REV(real5)
 	PRINT_REV(mine5)
+	PRINT_REV_CONST(real5)
+	PRINT_REV_CONST(mine5)
 
 	ENDL()
 
