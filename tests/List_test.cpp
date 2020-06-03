@@ -465,6 +465,7 @@ int main(void)
 	PRINT(custom <= cus2)
 	ENDL()
 
+	PRINT("Swap")
 	std::swap(standard, std2);
 	ft::swap(custom, cus2);
 	PRINT_L(standard)
