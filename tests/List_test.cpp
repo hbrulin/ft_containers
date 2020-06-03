@@ -70,77 +70,104 @@ void print_rev_const(list l)
 int main(void)
 {
 	PRINT("### Testing 4 constructors + = Operator ###")
+	ENDL()
 
-	PRINT("Constructor list()")
+	PRINT("# Constructor list()")
 	std::list<int> real;
 	ft::list<int> mine;
+	PRINT("STD : ")
 	PRINT_L(real)
+	PRINT("CUSTOM : ")
 	PRINT_L(mine)
 
-	PRINT("Fill constructor : constructs with n element, each a copy of val")
+	PRINT("# Fill constructor : constructs with n element, each a copy of val")
 	std::list<int> real2(3);
 	ft::list<int> mine2(3);
+	PRINT("STD : ")
 	PRINT_L(real2)
+	PRINT("CUSTOM : ")
 	PRINT_L(mine2)
 
-	PRINT("Fill constructor : val is defined")
+	PRINT("# Fill constructor : val is defined")
 	std::list<int> real3(3, 50);
 	ft::list<double> mine3(3, 50.6);
+	PRINT("STD : ")
 	PRINT_L(real3)
+	PRINT("CUSTOM : ")
 	PRINT_L(mine3)
 
-	PRINT("Range constructor :as many elements as the range [first, last)")
+	PRINT("# Range constructor :as many elements as the range [first, last)")
 	std::list<int> real4(real3.begin(), real3.end());
 	ft::list<int> mine4(mine3.begin(), mine3.end());
+	PRINT("STD : ")
 	PRINT_L(real4)
+	PRINT("CUSTOM : ")
 	PRINT_L(mine4)
 
-	PRINT("Range constructor array")
+	PRINT("# Range constructor array")
 	int array[] = {1, 2, 3, 4, 5};
 	std::list<int> real5(array, array + 5);
 	ft::list<int> mine5(array, array + 5);
+	PRINT("STD : ")
 	PRINT_L(real5)
+	PRINT("CUSTOM : ")
 	PRINT_L(mine5)
 
-	PRINT("Copy constructor")
+	PRINT("# Copy constructor")
 	std::list<int> real6(real5);
 	std::list<int> mine6(real5);
+	PRINT("STD : ")
 	PRINT_L(real6)
+	PRINT("CUSTOM : ")
 	PRINT_L(mine6)
 
-	PRINT("= Operator")
+	PRINT("# = Operator")
 	std::list<int> real7 = real5;
 	ft::list<int> mine7 = mine5;
+	PRINT("STD : ")
 	PRINT_L(real7)
+	PRINT("CUSTOM : ")
 	PRINT_L(mine7)
 
 	ENDL()
 
 	PRINT("### Testing const iterator ###")
+	PRINT("STD CONST : ")
 	PRINT_L_CONST(real5)
+	PRINT("CUSTOM CONST: ")
 	PRINT_L_CONST(mine5)
 
 	ENDL()
 
 	PRINT("### Testing rev iterator ###")
+	PRINT("STD REV : ")
 	PRINT_REV(real5)
+	PRINT("CUSTOM REV: ")
 	PRINT_REV(mine5)
+	PRINT("STD REV CONST : ")
 	PRINT_REV_CONST(real5)
+	PRINT("CUSTOM REV CONST: ")
 	PRINT_REV_CONST(mine5)
 
 	ENDL()
 
 	PRINT("### Capacity Tests ###")
+	PRINT("CUSTOM EMPTY : \n")
 	PRINT(mine.empty());
 	PRINT(mine5.empty());
+	PRINT("CUSTOM SIZE FUNCTIONS: \n")
 	PRINT(mine5.size());
 	PRINT(mine5.max_size());
 	ENDL()
 
 	PRINT("### Element access ###")
+	PRINT("STD FRONT : ")
 	PRINT(real5.front());
+	PRINT("STD BACK : ")
 	PRINT(real5.back());
+	PRINT("CUSTOM FRONT : ")
 	PRINT(mine5.front());
+	PRINT("CUSTOM BACK: ")
 	PRINT(mine5.back());
 	ENDL()
 
@@ -149,36 +176,50 @@ int main(void)
 	ft::list<int> custom(10, 8);
 	standard.assign(array, array +5);
 	custom.assign(array, array + 5);
+	PRINT("STD ASSIGN ITERATORS : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM ASSIGN ITERATORS : ")
 	PRINT_L(custom)
+	ENDL()
+
 	standard.assign(10, 10);
 	custom.assign(10, 10);
+	PRINT("STD ASSIGN n values : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM ASSIGN n values : ")
 	PRINT_L(custom)
 	ENDL()
 
 	PRINT("### Modifiers - Push & pop ###")
 	standard.push_front(3);
 	custom.push_front(3);
+	PRINT("STD Push front 3 : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Push front 3 : ")
 	PRINT_L(custom)
 	ENDL()
 
 	standard.pop_front();
 	custom.pop_front();
+	PRINT("STD Pop front 3 : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Pop front 3 : ")
 	PRINT_L(custom)
 	ENDL()
 
 	standard.push_back(3);
 	custom.push_back(3);
+	PRINT("STD Push back 3: ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Push back 3: ")
 	PRINT_L(custom)
 	ENDL()
 
 	standard.pop_back();
 	custom.pop_back();
+	PRINT("STD Pop Back : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Pop Back : ")
 	PRINT_L(custom)
 	ENDL();
 
@@ -194,26 +235,34 @@ int main(void)
 	}
 	standard.insert(its, 5);
 	custom.insert(itc, 5);
+	PRINT("STD Insert val 5 at position 5 : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Insert val 5 at position 5 : ")
 	PRINT_L(custom)
 	ENDL();
 
 	standard.insert(its, 3, 5);
 	custom.insert(itc, 3, 5);
+	PRINT("STD Insert 3 times val 5 : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Insert 3 times val 5 : ")
 	PRINT_L(custom)
 	ENDL();
 
 	standard.insert(its, array, array + 5);
 	custom.insert(itc, array, array + 5);
+	PRINT("STD Insert range : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Insert range : ")
 	PRINT_L(custom)
 	ENDL();
 
 	PRINT("### Modifiers - Erase ###")
 	standard.erase(its);
 	custom.erase(itc);
+	PRINT("STD Erase position : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Erase position : ")
 	PRINT_L(custom)
 	ENDL();
 
@@ -226,33 +275,45 @@ int main(void)
 	}
 	standard.erase(standard.begin(), its);
 	custom.erase(custom.begin(), itc);
+	PRINT("STD Erase range : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM Erase range: ")
 	PRINT_L(custom)
 	ENDL();
 
 	PRINT("### Modifiers - Swap ###")
 	standard.swap(real5);
 	custom.swap(mine5);
+	PRINT("STD 1st list : ")
 	PRINT_L(standard)
+	PRINT("Custom 1st list : ")
 	PRINT_L(custom)
+	PRINT("STD 2nd list : ")
 	PRINT_L(real5)
+	PRINT("CUSTOM 2nd list : ")
 	PRINT_L(mine5)
 	ENDL();
 
 	PRINT("### Modifiers - Resize ###")
 	standard.resize(2);
 	custom.resize(2);
+	PRINT("STD resize down : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM resize down : ")
 	PRINT_L(custom)
 	standard.resize(10);
 	custom.resize(10);
+	PRINT("STD resize up : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM resize up : ")
 	PRINT_L(custom)
 
 	PRINT("### Modifiers - Clear ###")
 	standard.clear();
 	custom.clear();
+	PRINT("STD clear : ")
 	PRINT_L(standard)
+	PRINT("CUSTOM clear: ")
 	PRINT_L(custom)
 	ENDL()
 

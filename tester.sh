@@ -1,23 +1,40 @@
 #!/bin/sh
 
-echo "TESTER LISTS" >> output
-make list && ./test >> output
-echo "\n" >> output
+rm output.txt
 
-echo "TESTER VECTOR" >> output
-make vector && ./test >> output
-echo "\n" >> output
+echo "#!#!#!#! LISTS #!#!#!#!" >> output.txt
+echo "\n" >> output.txt
+make list && ./test >> output.txt
+echo "\n" >> output.txt
+echo "-------------------------------------------------" >> output.txt
+echo "\n" >> output.txt
 
-echo "TESTER STACK" >> output
-make stack && ./test >> output
-echo "\n" >> output
+echo "#!#!#!#! VECTORS  #!#!#!#!" >> output.txt
+echo "\n" >> output.txt
+make vector && ./test >> output.txt
+echo "\n" >> output.txt
+echo "-------------------------------------------------" >> output.txt
+echo "\n" >> output.txt
 
-echo "TESTER QUEUE" >> output
-make queue && ./test >> output
-echo "\n" >> output
+echo "#!#!#!#! STACKS #!#!#!#!" >> output.txt
+echo "\n" >> output.txt
+make stack && ./test >> output.txt
+echo "\n" >> output.txt
+echo "-------------------------------------------------" >> output.txt
+echo "\n" >> output.txt
 
-echo "TESTER MAP" >> output
-make map && ./test >> output
-echo "\n" >> output
+echo "#!#!#!#! QUEUES #!#!#!#!" >> output.txt
+echo "\n" >> output.txt
+make queue && ./test >> output.txt
+echo "\n" >> output.txt
+echo "-------------------------------------------------" >> output.txt
+echo "\n" >> output.txt
 
-make fclean
+echo "#!#!#!#! MAPS #!#!#!#!" >> output.txt
+echo "\n" >> output.txt
+make map && ./test >> output.txt
+echo "\n" >> output.txt
+echo "-------------------------------------------------" >> output.txt
+echo "\n" >> output.txt
+
+make fclean 

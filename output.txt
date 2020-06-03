@@ -1,0 +1,365 @@
+#!#!#!#! LISTS #!#!#!#!
+
+
+### Testing 4 constructors + = Operator ###
+
+# Constructor list()
+STD : 
+
+CUSTOM : 
+
+# Fill constructor : constructs with n element, each a copy of val
+STD : 
+0 0 0 
+CUSTOM : 
+0 0 0 
+# Fill constructor : val is defined
+STD : 
+50 50 50 
+CUSTOM : 
+50.6 50.6 50.6 
+# Range constructor :as many elements as the range [first, last)
+STD : 
+50 50 50 
+CUSTOM : 
+50 50 50 
+# Range constructor array
+STD : 
+1 2 3 4 5 
+CUSTOM : 
+1 2 3 4 5 
+# Copy constructor
+STD : 
+1 2 3 4 5 
+CUSTOM : 
+1 2 3 4 5 
+# = Operator
+STD : 
+1 2 3 4 5 
+CUSTOM : 
+1 2 3 4 5 
+
+### Testing const iterator ###
+STD CONST : 
+1 2 3 4 5 
+CUSTOM CONST: 
+1 2 3 4 5 
+
+### Testing rev iterator ###
+STD REV : 
+5 4 3 2 1 
+CUSTOM REV: 
+5 4 3 2 1 
+STD REV CONST : 
+5 4 3 2 1 
+CUSTOM REV CONST: 
+5 4 3 2 1 
+
+### Capacity Tests ###
+CUSTOM EMPTY : 
+
+1
+0
+CUSTOM SIZE FUNCTIONS: 
+
+5
+768614336404564650
+
+### Element access ###
+STD FRONT : 
+1
+STD BACK : 
+5
+CUSTOM FRONT : 
+1
+CUSTOM BACK: 
+5
+
+### Modifiers - Assign ###
+STD ASSIGN ITERATORS : 
+1 2 3 4 5 
+CUSTOM ASSIGN ITERATORS : 
+1 2 3 4 5 
+
+STD ASSIGN n values : 
+10 10 10 10 10 10 10 10 10 10 
+CUSTOM ASSIGN n values : 
+10 10 10 10 10 10 10 10 10 10 
+
+### Modifiers - Push & pop ###
+STD Push front 3 : 
+3 10 10 10 10 10 10 10 10 10 10 
+CUSTOM Push front 3 : 
+3 10 10 10 10 10 10 10 10 10 10 
+
+STD Pop front 3 : 
+10 10 10 10 10 10 10 10 10 10 
+CUSTOM Pop front 3 : 
+10 10 10 10 10 10 10 10 10 10 
+
+STD Push back 3: 
+10 10 10 10 10 10 10 10 10 10 3 
+CUSTOM Push back 3: 
+10 10 10 10 10 10 10 10 10 10 3 
+
+STD Pop Back : 
+10 10 10 10 10 10 10 10 10 10 
+CUSTOM Pop Back : 
+10 10 10 10 10 10 10 10 10 10 
+
+### Modifiers - Inserts ###
+STD Insert val 5 at position 5 : 
+10 10 10 10 10 5 10 10 10 10 10 
+CUSTOM Insert val 5 at position 5 : 
+10 10 10 10 10 5 10 10 10 10 10 
+
+STD Insert 3 times val 5 : 
+10 10 10 10 10 5 5 5 5 10 10 10 10 10 
+CUSTOM Insert 3 times val 5 : 
+10 10 10 10 10 5 5 5 5 10 10 10 10 10 
+
+STD Insert range : 
+10 10 10 10 10 5 5 5 5 1 2 3 4 5 10 10 10 10 10 
+CUSTOM Insert range : 
+10 10 10 10 10 5 5 5 5 1 2 3 4 5 10 10 10 10 10 
+
+### Modifiers - Erase ###
+STD Erase position : 
+10 10 10 10 10 5 5 5 5 1 2 3 4 5 10 10 10 10 
+CUSTOM Erase position : 
+10 10 10 10 10 5 5 5 5 1 2 3 4 5 10 10 10 10 
+
+STD Erase range : 
+5 5 5 5 1 2 3 4 5 10 10 10 10 
+CUSTOM Erase range: 
+5 5 5 5 1 2 3 4 5 10 10 10 10 
+
+### Modifiers - Swap ###
+STD 1st list : 
+1 2 3 4 5 
+Custom 1st list : 
+1 2 3 4 5 
+STD 2nd list : 
+5 5 5 5 1 2 3 4 5 10 10 10 10 
+CUSTOM 2nd list : 
+5 5 5 5 1 2 3 4 5 10 10 10 10 
+
+### Modifiers - Resize ###
+STD resize down : 
+1 2 
+CUSTOM resize down : 
+1 2 
+STD resize up : 
+1 2 0 0 0 0 0 0 0 0 
+CUSTOM resize up : 
+1 2 0 0 0 0 0 0 0 0 
+### Modifiers - Clear ###
+STD clear : 
+
+CUSTOM clear: 
+
+
+### Operations - Splice ###
+1 2 3 8 8 8 8 8 8 8 8 8 8 4 5 
+1 2 3 8 8 8 8 8 8 8 8 8 8 4 5 
+
+
+
+1 2 3 8 8 8 8 8 8 8 8 8 8 11 4 5 
+1 2 3 8 8 8 8 8 8 8 8 8 8 11 4 5 
+11 11 11 11 11 11 11 11 11 
+11 11 11 11 11 11 11 11 11 
+
+11 11 11 11 11 11 11 11 1 2 3 8 8 8 8 8 8 8 8 8 8 11 4 5 
+11 11 11 11 11 11 11 11 1 2 3 8 8 8 8 8 8 8 8 8 8 11 4 5 
+11 
+11 
+
+### Operations - Remove ###
+1 2 3 8 8 8 8 8 8 8 8 8 8 4 5 
+1 2 3 8 8 8 8 8 8 8 8 8 8 4 5 
+
+1 2 3 4 5 
+1 2 3 4 5 
+
+### Operations - Unique ###
+1 1 2 3 4 5 
+1 1 2 3 4 5 
+1 2 3 4 5 
+1 2 3 4 5 
+
+1 2 3 4 
+1 2 3 4 
+
+### Operations - Merge ###
+1 1 2 2 3 3 4 4 5 
+1 1 2 2 3 3 4 4 5 
+
+
+
+1 1 2 2 3 3 4 4 5 1 2 3 4 5 
+1 1 2 2 3 3 4 4 5 1 2 3 4 5 
+
+
+
+10 10 10 1 1 2 2 3 3 4 4 5 1 2 3 4 5 
+10 10 10 1 1 2 2 3 3 4 4 5 1 2 3 4 5 
+
+
+
+### Operations - Sort ###
+1 1 1 2 2 2 3 3 3 4 4 4 5 5 10 10 10 
+1 1 1 2 2 2 3 3 3 4 4 4 5 5 10 10 10 
+
+10 10 10 5 5 4 4 4 3 3 3 2 2 2 1 1 1 
+10 10 10 5 5 4 4 4 3 3 3 2 2 2 1 1 1 
+
+### Operations - Reverse ###
+1 1 1 2 2 2 3 3 3 4 4 4 5 5 10 10 10 
+1 1 1 2 2 2 3 3 3 4 4 4 5 5 10 10 10 
+
+### relational operators ###
+0
+0
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+
+1 2 3 4 5 6 
+1 2 3 4 5 6 
+1 2 3 4 5 
+1 2 3 4 5 
+
+
+-------------------------------------------------
+
+
+#!#!#!#! VECTORS  #!#!#!#!
+
+
+
+
+-------------------------------------------------
+
+
+#!#!#!#! STACKS #!#!#!#!
+
+
+### Testing constructor ###
+
+
+
+### Testing constructor with container type ###
+5 4 3 2 1 
+5 4 3 2 1 
+
+### Testing copy constructor & =operator ###
+5 4 3 2 1 
+5 4 3 2 1 
+
+5 4 3 2 1 
+5 4 3 2 1 
+
+### Testing member functions ###
+1
+0
+5
+5
+
+10 5 4 3 2 1 
+5 4 3 2 1 
+
+### Relational operators ###
+0
+0
+1
+1
+1
+1
+1
+1
+0
+0
+0
+0
+
+
+
+-------------------------------------------------
+
+
+#!#!#!#! QUEUES #!#!#!#!
+
+
+### Testing constructor ###
+
+
+
+### Testing constructor with container type ###
+1 2 3 4 5 
+1 2 3 4 5 
+
+### Testing copy constructor & =operator ###
+1 2 3 4 5 
+1 2 3 4 5 
+
+1 2 3 4 5 
+1 2 3 4 5 
+
+### Testing member functions ###
+1
+0
+1
+5
+
+1 2 3 4 5 10 
+2 3 4 5 10 
+
+### Relational operators ###
+0
+0
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+
+
+
+-------------------------------------------------
+
+
+#!#!#!#! MAPS #!#!#!#!
+
+
+Testing constructors + assignment
+
+Testing iterator functions
+
+Capacity Tests
+
+Element access
+
+Modifiers
+
+Observers
+
+Operations
+
+
+
+-------------------------------------------------
+
+

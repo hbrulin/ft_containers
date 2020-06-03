@@ -1,7 +1,7 @@
 NAME = test
 
 SRCS_LIST = tests/List_test.cpp
-SRCS_VEC = tests/List_test.cpp
+SRCS_VEC = tests/Vector_test.cpp
 SRCS_STACK = tests/Stack_test.cpp
 SRCS_QUEUE = tests/Queue_test.cpp
 SRCS_MAP = tests/Map_test.cpp
