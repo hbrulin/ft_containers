@@ -57,40 +57,6 @@ namespace ft
 			container_type _c;
 	};
 
-/* Non member functions */
-/*
-	template <typename T, typename Container>
-	bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return lhs._c == rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator!= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return lhs._c != rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator< (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return lhs._c < rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator<= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return lhs._c <= rhs._c;
-	}
-
-	template <class T, class Container>
- 	bool operator>  (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return lhs._c > rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator>= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
-		return lhs._c >= rhs._c;
-	}
-*/
-	/*Member functions */
-
 	//pas besoin d'un appel explicite au constructeur de la liste?
 	template <typename T>
 	stack<T>::stack (const container_type& ctnr): _c(ctnr) {

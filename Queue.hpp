@@ -6,7 +6,7 @@
 namespace ft
 {
 
-	template <typename T, typename Container = list<T> >
+	template <typename T >
 	class queue : protected list<T>
 	{
 		public:
@@ -14,8 +14,6 @@ namespace ft
 			typedef list<T> container_type;
 			typedef typename list<T>::size_type size_type;
 
-		private:
-			container_type _c;
 
 		public:
 			explicit queue (const container_type& ctnr = container_type());
@@ -31,96 +29,92 @@ namespace ft
 			void push (const value_type& val);
 			void pop();
 
+			friend bool operator==(const queue<T> &lhs, const queue<T> &rhs)
+			{
+				return lhs._c == rhs._c;
+			}
+			friend bool operator!=(const queue<T> &lhs, const queue<T> &rhs)
+			{
+				return lhs._c != rhs._c;
+			}
+			friend bool operator<(const queue<T> &lhs, const queue<T> &rhs)
+			{
+				return lhs._c < rhs._c;
+			}
+			friend bool operator<=(const queue<T> &lhs, const queue<T> &rhs)
+			{
+				return lhs._c <= rhs._c;
+			}
+			friend bool operator>(const queue<T> &lhs, const queue<T> &rhs)
+			{
+				return lhs._c > rhs._c;
+			}
+			friend bool operator>=(const queue<T> &lhs, const queue<T> &rhs)
+			{
+				return lhs._c >= rhs._c;
+			}
+
+		private:
+			container_type _c;
+
 	};
 
-	/*Non member functions */
-
-	template <class T, class Container>
-  	bool operator== (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-		  return lhs._c == rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator!= (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-		return lhs._c != rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator<  (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-		return lhs._c < rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator<= (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-		return lhs._c <= rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator>  (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-		return lhs._c > rhs._c;
-	}
-
-	template <class T, class Container>
-  	bool operator>= (const queue<T,Container>& lhs, const queue<T,Container>& rhs) {
-		return lhs._c >= rhs._c;
-	}
-
 /*Member functions*/
-	template <typename T, typename C>
-	queue<T, C>::queue (const container_type& ctnr): _c(ctnr){
+	template <typename T>
+	queue<T>::queue (const container_type& ctnr): _c(ctnr){
 	}
 
-	template <typename T, typename C>
-	queue<T, C>::queue(queue const &other) : _c(other._c) {
+	template <typename T>
+	queue<T>::queue(queue const &other) : _c(other._c) {
 	}
 
-	template <typename T, typename C>
-	queue<T, C> &queue<T, C>::operator=(queue const &other) {
+	template <typename T>
+	queue<T> &queue<T>::operator=(queue const &other) {
 		_c = other._c;
 		return *this;
 	}
 
-	template <typename T, typename C>
-	queue<T, C>::~queue() {
+	template <typename T>
+	queue<T>::~queue() {
 	}
 
-	template <typename T, typename C>
-	bool queue<T, C>::empty() const {
+	template <typename T>
+	bool queue<T>::empty() const {
 		return _c.empty();
 	}
 
-	template <typename T, typename C>
-	typename queue<T, C>::size_type queue<T, C>::size() const {
+	template <typename T>
+	typename queue<T>::size_type queue<T>::size() const {
 		return _c.size();
 	}
 
-	template <typename T, typename C>
-	typename queue<T, C>::value_type& queue<T, C>::front() {
+	template <typename T>
+	typename queue<T>::value_type& queue<T>::front() {
 		return _c.front();
 	}
 
-	template <typename T, typename C>
-	const typename queue<T, C>::value_type& queue<T, C>::front() const {
+	template <typename T>
+	const typename queue<T>::value_type& queue<T>::front() const {
 		return _c.front();
 	}
 
-	template <typename T, typename C>
-	typename queue<T, C>::value_type& queue<T, C>::back() {
+	template <typename T>
+	typename queue<T>::value_type& queue<T>::back() {
 		return _c.back();
 	}
 
-	template <typename T, typename C>
-	const typename queue<T, C>::value_type& queue<T, C>::back() const {
+	template <typename T>
+	const typename queue<T>::value_type& queue<T>::back() const {
 		return _c.back();
 	}
 
-	template <typename T, typename C>
-	void queue<T, C>::push (const value_type& val) {
+	template <typename T>
+	void queue<T>::push (const value_type& val) {
 		_c.push_back(val);
 	}
 
-	template <typename T, typename C>
-	void queue<T, C>::pop() {
+	template <typename T>
+	void queue<T>::pop() {
 		_c.pop_front();
 	}
 
