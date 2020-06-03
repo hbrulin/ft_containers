@@ -16,9 +16,6 @@ namespace ft
 			typedef list<T> container_type;
 			typedef typename list<T>::size_type size_type;
 
-		private:
-			container_type _c;
-
 		public:
 			explicit stack (const container_type& ctnr = container_type());
 			stack(stack const &other);
@@ -31,31 +28,33 @@ namespace ft
 			void push (const value_type& val);
 			void pop();
 
-		friend bool operator==(const stack<T> &lhs, const stack<T> &rhs)
-		{
-			return lhs._c == rhs._c;
-		}
-		friend bool operator!=(const stack<T> &lhs, const stack<T> &rhs)
-		{
-			return lhs._c != rhs._c;
-		}
-		friend bool operator<(const stack<T> &lhs, const stack<T> &rhs)
-		{
-			return lhs._c < rhs._c;
-		}
-		friend bool operator<=(const stack<T> &lhs, const stack<T> &rhs)
-		{
-			return lhs._c <= rhs._c;
-		}
-		friend bool operator>(const stack<T> &lhs, const stack<T> &rhs)
-		{
-			return lhs._c > rhs._c;
-		}
-		friend bool operator>=(const stack<T> &lhs, const stack<T> &rhs)
-		{
-			return lhs._c >= rhs._c;
-		}
+			friend bool operator==(const stack<T> &lhs, const stack<T> &rhs)
+			{
+				return lhs._c == rhs._c;
+			}
+			friend bool operator!=(const stack<T> &lhs, const stack<T> &rhs)
+			{
+				return lhs._c != rhs._c;
+			}
+			friend bool operator<(const stack<T> &lhs, const stack<T> &rhs)
+			{
+				return lhs._c < rhs._c;
+			}
+			friend bool operator<=(const stack<T> &lhs, const stack<T> &rhs)
+			{
+				return lhs._c <= rhs._c;
+			}
+			friend bool operator>(const stack<T> &lhs, const stack<T> &rhs)
+			{
+				return lhs._c > rhs._c;
+			}
+			friend bool operator>=(const stack<T> &lhs, const stack<T> &rhs)
+			{
+				return lhs._c >= rhs._c;
+			}
 
+		private:
+			container_type _c;
 	};
 
 /* Non member functions */

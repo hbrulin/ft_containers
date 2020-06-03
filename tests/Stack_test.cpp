@@ -82,7 +82,7 @@ int main(void)
 	PRINT("### Relational operators ###")
 	cus3.pop();
 	std3.pop();
-	/*PRINT(std2 == std3)
+	PRINT(std2 == std3)
 	PRINT(cus2 == cus3)
 	PRINT(std2 != std3)
 	PRINT(cus2 != cus3)
@@ -93,7 +93,7 @@ int main(void)
 	PRINT(std2 < std3)
 	PRINT(cus2 < cus3)
 	PRINT(std2 <= std3)
-	PRINT(cus2 <= cus3)*/
+	PRINT(cus2 <= cus3)
 
 	ENDL()
 
