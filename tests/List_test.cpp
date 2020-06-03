@@ -9,6 +9,20 @@
 #define	PRINT_REV(list) print_rev(list);
 #define	PRINT_REV_CONST(list) print_rev_const(list);
 
+bool above_five(const int &value) { return (value > 5); }
+
+bool above_eight(int a, int b) //will test (*i,*(i-1))
+{
+	if (a + b > 8)
+		return true;
+	return false;
+}
+
+bool comp(int first, int second)
+{
+	return (first > second); //will check if element from merged_list is superior. If yes, it will merge here. Otherwise increment.
+}
+
 template <class list>
 void print_list(list l)
 {
@@ -242,8 +256,131 @@ int main(void)
 	PRINT_L(custom)
 	ENDL()
 
-	PRINT("### Operations ###")
-///
+	PRINT("### Operations - Splice ###")
+	standard.assign(array, array +5);
+	custom.assign(array, array + 5);
+	std::list<int> std2(10, 8);
+	ft::list<int> cus2(10, 8);
+	its = standard.begin();
+	itc = custom.begin();
+	for (size_t i = 0; i < 3; i++)
+	{
+		its++;
+		itc++;
+	}
+	standard.splice(its, std2);
+	custom.splice(itc, cus2);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(std2)
+	PRINT_L(cus2)
+	ENDL()
+	
+	std2.assign(10, 11);
+	cus2.assign(10, 11);
+	std::list<int>::iterator is;
+	is = std2.begin();
+	ft::list<int>::iterator ic;
+	ic = cus2.begin();
+	standard.splice(its, std2, is);
+	custom.splice(itc, cus2, ic);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(std2)
+	PRINT_L(cus2)
+	ENDL()
+
+	its = standard.begin();
+	itc = custom.begin();
+	standard.splice(its, std2, std2.begin(), --(std2.end()));
+	custom.splice(itc, cus2, cus2.begin(), --(cus2.end()));
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(std2)
+	PRINT_L(cus2)
+	ENDL()
+
+	PRINT("### Operations - Remove ###")
+	standard.remove(11);
+	custom.remove(11);
+	standard.remove(18);
+	custom.remove(18);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	standard.remove_if(above_five);
+	custom.remove_if(above_five);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	PRINT("### Operations - Unique ###")
+	standard.push_front(1);
+	custom.push_front(1);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	standard.unique();
+	custom.unique();
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	standard.unique(above_eight); //removes i if i + i-1 > 8
+	custom.unique(above_eight);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	PRINT("### Operations - Merge ###")
+	std::list<int> merged_std(array, array + 5);
+	ft::list<int> merged_cus(array, array + 5);
+	standard.merge(merged_std);
+	custom.merge(merged_cus);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(merged_std)
+	PRINT_L(merged_cus)
+	ENDL()
+
+	merged_std.assign(array, array + 5);
+	merged_cus.assign(array, array + 5);
+	standard.merge(merged_std, comp);
+	custom.merge(merged_cus, comp);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(merged_std)
+	PRINT_L(merged_cus)
+	ENDL()
+
+	merged_std.assign(3, 10);
+	merged_cus.assign(3, 10);
+	standard.merge(merged_std, comp);
+	custom.merge(merged_cus, comp);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	PRINT_L(merged_std)
+	PRINT_L(merged_cus)
+	ENDL()
+
+	PRINT("### Operations - Sort ###")
+	standard.sort();
+	custom.sort();
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	standard.sort(comp);
+	custom.sort(comp);
+	PRINT_L(standard)
+	PRINT_L(custom)
+	ENDL()
+
+	PRINT("### Operations - Reverse ###")
+	standard.reverse();
+	custom.reverse();
+	PRINT_L(standard)
+	PRINT_L(custom)
 	ENDL()
 
 	PRINT("### Non-member functions ###")

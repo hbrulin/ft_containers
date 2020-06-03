@@ -751,7 +751,7 @@ The operation is performed without constructing nor destroying any element: they
 		ListNode<T> *aft;
 		while (b != _li)
 		{ 	// bef -> a -> b -> aft
-			if (comp(b->el, a->el))
+			if (comp(b->element, a->element))
 			{
 				bef = a->prv;
 				aft = b->nxt;
