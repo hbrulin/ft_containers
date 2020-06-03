@@ -8,7 +8,7 @@ namespace ft
 	/*Heritage protected : 'stack' utilisera les méthodes de 'std::list' (public et protected) en interne 
 	pour implémenter ses propres fonctions, c'est une sorte de spécialisation mais avec une 
 	nouvelle interface - les ft de list ne seront pas accessibles dans un main via un stack*/
-	template <typename T, typename Container = list<T> >
+	template <typename T >
 	class stack : protected list<T>
 	{
 		public:
@@ -31,11 +31,36 @@ namespace ft
 			void push (const value_type& val);
 			void pop();
 
+		friend bool operator==(const stack<T> &lhs, const stack<T> &rhs)
+		{
+			return lhs._c == rhs._c;
+		}
+		friend bool operator!=(const stack<T> &lhs, const stack<T> &rhs)
+		{
+			return lhs._c != rhs._c;
+		}
+		friend bool operator<(const stack<T> &lhs, const stack<T> &rhs)
+		{
+			return lhs._c < rhs._c;
+		}
+		friend bool operator<=(const stack<T> &lhs, const stack<T> &rhs)
+		{
+			return lhs._c <= rhs._c;
+		}
+		friend bool operator>(const stack<T> &lhs, const stack<T> &rhs)
+		{
+			return lhs._c > rhs._c;
+		}
+		friend bool operator>=(const stack<T> &lhs, const stack<T> &rhs)
+		{
+			return lhs._c >= rhs._c;
+		}
+
 	};
 
 /* Non member functions */
-
-	template <class T, class Container>
+/*
+	template <typename T, typename Container>
 	bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
 		return lhs._c == rhs._c;
 	}
@@ -64,58 +89,58 @@ namespace ft
   	bool operator>= (const stack<T,Container>& lhs, const stack<T,Container>& rhs) {
 		return lhs._c >= rhs._c;
 	}
-
+*/
 	/*Member functions */
 
 	//pas besoin d'un appel explicite au constructeur de la liste?
-	template <typename T, typename C>
-	stack<T, C>::stack (const container_type& ctnr): _c(ctnr) {
+	template <typename T>
+	stack<T>::stack (const container_type& ctnr): _c(ctnr) {
 	}
 
 	//deep copy necessaire? ou appel au constructeur de la list?
-	template <typename T, typename C>
-	stack<T, C>::stack(stack const &other): _c(other._c) {
+	template <typename T>
+	stack<T>::stack(stack const &other): _c(other._c) {
 	}
 
 	//deep copy necessaire?
-	template <typename T, typename C>
-	stack<T, C> &stack<T, C>::operator=(stack const &other) {
+	template <typename T>
+	stack<T> &stack<T>::operator=(stack const &other) {
 		_c = other._c;
 		return *this;	
 	}
 
 	//appel destructeur list auto
-	template <typename T, typename C>
-	stack<T, C>::~stack() {
+	template <typename T>
+	stack<T>::~stack() {
 	}
 
-	template <typename T, typename C>
-	bool stack<T, C>::empty() const {
+	template <typename T>
+	bool stack<T>::empty() const {
 		return _c.empty();
 	}
 
-	template <typename T, typename C>
-	typename stack<T, C>::size_type stack<T, C>::size() const {
+	template <typename T>
+	typename stack<T>::size_type stack<T>::size() const {
 		return _c.size();
 	}
 
-	template <typename T, typename C>
-	typename stack<T, C>::value_type& stack<T, C>::top() {
+	template <typename T>
+	typename stack<T>::value_type& stack<T>::top() {
 		return _c.back();
 	}
 
-	template <typename T, typename C>
-	const typename stack<T, C>::value_type& stack<T, C>::top() const {
+	template <typename T>
+	const typename stack<T>::value_type& stack<T>::top() const {
 		return _c.back();
 	}
 
-	template <typename T, typename C>
-	void stack<T, C>::push (const value_type& val) {
+	template <typename T>
+	void stack<T>::push (const value_type& val) {
 		_c.push_back(val);
 	}
 
-	template <typename T, typename C>
-	void stack<T, C>::pop() {
+	template <typename T>
+	void stack<T>::pop() {
 		_c.pop_back();
 	}
 
