@@ -90,7 +90,7 @@ int main(void)
 
 	PRINT("# Fill constructor : val is defined")
 	std::list<int> real3(3, 50);
-	ft::list<double> mine3(3, 50.6);
+	ft::list<int> mine3(3, 50);
 	PRINT("STD : ")
 	PRINT_L(real3)
 	PRINT("CUSTOM : ")

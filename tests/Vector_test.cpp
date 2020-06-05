@@ -1,12 +1,13 @@
 #include "../Vector.hpp"
 #include "iostream"
+#include <vector>
 
 #define PRINT(string) std::cout << (string) << std::endl;
 #define ENDL() std::cout << std::endl;
-#define PRINT_V(list) print_vec(list);
-#define PRINT_V_CONST(list) print_vec_const(list);
-#define	PRINT_REV(list) print_rev(list);
-#define	PRINT_REV_CONST(list) print_rev_const(list);
+#define PRINT_V(vector) print_vec(vector);
+#define PRINT_V_CONST(vector) print_vec_const(vector);
+#define	PRINT_REV(vector) print_rev(vector);
+#define	PRINT_REV_CONST(vector) print_rev_const(vector);
 
 template <class vector>
 void print_vec(vector v)
@@ -20,7 +21,7 @@ void print_vec(vector v)
 }
 
 template <class vector>
-void print_vec_const(vec v)
+void print_vec_const(vector v)
 {
 	typename vector::const_iterator it;
 	for (it = v.begin(); it != v.end(); ++it)
@@ -55,7 +56,62 @@ void print_rev_const(vector v)
 int main(void)
 {
 	PRINT("### Testing constructors + assignments ###")
-////
+	std::vector<int> real;
+	ft::vector<int> mine;
+	PRINT_V(real);
+	PRINT_V(mine);
+
+	PRINT("# Fill constructor : constructs with n element, each a copy of val")
+	std::vector<int> real2(3);
+	ft::vector<int> mine2(3);
+	PRINT("STD : ")
+	PRINT_V(real2)
+	PRINT("CUSTOM : ")
+	PRINT_V(mine2)
+
+	PRINT("# Fill constructor : val is defined")
+	std::vector<int> real3(3, 50);
+	ft::vector<int> mine3(3, 50);
+	PRINT("STD : ")
+	PRINT_V(real3)
+	PRINT("CUSTOM : ")
+	PRINT_V(mine3)
+
+	PRINT("# Range constructor :as many elements as the range [first, last)")
+	std::vector<int> real4(real3.begin(), real3.end());
+	ft::vector<int> mine4(mine3.begin(), mine3.end());
+	PRINT("STD : ")
+	PRINT_V(real4)
+	PRINT("CUSTOM : ")
+	PRINT_V(mine4)
+
+	PRINT("# Range constructor array")
+	int array[] = {1, 2, 3, 4, 5};
+	std::vector<int> real5(array, array + 5);
+	ft::vector<int> mine5(array, array + 5);
+	PRINT("STD : ")
+	PRINT_V(real5)
+	PRINT("CUSTOM : ")
+	PRINT_V(mine5)
+
+	PRINT("# Copy constructor")
+	std::vector<int> real6(real5);
+	std::vector<int> mine6(real5);
+	PRINT("STD : ")
+	PRINT_V(real6)
+	PRINT("CUSTOM : ")
+	PRINT_V(mine6)
+
+	PRINT("# = Operator")
+	std::vector<int> real7 = real5;
+	ft::vector<int> mine7 = mine5;
+	PRINT("STD : ")
+	PRINT_V(real7)
+	PRINT("CUSTOM : ")
+	PRINT_V(mine7)
+
+	ENDL()
+
 	ENDL()
 
 	PRINT("### Testing const iterator ###")
@@ -70,7 +126,7 @@ int main(void)
 ///
 	ENDL()
 
-	PRINT("### Element access ###" << std::endl;
+	PRINT("### Element access ###")
 ///
 	ENDL()
 

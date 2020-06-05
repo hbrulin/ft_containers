@@ -6,6 +6,7 @@
 /*This header defines a set of standard exceptions that both 
 the library and programs can use to report common errors. I don't need to make classes to use length error, it is already defined*/
 # include "Iterators.hpp"
+# include "Utils.hpp"
 
 namespace ft
 {
@@ -66,6 +67,7 @@ namespace ft
 
 			const_iterator() : Iter<T>(NULL){};
 			const_iterator(const const_iterator &it) : Iter<T>(it._p){};
+			const_iterator(const iterator &it) : Iter<T>(it.getP()){};
 			const_iterator(T* p) : Iter<T>(p){}; // it = &(arr[0]);
 			virtual ~const_iterator() {};
 
@@ -103,7 +105,8 @@ namespace ft
 			explicit vector (size_type n, const value_type& val = value_type(),
 					const allocator_type& alloc = allocator_type());
 			template <class InputIterator>
-			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());	
+			vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
+				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
 			vector (const vector& x);
 			~vector();
 			vector& operator= (const vector& x);
@@ -138,7 +141,8 @@ namespace ft
 
 			/*Assign*/
 			template <class InputIterator>
-  			void assign (InputIterator first, InputIterator last);	
+  			void assign(InputIterator first, InputIterator last,
+				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
 			void assign (size_type n, const value_type& val);
 
 			/*Modifiers*/
@@ -147,7 +151,8 @@ namespace ft
 			iterator insert (iterator position, const value_type& val);	
     		void insert (iterator position, size_type n, const value_type& val);
 			template <class InputIterator>
-    		void insert (iterator position, InputIterator first, InputIterator last);
+    		void insert(iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
 			iterator erase (iterator position);
 			iterator erase (iterator first, iterator last);
 			void swap (vector& x);
@@ -228,7 +233,8 @@ namespace ft
 
 	template <typename T, typename A>
 	template <class InputIterator>
-	vector<T, A>::vector (InputIterator first, InputIterator last, const allocator_type& alloc): _allocator(alloc) {
+	vector<T, A>::vector(InputIterator first, InputIterator last, const allocator_type &alloc,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
 		_size = last - first;
 		_cap = _size;
 		_arr = _allocator.allocate(_size);
@@ -421,7 +427,8 @@ namespace ft
 
 	template <typename T, typename A>
 	template <class InputIterator>
-  	void vector<T, A>::assign (InputIterator first, InputIterator last) {
+  	void vector<T, A>::assign(InputIterator first, InputIterator last,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
 		clear();
 		insert(begin(), first, last);
 	}
@@ -477,7 +484,8 @@ namespace ft
 
 	template <typename T, typename A>
 	template <class InputIterator>
-    void vector<T, A>::insert (iterator position, InputIterator first, InputIterator last) {
+    void vector<T, A>::insert(iterator position, InputIterator first, InputIterator last,
+		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
 		size_type pos = ft::distance(begin(), position);
 		size_type n = ft::distance(first, last);
 		size_type newSize = _size + n;
