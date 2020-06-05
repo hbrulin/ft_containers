@@ -138,31 +138,133 @@ int main(void)
 
 	PRINT("CUSTOM RESIZE : \n")
 	mine5.resize(3);
-	PRINT_V(mine5);
+	PRINT_V(mine5)
 	mine5.resize(5);
-	PRINT_V(mine5);
+	PRINT_V(mine5)
 	mine5.resize(7, 10);
-	PRINT_V(mine5);
+	PRINT_V(mine5)
 
 	PRINT("CUSTOM RESERVE : \n")
-	PRINT(mine5.capacity());
+	PRINT(mine5.capacity())
 	mine5.reserve(2);
-	PRINT(mine5.capacity());
+	PRINT(mine5.capacity())
 	mine5.reserve(20);
-	PRINT(mine5.capacity());
+	PRINT(mine5.capacity())
 
 	PRINT("CUSTOM EMPTY : \n")
-	PRINT(mine.empty());
-	PRINT(mine5.empty());
+	PRINT(mine.empty())
+	PRINT(mine5.empty())
 	ENDL()
 
-	PRINT("### Element access ###")
-///
+	PRINT("### Element access - operator[] ###")
+	std::vector<int> standard(array, array + 5);
+	ft::vector<int> custom(array, array + 5);
+
+	PRINT(standard[3])
+	PRINT(custom[3])
 	ENDL()
 
-	PRINT("### Modifiers ###")
-///
+	PRINT("### Element access - at() ###")
+	PRINT(standard.at(3))
+	PRINT(custom.at(3))
 	ENDL()
+
+	PRINT("### at exception ###")
+	try
+	{
+		standard.at(10);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		custom.at(10);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
+	PRINT("### Element access - front & back ###")
+	PRINT(standard.front())
+	PRINT(custom.front())
+
+	PRINT(standard.back())
+	PRINT(custom.back())
+	ENDL()
+
+	PRINT("### Modifiers - Assign ###")
+	std::vector<int> std2(10, 8);
+	ft::vector<int> cus2(10, 8);
+	std2.assign(array, array +5);
+	cus2.assign(array, array + 5);
+	PRINT("STD ASSIGN ITERATORS : ")
+	PRINT_V(std2)
+	PRINT("CUSTOM ASSIGN ITERATORS : ")
+	PRINT_V(cus2)
+	ENDL()
+
+	std2.assign(10, 10);
+	cus2.assign(10, 10);
+	PRINT("STD ASSIGN n values : ")
+	PRINT_V(std2)
+	PRINT("CUSTOM ASSIGN n values : ")
+	PRINT_V(cus2)
+	ENDL()
+
+	PRINT("### Modifiers - Push & pop back ###")
+	standard.push_back(3);
+	custom.push_back(3);
+	PRINT("STD Push back 3: ")
+	PRINT_V(standard)
+	PRINT("CUSTOM Push back 3: ")
+	PRINT_V(custom)
+	ENDL()
+
+	standard.pop_back();
+	custom.pop_back();
+	PRINT("STD Pop Back : ")
+	PRINT_V(standard)
+	PRINT("CUSTOM Pop Back : ")
+	PRINT_V(custom)
+	ENDL();
+
+	PRINT("### Modifiers - Insert ###")
+	std::vector<int>::iterator its;
+	its = standard.begin();
+	ft::vector<int>::iterator itc;
+	itc = custom.begin();
+	for (size_t i = 0; i < 5; i++)
+	{
+		its++;
+		itc++;
+	}
+	standard.insert(its, 5);
+	custom.insert(itc, 5);
+	PRINT("STD Insert val 5 at position 5 : ")
+	PRINT_V(standard)
+	PRINT("CUSTOM Insert val 5 at position 5 : ")
+	PRINT_V(custom)
+	ENDL();
+
+	standard.insert(its, 3, 5);
+	custom.insert(itc, 3, 5);
+	PRINT("STD Insert 3 times val 5 : ")
+	PRINT_V(standard)
+	PRINT("CUSTOM Insert 3 times val 5 : ")
+	PRINT_V(custom)
+	ENDL();
+
+	standard.insert(its, array, array + 5);
+	custom.insert(itc, array, array + 5);
+	PRINT("STD Insert range : ")
+	PRINT_V(standard)
+	PRINT("CUSTOM Insert range : ")
+	PRINT_V(custom)
+	ENDL();
+
 
 	PRINT("### Operations ###")
 ///
