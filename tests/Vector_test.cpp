@@ -280,13 +280,82 @@ int main(void)
 	PRINT_V(cus3)
 	ENDL();
 
+	PRINT("### Modifiers - Erase ###")
+	its3 = std3.begin();
+	itc3 = cus3.begin();
+	std3.erase(its3);
+	cus3.erase(itc3);
+	PRINT("STD Erase position : ")
+	PRINT_V(std3)
+	PRINT("CUSTOM Erase position : ")
+	PRINT_V(cus3)
+	ENDL();
 
-	PRINT("### Operations ###")
-///
+	its3 = std3.begin();
+	itc3 = cus3.begin();
+	for (size_t i = 0; i < 5; i++)
+	{
+		its3++;
+		itc3++;
+	}
+	std3.erase(std3.begin(), its3);
+	cus3.erase(cus3.begin(), itc3);
+	PRINT("STD Erase range : ")
+	PRINT_V(std3)
+	PRINT("CUSTOM Erase range: ")
+	PRINT_V(cus3)
+	ENDL();
+
+	PRINT("### Modifiers - Swap ###")
+	std3.swap(real4);
+	cus3.swap(mine4);
+	PRINT("STD 1st list : ")
+	PRINT_V(std3)
+	PRINT("Custom 1st list : ")
+	PRINT_V(cus3)
+	PRINT("STD 2nd list : ")
+	PRINT_V(real4)
+	PRINT("CUSTOM 2nd list : ")
+	PRINT_V(mine4)
+	ENDL();
+
+	PRINT("### Modifiers - Clear ###")
+	std3.clear();
+	cus3.clear();
+	PRINT("STD clear : ")
+	PRINT_V(std3)
+	PRINT("CUSTOM clear: ")
+	PRINT_V(cus3)
 	ENDL()
 
-	PRINT("### Non-member functions ###")
-///
+
+	PRINT("### relational operators ###")
+	int array2[] = {1, 2, 3, 4, 5, 6};
+	standard.assign(array, array + 5);
+	std2.assign(array2, array2 + 6);
+	custom.assign(array, array + 5);
+	cus2.assign(array2, array2 + 6);
+
+	PRINT(standard == std2)
+	PRINT(custom == cus2)
+	PRINT(standard != std2)
+	PRINT(custom != cus2)
+	PRINT(standard > std2)
+	PRINT(custom > cus2)
+	PRINT(standard >= std2)
+	PRINT(custom >= cus2)
+	PRINT(standard < std2)
+	PRINT(custom < cus2)
+	PRINT(standard <= std2)
+	PRINT(custom <= cus2)
 	ENDL()
+
+	PRINT("Swap")
+	std::swap(standard, std2);
+	ft::swap(custom, cus2);
+	PRINT_V(standard)
+	PRINT_V(custom)
+	PRINT_V(std2)
+	PRINT_V(cus2)
 
 }
