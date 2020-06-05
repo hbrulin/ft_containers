@@ -21,7 +21,7 @@ list: $(OBJS_L)
 	@echo "$(NAME) list created"
 
 vector: $(OBJS_V)
-	clang++ $(OBJS_V) -lm -o $(NAME) -g
+	clang++ $(OBJS_V) -lm -o $(NAME) -fsanitize=address -g
 	@echo "$(NAME) vector created"
 
 stack: $(OBJS_S)

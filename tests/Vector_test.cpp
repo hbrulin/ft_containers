@@ -135,6 +135,7 @@ int main(void)
 	PRINT(mine5.size());
 	PRINT(mine5.max_size());
 	PRINT(mine5.capacity());
+	ENDL();
 
 	PRINT("CUSTOM RESIZE : \n")
 	mine5.resize(3);
@@ -143,6 +144,7 @@ int main(void)
 	PRINT_V(mine5)
 	mine5.resize(7, 10);
 	PRINT_V(mine5)
+	ENDL();
 
 	PRINT("CUSTOM RESERVE : \n")
 	PRINT(mine5.capacity())
@@ -150,6 +152,7 @@ int main(void)
 	PRINT(mine5.capacity())
 	mine5.reserve(20);
 	PRINT(mine5.capacity())
+	ENDL();
 
 	PRINT("CUSTOM EMPTY : \n")
 	PRINT(mine.empty())
@@ -236,16 +239,16 @@ int main(void)
 	its = standard.begin();
 	ft::vector<int>::iterator itc;
 	itc = custom.begin();
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < 2; i++)
 	{
 		its++;
 		itc++;
 	}
 	standard.insert(its, 5);
 	custom.insert(itc, 5);
-	PRINT("STD Insert val 5 at position 5 : ")
+	PRINT("STD Insert val 5 at position 2 : ")
 	PRINT_V(standard)
-	PRINT("CUSTOM Insert val 5 at position 5 : ")
+	PRINT("CUSTOM Insert val 5 at position 2 : ")
 	PRINT_V(custom)
 	ENDL();
 
@@ -257,12 +260,24 @@ int main(void)
 	PRINT_V(custom)
 	ENDL();
 
-	standard.insert(its, array, array + 5);
-	custom.insert(itc, array, array + 5);
+	PRINT("### Range insert : ###")
+	std::vector<int> std3(array, array + 5);
+	ft::vector<int> cus3(array, array + 5);
+	std::vector<int>::iterator its3;
+	its3 = std3.begin();
+	ft::vector<int>::iterator itc3;
+	itc3 = cus3.begin();
+	for (size_t i = 0; i < 2; i++)
+	{
+		its3++;
+		itc3++;
+	}
+	std3.insert(its3, array, array + 5);
+	cus3.insert(itc3, array, array + 5);
 	PRINT("STD Insert range : ")
-	PRINT_V(standard)
+	PRINT_V(std3)
 	PRINT("CUSTOM Insert range : ")
-	PRINT_V(custom)
+	PRINT_V(cus3)
 	ENDL();
 
 

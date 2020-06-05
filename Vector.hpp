@@ -486,11 +486,12 @@ namespace ft
 	template <class InputIterator>
     void vector<T, A>::insert(iterator position, InputIterator first, InputIterator last,
 		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
+		
 		size_type pos = ft::distance(begin(), position);
 		size_type n = ft::distance(first, last);
 		size_type newSize = _size + n;
 		if (newSize > _cap)
-			reserve(newSize);
+			reserve(newSize * 1.5f);
 		if (_size)
 		{
 			// copy from end down to pos
