@@ -112,18 +112,48 @@ int main(void)
 
 	ENDL()
 
-	ENDL()
-
 	PRINT("### Testing const iterator ###")
-	
+	PRINT("STD CONST : ")
+	PRINT_V_CONST(real5)
+	PRINT("CUSTOM CONST: ")
+	PRINT_V_CONST(mine5)
 	ENDL()
 
 	PRINT("### Testing rev iterator ###")
-
+	PRINT("STD REV : ")
+	PRINT_REV(real5)
+	PRINT("CUSTOM REV: ")
+	PRINT_REV(mine5)
+	PRINT("STD REV CONST : ")
+	PRINT_REV_CONST(real5)
+	PRINT("CUSTOM REV CONST: ")
+	PRINT_REV_CONST(mine5)
 	ENDL()
 
 	PRINT("### Capacity Tests ###")
-///
+	PRINT("CUSTOM SIZE FUNCTIONS: \n")
+	PRINT(mine5.size());
+	PRINT(mine5.max_size());
+	PRINT(mine5.capacity());
+
+	PRINT("CUSTOM RESIZE : \n")
+	mine5.resize(3);
+	PRINT_V(mine5);
+	mine5.resize(5);
+	PRINT_V(mine5);
+	mine5.resize(7, 10);
+	PRINT_V(mine5);
+
+	PRINT("CUSTOM RESERVE : \n")
+	PRINT(mine5.capacity());
+	mine5.reserve(2);
+	PRINT(mine5.capacity());
+	mine5.reserve(20);
+	PRINT(mine5.capacity());
+
+	PRINT("CUSTOM EMPTY : \n")
+	PRINT(mine.empty());
+	PRINT(mine5.empty());
 	ENDL()
 
 	PRINT("### Element access ###")
