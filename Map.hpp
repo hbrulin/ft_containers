@@ -423,14 +423,14 @@ namespace ft
 			while (tmp)
 			{
 				ptmp = tmp;
-				if (cmp(k, tmp->el.first))
+				if (cmp(k, tmp->element.first))
 					tmp = tmp->left;
 				else
 					tmp = tmp->right;
 			}
 			while (ptmp)
 			{
-				if (!cmp(k, ptmp->el.first)) 
+				if (!cmp(k, ptmp->element.first)) 
 					ptmp = ptmp->parent;
 				else
 					return iterator(&_tree, ptmp);

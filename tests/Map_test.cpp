@@ -143,7 +143,49 @@ int main(void)
 	mine4[6] = 'f';
 	PRINT_M(real4);
 	PRINT_M(mine4);
+	ENDL()
 
-	PRINT("### Inserting ###")
+	PRINT("### Inserting one pair ###")
+	real4.insert(std::make_pair(7, 'g'));
+	mine4.insert(ft::make_pair(7, 'g'));
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()
 
+	PRINT("### Inserting one pair at position ###")
+
+	std::map<int, char>::iterator its = real4.insert(real4.begin(), std::make_pair(26, 'z'));
+	ft::map<int, char >::iterator itc = mine4.insert(mine4.begin(), ft::make_pair(26, 'z'));
+	its = real4.insert(its, std::make_pair(25, 'y'));
+	itc = mine4.insert(itc, ft::make_pair(25, 'y'));
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()
+
+	PRINT("### Range - same keys ###")
+	real4.insert(rp, rp + 5);
+	mine4.insert(mp, mp + 5);
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()
+
+	PRINT("### Range - new keys ###")
+	std::pair<int, char> rp2[] = {
+		std::make_pair(10, 'a'),
+		std::make_pair(20, 'b'),
+		std::make_pair(30, 'c'),
+		std::make_pair(40, 'd'),
+		std::make_pair(50, 'e')};
+	ft::pair<int, char> mp2[] = {
+		ft::make_pair(10, 'a'),
+		ft::make_pair(20, 'b'),
+		ft::make_pair(30, 'c'),
+		ft::make_pair(40, 'd'),
+		ft::make_pair(50, 'e')};
+
+	real4.insert(rp2, rp2 + 5);
+	mine4.insert(mp2, mp2 + 5);
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()
 }
