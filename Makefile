@@ -21,7 +21,7 @@ list: $(OBJS_L)
 	@echo "$(NAME) list created"
 
 vector: $(OBJS_V)
-	clang++ $(OBJS_V) -lm -o $(NAME) -fsanitize=address -g
+	clang++ $(OBJS_V) -lm -o $(NAME) 
 	@echo "$(NAME) vector created"
 
 stack: $(OBJS_S)
@@ -33,7 +33,7 @@ queue: $(OBJS_Q)
 	@echo "$(NAME) queue created"
 
 map: $(OBJS_M)
-	clang++ $(OBJS_M) -lm -o $(NAME) -g
+	clang++ $(OBJS_M) -lm -o $(NAME) -fsanitize=address -g
 	@echo "$(NAME) map created"
 
 $(OBJS_L)/%.o: %.cpp Makefile

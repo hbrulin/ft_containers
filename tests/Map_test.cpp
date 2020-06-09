@@ -195,4 +195,44 @@ int main(void)
 	PRINT_M(real4);
 	PRINT_M(mine4);
 	ENDL()
+
+	/*PRINT("### erase with key ###") //NE MARCHE PAS
+	//real4.erase(3);
+	//mine4.erase(3);
+	//real4.erase(123);
+	//mine4.erase(123);
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()
+
+	PRINT("### Range erase ###")
+	its = real4.begin();
+	itc = mine4.begin();
+	std::advance(its, 5);
+	std::advance(itc, 5);
+	real4.erase(its, real4.end());
+	mine4.erase(itc, mine4.end());
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()*/
+
+	PRINT("### swap ###")
+	real4.swap(real3);
+	mine4.swap(mine3);
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()
+
+	/* NE MARCHE PAS 
+	PRINT("### clear ###")
+	real4.clear;
+	mine4.clear;
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()*/
+
+	PRINT("### OBSERVERS - key_comp ###")
+	std::map<int, char> real5(rp, rp + 5);
+	ft::map<int, char> mine5(mp, mp + 5);
+
 }
