@@ -120,4 +120,30 @@ int main(void)
 	PRINT("CUSTOM REV CONST: ")
 	PRINT_REV_CONST(mine4)
 	ENDL()
+
+	PRINT("### Capacity Tests ###")
+	PRINT("CUSTOM EMPTY :")
+	PRINT(mine.empty());
+	PRINT(mine4.empty());
+	PRINT("CUSTOM SIZE FUNCTIONS:")
+	PRINT(mine4.size());
+	PRINT(mine4.max_size());
+	ENDL()
+
+	PRINT("### Element access - operator[] - map[key] = val###")
+	PRINT(real4[3])
+	PRINT(mine4[3])
+	ENDL()
+
+	PRINT("### Element access - operator[] - new key ###")
+	PRINT(real4[6])
+	PRINT(mine4[6])
+	PRINT(mine4.size());
+	real4[6] = 'f';
+	mine4[6] = 'f';
+	PRINT_M(real4);
+	PRINT_M(mine4);
+
+	PRINT("### Inserting ###")
+
 }
