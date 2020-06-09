@@ -16,8 +16,8 @@ namespace ft {
 		~pair() {}
 		pair(const T1 &x, const T2 &y) : first(x), second(y) {}
 		pair(const pair &c) : first(c.first), second(c.second) {}
-		//template <class U, class V>
-		//pair(const pair<U, V> &pr) : first(pr.first), second(pr.second) {};
+		template <class U, class V>
+		pair(const pair<U, V> &ptr) : first(ptr.first), second(ptr.second) {}; //pour insert with iterateurs
 		pair &operator=(const pair &c)
 		{
 			first = c.first;

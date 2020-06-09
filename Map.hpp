@@ -171,7 +171,7 @@ namespace ft
 	typename map<Key, T, Compare, A>::iterator map<Key, T, Compare, A>::begin() {
 		Node *n = _tree.getR();
 		if (!n)
-			return iterator(&_tree, _tree.getD());
+			return iterator(&_tree, _tree.getInit());
 		while (n && n->left) //car on parle du premier element selon key, pas selon si parent ou enfant
 			n = n->left;
 		return iterator(&_tree, n);

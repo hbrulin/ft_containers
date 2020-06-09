@@ -27,7 +27,7 @@ namespace ft
 		BSTIter();
 
 	protected:
-		BST<T, Compare, isMulti> &_tree;
+		BST<T, Compare, isMulti> *_tree;
 		BSTNode<T> *_node;
 
 	public:
