@@ -102,4 +102,22 @@ int main(void)
 	PRINT_M(mine4)
 
 	ENDL()
+
+	PRINT("### Testing const iterator ###")
+	PRINT("STD CONST : ")
+	PRINT_M_CONST(real4)
+	PRINT("CUSTOM CONST: ")
+	PRINT_M_CONST(mine4)
+	ENDL()
+
+	PRINT("### Testing rev iterator ###")
+	PRINT("STD REV : ")
+	PRINT_REV(real4)
+	PRINT("CUSTOM REV: ")
+	PRINT_REV(mine4)
+	PRINT("STD REV CONST : ")
+	PRINT_REV_CONST(real4)
+	PRINT("CUSTOM REV CONST: ")
+	PRINT_REV_CONST(mine4)
+	ENDL()
 }

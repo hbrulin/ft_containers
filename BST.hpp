@@ -192,7 +192,7 @@ namespace ft
 				}
 				this->_node = tmp;
 				if (!tmp) 
-					this->_node = this->_tree->getD();
+					this->_node = this->_tree->getInit();
 				return *this;
 			}
 			const_iterator operator++(int)
