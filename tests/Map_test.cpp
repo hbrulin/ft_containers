@@ -188,4 +188,11 @@ int main(void)
 	PRINT_M(real4);
 	PRINT_M(mine4);
 	ENDL()
+
+	PRINT("### erase position ###")
+	real4.erase(its);
+	mine4.erase(itc);
+	PRINT_M(real4);
+	PRINT_M(mine4);
+	ENDL()
 }

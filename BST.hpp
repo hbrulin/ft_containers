@@ -385,7 +385,7 @@ namespace ft
 				del = tmp;
 				break;
 			}
-			if (_cmp(val, tmp->el))
+			if (_cmp(val, tmp->element))
 				tmp = tmp->left;
 			else
 				tmp = tmp->right;
