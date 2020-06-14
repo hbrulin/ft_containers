@@ -25,7 +25,7 @@ namespace ft {
 			return *this;
 		}
 	};
-	//needed?
+	
 	template <typename T1, typename T2>
 	pair<T1, T2> make_pair(const T1 t, const T2 u)
 	{

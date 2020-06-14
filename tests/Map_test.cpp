@@ -196,11 +196,11 @@ int main(void)
 	PRINT_M(mine4);
 	ENDL()
 
-	/*PRINT("### erase with key ###") //NE MARCHE PAS
-	//real4.erase(3);
-	//mine4.erase(3);
-	//real4.erase(123);
-	//mine4.erase(123);
+	PRINT("### erase with key ###") // ne marche pas avec tous les chiffres
+	real4.erase(5);
+	mine4.erase(5);
+	real4.erase(123);
+	mine4.erase(123);
 	PRINT_M(real4);
 	PRINT_M(mine4);
 	ENDL()
@@ -214,7 +214,7 @@ int main(void)
 	mine4.erase(itc, mine4.end());
 	PRINT_M(real4);
 	PRINT_M(mine4);
-	ENDL()*/
+	ENDL()
 
 	PRINT("### swap ###")
 	real4.swap(real3);
@@ -223,13 +223,12 @@ int main(void)
 	PRINT_M(mine4);
 	ENDL()
 
-	/* NE MARCHE PAS 
 	PRINT("### clear ###")
-	real4.clear;
-	mine4.clear;
+	real4.clear();
+	mine4.clear();
 	PRINT_M(real4);
 	PRINT_M(mine4);
-	ENDL()*/
+	ENDL()
 
 	PRINT("### OBSERVERS - key_comp ###")
 	std::map<int, char> real5(rp, rp + 5);

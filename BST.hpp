@@ -3,6 +3,7 @@
 
 #include "Iterators.hpp"
 #include "Pair.hpp"
+#include "iostream"
 
 namespace ft
 {
@@ -375,6 +376,8 @@ namespace ft
 		Node *cddp = NULL;
 		Node *tmp = NULL;
 
+		//std::cout << val.first << " " << val.second << std::endl;
+
 		if (!_root)
 			return false;
 		tmp = _root;
@@ -401,7 +404,7 @@ namespace ft
 		{
 			cdd = del->right;
 			cdd->left = del->left;
-			del->left->parent = cdd;
+			//del->left->parent = cdd;
 		}
 		else // case3
 		{

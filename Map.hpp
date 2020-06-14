@@ -270,7 +270,7 @@ namespace ft
 
 	template <class Key, class T, class Compare, class A>
 	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::erase (const key_type& k) {
-		return _tree.map_erase(make_pair(k, mapped_type())); //because in map_erase I use val.first. No need for two functions.
+		return _tree.map_erase(make_pair(k, mapped_type())); 
 	}
 
 	template <class Key, class T, class Compare, class A>
