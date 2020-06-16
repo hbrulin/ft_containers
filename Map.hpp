@@ -126,7 +126,7 @@ namespace ft
 		/*Operations*/
 		iterator find (const key_type& k);
 		const_iterator find (const key_type& k) const;
-		size_type count (const key_type& k) const;
+		size_type count (const key_type& k);
 		iterator lower_bound (const key_type& k);
 		const_iterator lower_bound (const key_type& k) const;
 		iterator upper_bound (const key_type& k);
@@ -338,7 +338,7 @@ namespace ft
 	}
 
 	template <class Key, class T, class Compare, class A>
-	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::count (const key_type& k) const {
+	typename map<Key, T, Compare, A>::size_type map<Key, T, Compare, A>::count (const key_type& k) {
 		Node *tmp = _tree.getR();
 		key_compare cmp = key_comp();
 		while (tmp)
