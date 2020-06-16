@@ -33,7 +33,7 @@ queue: $(OBJS_Q)
 	@echo "$(NAME) queue created"
 
 map: $(OBJS_M)
-	clang++ $(OBJS_M) -lm -o $(NAME) -fsanitize=address -g
+	clang++ $(OBJS_M) -lm -o $(NAME) -g
 	@echo "$(NAME) map created"
 
 $(OBJS_L)/%.o: %.cpp Makefile
