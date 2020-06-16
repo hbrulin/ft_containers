@@ -7,17 +7,17 @@
 
 namespace ft
 {
-	template <typename T, typename Compare, bool isMulti>
+	template <typename T, typename Compare>
 	class BST
 	{
 	public:
 		typedef T value_type;
 		typedef BSTNode<T> Node;
 		typedef size_t size_type;
-		typedef BST<T, Compare, isMulti> Tree;
+		typedef BST<T, Compare> Tree;
 	
 		/*Define iterators - Maps automatically store values in sort-order, so iterating will go through order in key.*/
-		class iterator : public BSTIter<T, Compare, isMulti>
+		class iterator : public BSTIter<T, Compare>
 		{
 		public:
 			typedef T value_type;
@@ -27,10 +27,10 @@ namespace ft
 			typedef std::bidirectional_iterator_tag iterator_category;
 			typedef BSTNode<T> Node;
 
-			iterator() : BSTIter<T, Compare, isMulti>(NULL, NULL) {}
-			iterator(BST *tree) : BSTIter<T, Compare, isMulti>(tree, NULL) {}
-			iterator(BST *tree, Node *node) : BSTIter<T, Compare, isMulti>(tree, node) {}
-			iterator(const iterator &other) : BSTIter<T, Compare, isMulti>(other) {}
+			iterator() : BSTIter<T, Compare>(NULL, NULL) {}
+			iterator(BST *tree) : BSTIter<T, Compare>(tree, NULL) {}
+			iterator(BST *tree, Node *node) : BSTIter<T, Compare>(tree, node) {}
+			iterator(const iterator &other) : BSTIter<T, Compare>(other) {}
 			~iterator() {}
 			iterator &operator=(const iterator &other)
 			{
@@ -135,7 +135,7 @@ namespace ft
 		};
 
 		/* const_iterator */
-		class const_iterator : public BSTIter<T, Compare, isMulti>
+		class const_iterator : public BSTIter<T, Compare>
 		{
 		public:
 			typedef T value_type;
@@ -145,10 +145,10 @@ namespace ft
 			typedef std::bidirectional_iterator_tag iterator_category;
 			typedef BSTNode<T> Node;
 
-			const_iterator() : BSTIter<T, Compare, isMulti>(NULL, NULL) {}
-			const_iterator(BST *tree, Node *node) : BSTIter<T, Compare, isMulti>(tree, node) {}
-			const_iterator(const const_iterator &other) : BSTIter<T, Compare, isMulti>(other) {}
-			const_iterator(const iterator &other) : BSTIter<T, Compare, isMulti>(other) {}
+			const_iterator() : BSTIter<T, Compare>(NULL, NULL) {}
+			const_iterator(BST *tree, Node *node) : BSTIter<T, Compare>(tree, node) {}
+			const_iterator(const const_iterator &other) : BSTIter<T, Compare>(other) {}
+			const_iterator(const iterator &other) : BSTIter<T, Compare>(other) {}
 			~const_iterator() {}
 			const_iterator &operator=(const const_iterator &other)
 			{
@@ -294,8 +294,8 @@ namespace ft
 	};
 
 	/* private functions */
-	template <typename T, typename Compare, bool isMulti>
-	void BST<T, Compare, isMulti>::deep_free(Node *root)
+	template <typename T, typename Compare>
+	void BST<T, Compare>::deep_free(Node *root)
 	{
 		if (!root)
 			return;
@@ -304,8 +304,8 @@ namespace ft
 		delete root;
 	}
 
-	template <typename T, typename Compare, bool isMulti>
-	typename BST<T, Compare, isMulti>::Node *BST<T, Compare, isMulti>::deep_copy(Node *parent, Node *n)
+	template <typename T, typename Compare>
+	typename BST<T, Compare>::Node *BST<T, Compare>::deep_copy(Node *parent, Node *n)
 	{
 		if (!n)
 			return NULL;
@@ -321,8 +321,8 @@ namespace ft
 	element already in the container, and if so, the element is not inserted, returning an iterator to this
 	existing element (if the function returns a value).
 	Keys that are less than parent go to left, keys that are bigger than to the right.*/
-	template <typename T, typename Compare, bool isMulti>
-	pair<typename BST<T, Compare, isMulti>::iterator, bool> BST<T, Compare, isMulti>::insert(iterator position, const value_type &val) {
+	template <typename T, typename Compare>
+	pair<typename BST<T, Compare>::iterator, bool> BST<T, Compare>::insert(iterator position, const value_type &val) {
 		Node *pos = position.getP();
 		Node *newNode;
 
@@ -338,7 +338,7 @@ namespace ft
 
 		while (true)
 		{
-			if (!isMulti && pos->element == val)
+			if (pos->element == val)
 				return make_pair(iterator(this, pos), false);
 			if (_cmp(val, pos->element)) //pas besoin de check le first element de val, c'est cmp() qui le fait.
 			{
@@ -368,8 +368,8 @@ namespace ft
 
 	}
 
-	template <typename T, typename Compare, bool isMulti>
-	bool BST<T, Compare, isMulti>::map_erase(const value_type &val) { //pass value itself or dereference iterator
+	template <typename T, typename Compare>
+	bool BST<T, Compare>::map_erase(const value_type &val) { //pass value itself or dereference iterator
 		Node *del = NULL;
 		Node *delp = NULL;
 		Node *cdd = NULL;

@@ -65,15 +65,15 @@ namespace ft
 		typedef std::ptrdiff_t difference_type;
 		typedef size_t size_type;
 
-		typedef typename BST<value_type, value_compare, false>::iterator iterator;
-		typedef typename BST<value_type, value_compare, false>::const_iterator const_iterator;
-		typedef typename BST<value_type, value_compare, false>::reverse_iterator reverse_iterator;
-		typedef typename BST<value_type, value_compare, false>::const_reverse_iterator const_reverse_iterator;
+		typedef typename BST<value_type, value_compare>::iterator iterator;
+		typedef typename BST<value_type, value_compare>::const_iterator const_iterator;
+		typedef typename BST<value_type, value_compare>::reverse_iterator reverse_iterator;
+		typedef typename BST<value_type, value_compare>::const_reverse_iterator const_reverse_iterator;
 		
 		typedef BSTNode<pair<const Key, T> > Node;
 
 	private:
-		BST<pair<const Key, T>, value_compare, false> _tree;
+		BST<pair<const Key, T>, value_compare> _tree;
 		allocator_type _alloc;
 		
 	public:

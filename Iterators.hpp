@@ -3,7 +3,7 @@
 
 namespace ft
 {
-	template <typename T, typename Compare, bool isMulti>
+	template <typename T, typename Compare>
 	class BST;
 
 	template <typename T> 
@@ -20,14 +20,14 @@ namespace ft
 			: element(o.element), parent(o.parent), left(o.left), right(o.right) {};
 	};
 
-	template <typename T, typename Compare, bool isMulti>
+	template <typename T, typename Compare>
 	class BSTIter
 	{
 	private:
 		BSTIter();
 
 	protected:
-		BST<T, Compare, isMulti> *_tree;
+		BST<T, Compare> *_tree;
 		BSTNode<T> *_node;
 
 	public:
@@ -37,12 +37,12 @@ namespace ft
 		typedef T& reference;
 		typedef std::bidirectional_iterator_tag iterator_category;
 		virtual ~BSTIter(){};
-		BSTIter(BST<T, Compare, isMulti> *tree, BSTNode<T> *node) : _tree(tree), _node(node) {}
+		BSTIter(BST<T, Compare> *tree, BSTNode<T> *node) : _tree(tree), _node(node) {}
 		BSTIter(const BSTIter &other) : _tree(other._tree), _node(other._node) {}
 		bool operator==(const BSTIter &rhs) const { return _node == rhs._node; };
 		bool operator!=(const BSTIter &rhs) const { return _node != rhs._node; };
 		BSTNode<T> *getP() const { return _node; };
-		BST<T, Compare, isMulti> *getTree() const { return _tree; };
+		BST<T, Compare> *getTree() const { return _tree; };
 
 	};
 
