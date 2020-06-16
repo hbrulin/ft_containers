@@ -45,7 +45,6 @@ namespace ft
 			iterator operator--(int) { iterator it = *this; this->_p--; return it; }; // it--
 			iterator &operator+=(difference_type n) { this->_p += n; return (*this); };
 			iterator operator+(difference_type n) const { return iterator(this->_p + n); };
-			friend iterator operator+(difference_type n, const iterator &it) { return iterator(it._p + n); };
 			iterator &operator-=(difference_type n) { this->_p -= n; return (*this); };
 			iterator operator-(difference_type n) const { return iterator(this->_p - n); };
 			difference_type operator-(const Iter<T> &other) { return this->_p - other.getP(); };
@@ -78,7 +77,6 @@ namespace ft
 			const_iterator operator--(int) { const_iterator it = *this; this->_p--; return it; }; // it--
 			const_iterator &operator+=(difference_type n) { this->_p += n; return (*this); };
 			const_iterator operator+(difference_type n) const { return const_iterator(this->_p + n); };
-			friend const_iterator operator+(difference_type n, const const_iterator &it) { return const_iterator(it._p + n); };
 			const_iterator &operator-=(difference_type n) { this->_p -= n; return (*this); };
 			const_iterator operator-(difference_type n) const { return const_iterator(this->_p - n); };
 			difference_type operator-(const Iter<T> &other) const { return this->_p - other.getP(); };
