@@ -254,6 +254,8 @@ namespace ft { //utilisation ft::list
 	list<T, A>::list(InputIterator first, InputIterator last, const allocator_type& alloc,
 		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) : _allocator(alloc), _size(0) //pour qu'utilisation seulement si Iterator, pas de int
 	{
+		(void)alloc;
+		(void)isIter;
 		_li = new ListNode<T>(NULL, NULL, value_type());
 		_li->prv = _li;
 		_li->nxt = _li;
@@ -369,6 +371,7 @@ namespace ft { //utilisation ft::list
 	template <class InputIterator>
 	void list<T, A>::assign(InputIterator first, InputIterator last,
 	typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
+		(void)isIter;
 		clear();
 		insert(begin(), first, last);
 	}	
@@ -456,6 +459,7 @@ namespace ft { //utilisation ft::list
 	template <class InputIterator>
     void list<T, A>::insert(iterator position, InputIterator first, InputIterator last,
 		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
+		(void)isIter;
 		ListNode<T> *start;
 		ListNode<T> *cur;
 		ListNode<T> *nxt;

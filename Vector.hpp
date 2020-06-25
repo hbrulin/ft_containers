@@ -233,6 +233,8 @@ namespace ft
 	template <class InputIterator>
 	vector<T, A>::vector(InputIterator first, InputIterator last, const allocator_type &alloc,
 		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
+		(void)alloc;
+		(void)isIter;
 		_size = last - first;
 		_cap = _size;
 		_arr = _allocator.allocate(_size);
@@ -427,6 +429,7 @@ namespace ft
 	template <class InputIterator>
   	void vector<T, A>::assign(InputIterator first, InputIterator last,
 		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
+		(void)isIter;
 		clear();
 		insert(begin(), first, last);
 	}
@@ -484,7 +487,7 @@ namespace ft
 	template <class InputIterator>
     void vector<T, A>::insert(iterator position, InputIterator first, InputIterator last,
 		typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) {
-		
+		(void)isIter;
 		size_type pos = ft::distance(begin(), position);
 		size_type n = ft::distance(first, last);
 		size_type newSize = _size + n;

@@ -8,36 +8,27 @@ SRCS_MAP = tests/Map_test.cpp
 
 CFLAGS = -Wall -Werror -Wextra
 
-OBJS_L = $(SRCS_LIST:.cpp=.o)
-OBJS_V = $(SRCS_VEC:.cpp=.o)
-OBJS_S = $(SRCS_STACK:.cpp=.o)
-OBJS_Q = $(SRCS_QUEUE:.cpp=.o)
-OBJS_M = $(SRCS_MAP:.cpp=.o)
-
 all: list
 	
 list: $(OBJS_L)
-	clang++ $(OBJS_L) -lm -o $(NAME) -g
+	clang++ $(CFLAGS) $(SRCS_LIST) -o $(NAME) -g
 	@echo "$(NAME) list created"
 
 vector: $(OBJS_V)
-	clang++ $(OBJS_V) -lm -o $(NAME) -g
+	clang++ $(CFLAGS) $(SRCS_VEC) -o $(NAME) -g
 	@echo "$(NAME) vector created"
 
 stack: $(OBJS_S)
-	clang++ $(OBJS_S) -lm -o $(NAME) -g
+	clang++ $(CFLAGS) $(SRCS_STACK) -o $(NAME) -g
 	@echo "$(NAME) stack created"
 
 queue: $(OBJS_Q)
-	clang++ $(OBJS_Q) -lm -o $(NAME) -g
+	clang++ $(CFLAGS) $(SRCS_QUEUE) -o $(NAME) -g
 	@echo "$(NAME) queue created"
 
 map: $(OBJS_M)
-	clang++ $(OBJS_M) -lm -o $(NAME) -g
+	clang++ $(CFLAGS) $(SRCS_MAP) -o $(NAME) -g
 	@echo "$(NAME) map created"
-
-$(OBJS_L)/%.o: %.cpp Makefile
-	clang++ $(CFLAGS) -o $@ -c $<
 
 clean:
 	@/bin/rm -rf tests/*.o
