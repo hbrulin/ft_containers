@@ -9,6 +9,8 @@
 #define	PRINT_REV(list) print_rev(list);
 #define	PRINT_REV_CONST(list) print_rev_const(list);
 
+bool lesser_than_rhs(int nbr1, int nbr2)  { return (nbr1 <= nbr2); }
+
 bool above_five(const int &value) { return (value > 5); }
 
 bool above_eight(int a, int b) //will test (*i,*(i-1))
@@ -393,6 +395,38 @@ int main(void)
 	PRINT_L(standard)
 	PRINT_L(custom)
 	ENDL()
+
+	std::list<int> testr;
+	ft::list<int> testc;
+	testr.push_back(5);
+	testr.push_back(5);
+	testr.push_back(42);
+	testr.push_back(42);
+	testr.push_back(44);
+	testr.push_back(43);
+	testr.push_back(44);
+	testr.push_back(5);
+	testr.push_back(45);
+	testr.push_back(45);
+
+	testc.push_back(5);
+	testc.push_back(5);
+	testc.push_back(42);
+	testc.push_back(42);
+	testc.push_back(44);
+	testc.push_back(43);
+	testc.push_back(44);
+	testc.push_back(5);
+	testc.push_back(45);
+	testc.push_back(45);
+
+	PRINT_L(testr)
+	PRINT_L(testc)
+
+	testr.unique(lesser_than_rhs);
+	testc.unique(lesser_than_rhs);
+	PRINT_L(testr)
+	PRINT_L(testc)
 
 	PRINT("### Operations - Merge ###")
 	std::list<int> merged_std(array, array + 5);

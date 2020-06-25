@@ -637,10 +637,12 @@ namespace ft { //utilisation ft::list
 		{
 			iterator tmp = it;
 			--tmp;
-			if (binary_pred(*it, *tmp)) //tester avec *(it - 1)
+			if (binary_pred(*tmp, *it)) //tester avec *(it - 1)
+			{
 				it = erase(it);
+			}
 			else
-				++it;
+				it++;
 		}
 	}
 
