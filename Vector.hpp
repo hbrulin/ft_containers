@@ -523,15 +523,15 @@ namespace ft
 
 		for (it = first; it != last; ++it) 
 		{
-			_allocator.destroy(&*it); //SYNTAXE
+			_allocator.destroy(&*it); //adresse de l'it déférencé
 		}
 
 		if (last < end())
 		{
 			for (it = first; last != end(); ++it, ++last)
 			{
-				_allocator.construct(&*it, *last);	//SYNTAXE
-				_allocator.destroy(&*last); //SYNTAXE
+				_allocator.construct(&*it, *last);	//adresse de l'it déférencé
+				_allocator.destroy(&*last); //adresse de l'it déférencé
 			}
 		}
 		_size -= times;

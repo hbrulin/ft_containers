@@ -237,7 +237,7 @@ namespace ft
 	typename map<Key, T, Compare, A>::mapped_type& map<Key, T, Compare, A>::operator[] (const key_type& k) {
 		iterator it = find(k);
 		if (it == end()) {
-			it = _tree.insert(iterator(&_tree, _tree.getR()), make_pair(k, mapped_type())).first;
+			it = _tree.insert(iterator(&_tree, _tree.getR()), make_pair(k, mapped_type())).first; //car insert returns pair avec bool
 		}
 		return it->second;
 	}
