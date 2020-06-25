@@ -157,6 +157,7 @@ int main(void)
 	PRINT(mine5.empty());
 	PRINT("CUSTOM SIZE FUNCTIONS: \n")
 	PRINT(mine5.size());
+	PRINT(real5.max_size())
 	PRINT(mine5.max_size());
 	ENDL()
 
